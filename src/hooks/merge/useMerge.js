@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
+import { PDFDocument } from 'pdf-lib';
 
 export const useMerge = () => {
   const [files, setFiles] = useState([]);
@@ -127,58 +128,37 @@ export const useMerge = () => {
     setError(null);
 
     try {
-      const formData = new FormData();
-      files.forEach((file) => {
-        formData.append('files', file.file);
-      });
+      // 创建一个空的 PDF 文档
+      const mergedPdf = await PDFDocument.create();
 
-      console.log('Sending request to server...');
-      const response = await fetch('${process.env.REACT_APP_API_URL}/api/merge', {
-        method: 'POST',
-        body: formData,
-        mode: 'cors'
-      });
-
-      if (!response.ok) {
-        const text = await response.text();
-        console.error('Error response:', text);
-        try {
-          const errorData = JSON.parse(text);
-          throw new Error(errorData.error || errorData.details || 'PDF 合并失败');
-        } catch (e) {
-          throw new Error(`服务器错误: ${text.slice(0, 100)}...`);
-        }
+      // 依次将每个选中的 PDF 文件加载并复制页面
+      for (const fileItem of files) {
+        // 读取 File 对象的 ArrayBuffer
+        const arrayBuffer = await fileItem.file.arrayBuffer();
+        const pdf = await PDFDocument.load(arrayBuffer);
+        const copiedPages = await mergedPdf.copyPages(
+          pdf,
+          pdf.getPageIndices()
+        );
+        copiedPages.forEach((page) => mergedPdf.addPage(page));
       }
 
-      // 获取操作 ID
-      const newOperationId = response.headers.get('x-operation-id');
-      console.log('Received operation ID:', newOperationId);
+      // 保存合并后的 PDF 数据
+      const mergedPdfBytes = await mergedPdf.save();
 
-      const blob = await response.blob();
-      console.log('Received blob:', {
-        size: blob.size,
-        type: blob.type
-      });
-      
-      // 清理之前的 URL
+      // 清理之前生成的 URL（如果有）
       if (mergedFileUrl) {
         URL.revokeObjectURL(mergedFileUrl);
       }
-      
-      // 创建新的 URL 并更新状态
-      const url = URL.createObjectURL(blob);
-      
-      // 批量更新状态
+      // 根据合并后的数据创建 Blob URL
+      const url = URL.createObjectURL(
+        new Blob([mergedPdfBytes], { type: 'application/pdf' })
+      );
       setMergedFileUrl(url);
-      setHasServerFiles(true);
-      setOperationId(newOperationId);
-
-      console.log('Updated state:', {
-        url,
-        hasServerFiles: true,
-        operationId: newOperationId
-      });
-
+      // 客户端合并的结果不属于"服务器文件"
+      setHasServerFiles(false);
+      setMessage('PDF 合并成功');
+      console.log('Merged PDF successfully, URL:', url);
       return url;
     } catch (err) {
       console.error('Merge failed:', err);
@@ -203,43 +183,13 @@ export const useMerge = () => {
     document.body.removeChild(a);
   }, [mergedFileUrl]);
 
-  const handleCleanup = useCallback(async () => {
-    if (!operationId) {
-      console.log('No operationId available for cleanup');
-      return;
+  const handleCleanup = useCallback(() => {
+    if (mergedFileUrl) {
+      URL.revokeObjectURL(mergedFileUrl);
     }
-
-    try {
-      console.log('Cleaning up files for operation:', operationId);
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/merge/cleanup/${operationId}`,
-        {
-          method: 'DELETE',
-          mode: 'cors'
-        }
-      );
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || '清理文件失败');
-      }
-
-      // 清理状态
-      if (mergedFileUrl) {
-        URL.revokeObjectURL(mergedFileUrl);
-      }
-      setMergedFileUrl(null);
-      setHasServerFiles(false);
-      setOperationId(null);
-      setError(null);
-      setMessage('文件已成功删除');  // 设置成功消息
-
-      console.log('Cleanup successful, state reset');
-    } catch (err) {
-      console.error('Cleanup failed:', err);
-      setError(err.message);
-    }
-  }, [operationId, mergedFileUrl]);
+    setMergedFileUrl(null);
+    setMessage('已清理合并文件');
+  }, [mergedFileUrl]);
 
   // 组件卸载时清理
   useEffect(() => {
