@@ -1,0 +1,176 @@
+/* PDFPreview.css */
+.react-pdf__Page {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.react-pdf__Page__canvas {
+  margin: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+.stamp {
+  transform-origin: 50% 50%; /* 旋转围绕元素的中心点 */
+  transition: transform 0.1s ease-in-out; /* 可选：平滑过渡 */
+}
+
+.stamp-container {
+  position: absolute;
+}
+
+.stamp-container .resize-handles .handle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border: 1px solid #1976d2;
+  border-radius: 50%;
+}
+
+.handle.top-left { top: -4px; left: -4px; cursor: nw-resize; }
+.handle.top-middle { top: -4px; left: 50%; transform: translateX(-50%); cursor: n-resize; }
+.handle.top-right { top: -4px; right: -4px; cursor: ne-resize; }
+.handle.middle-right { top: 50%; right: -4px; transform: translateY(-50%); cursor: e-resize; }
+.handle.bottom-right { bottom: -4px; right: -4px; cursor: se-resize; }
+.handle.bottom-middle { bottom: -4px; left: 50%; transform: translateX(-50%); cursor: s-resize; }
+.handle.bottom-left { bottom: -4px; left: -4px; cursor: sw-resize; }
+.handle.middle-left { top: 50%; left: -4px; transform: translateY(-50%); cursor: w-resize; }
+
+.rotation-handle {
+  position: absolute;
+  left: 50%;
+  bottom: -40px;
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+
+.rotation-line {
+  width: 2px;
+  height: 20px;
+  background: #1976d2;
+  margin: 0 auto;
+}
+
+.rotation-knob {
+  width: 16px;
+  height: 16px;
+  background: white;
+  border: 2px solid #1976d2;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.rotation-knob:hover {
+  background-color: #e3f2fd;
+}
+
+.stamp-container.selected {
+  outline: none;
+}
+
+.stamp-container.selected::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px dashed #1976d2;
+  pointer-events: none;
+}
+
+.stamp-container img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* 禁用 PDF 文本选择 */
+.react-pdf__Page__textContent {
+  display: none;
+}
+
+/* 隐藏 PDF 注释层 */
+.react-pdf__Page__annotations {
+  display: none;
+}
+
+/* 加载状态样式 */
+.pdf-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: #666;
+}
+
+/* 错误状态样式 */
+.pdf-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: #d32f2f;
+  text-align: center;
+  padding: 20px;
+}
+.stamp-container {
+  transition: transform 0.1s ease-out;
+  transform-origin: 50% 50% !important;
+}
+
+.stamp-container.selected {
+  outline: 2px solid #1976d2;
+  outline-offset: 2px;
+}
+
+.stamp-image-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.rotate-handle {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  background: #1976d2;
+  border: 2px solid white;
+  border-radius: 50%;
+  cursor: grab;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 16px;
+  transition: transform 0.2s ease;
+}
+
+.rotate-handle:active {
+  cursor: grabbing;
+  background: #1565c0;
+}
+
+.rotate-handle:hover {
+  transform: translateX(-50%) scale(1.1);
+}
+
+.pdf-preview-page {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+
+.pdf-preview-page canvas {
+  border-radius: 4px;
+}
