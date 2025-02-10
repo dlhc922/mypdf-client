@@ -8,7 +8,7 @@ export const useStampContext = () => useContext(StampContext);
 
 const MM_TO_PT = 2.83465;
 const MM_TO_INCH = 0.0393701;
-const DPI = 96;
+const DPI = 144;
 
 // 辅助函数 1：加载图片（返回 HTMLImageElement）
 const loadImage = (src) =>
