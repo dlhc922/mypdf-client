@@ -26,8 +26,8 @@ import {
 import { Document, Page } from 'react-pdf';
 import { useStampContext } from '../../contexts/StampContext';
 
-function PageSelectDialog({ 
-  open, 
+function PageSelectDialog({
+  open,
   onClose,
   file,
   numPages,
@@ -50,12 +50,12 @@ function PageSelectDialog({
     const newSelected = selectedPages.includes(pageNum)
       ? selectedPages.filter(p => p !== pageNum)
       : [...selectedPages, pageNum].sort((a, b) => a - b);
-    
+
     // 如果是添加新页面，使用当前的默认位置设置
     if (!selectedPages.includes(pageNum)) {
       const defaultPosition = stampConfig.position || { x: 50, y: 50 };
       const defaultRotation = stampConfig.randomAngle ? Math.floor(Math.random() * 360) : 0;
-      
+
       handleStampConfigChange('pageSettings', {
         ...stampConfig.pageSettings,
         [pageNum]: {
@@ -64,12 +64,30 @@ function PageSelectDialog({
         }
       });
     }
-    
+
     onPagesChange(newSelected);
   };
 
+  // 修改后的全选处理，补充设置每个页面的印章初始位置
   const handleSelectAll = () => {
-    onPagesChange(Array.from({ length: documentNumPages }, (_, i) => i + 1));
+    if (!documentNumPages) return;
+    const allPages = Array.from({ length: documentNumPages }, (_, i) => i + 1);
+    // 对所有页面进行遍历，对未配置的页面设置默认位置与角度
+    const newPageSettings = { ...stampConfig.pageSettings };
+    allPages.forEach(pageNum => {
+      if (!newPageSettings[pageNum]) {
+        const defaultPosition = stampConfig.position || { x: 50, y: 50 };
+        const defaultRotation = stampConfig.randomAngle ? Math.floor(Math.random() * 360) : 0;
+        newPageSettings[pageNum] = {
+          position: { ...defaultPosition },
+          rotation: defaultRotation,
+        };
+      }
+    });
+    // 更新印章配置
+    handleStampConfigChange('pageSettings', newPageSettings);
+    // 更新页面选择
+    onPagesChange(allPages);
   };
 
   const handleClearAll = () => {
@@ -128,7 +146,7 @@ function PageSelectDialog({
                   onChange={(e) => setPageInput(e.target.value)}
                   sx={{ flex: 1 }}
                 />
-                <Button 
+                <Button
                   variant="outlined"
                   onClick={handleQuickSelect}
                   disabled={!pageInput.trim() || !documentNumPages}
@@ -144,13 +162,13 @@ function PageSelectDialog({
 
           {/* 页面预览网格 */}
           <Box sx={{ height: '60vh', overflow: 'auto' }}>
-            <Document 
+            <Document
               file={file}
               onLoadSuccess={handleDocumentLoadSuccess}
               loading={
-                <Box sx={{ 
-                  p: 4, 
-                  display: 'flex', 
+                <Box sx={{
+                  p: 4,
+                  display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center'
                 }}>
@@ -172,7 +190,7 @@ function PageSelectDialog({
                           p: 1,
                           cursor: 'pointer',
                           position: 'relative',
-                          border: theme => selectedPages.includes(index + 1) 
+                          border: theme => selectedPages.includes(index + 1)
                             ? `2px solid ${theme.palette.primary.main}`
                             : 'none'
                         }}
@@ -185,9 +203,9 @@ function PageSelectDialog({
                             renderAnnotationLayer={false}
                             renderTextLayer={false}
                             loading={
-                              <Box sx={{ 
-                                width: 150, 
-                                height: 200, 
+                              <Box sx={{
+                                width: 150,
+                                height: 200,
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center'
@@ -198,7 +216,7 @@ function PageSelectDialog({
                           />
                           <Checkbox
                             checked={selectedPages.includes(index + 1)}
-                            sx={{ 
+                            sx={{
                               position: 'absolute',
                               top: 0,
                               right: 0,
@@ -248,7 +266,7 @@ function PageSelectDialog({
             已选择 {selectedPages.length} 页
           </Typography>
           <Button onClick={onClose}>取消</Button>
-          <Button 
+          <Button
             variant="contained"
             onClick={onClose}
             disabled={selectedPages.length === 0}
