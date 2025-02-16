@@ -305,10 +305,10 @@ function PDFPreview() {
             onClick={() => fileInputRef.current?.click()}
             size="small"
             sx={{ 
-              borderColor: '#e91e63',
-              color: '#e91e63',
+              borderColor: '#00BFFF',
+              color: '#00BFFF',
               '&:hover': {
-                borderColor: '#c2185b',
+                borderColor: '#0090E0',
                 backgroundColor: 'rgba(233, 30, 99, 0.04)'
               }
             }}

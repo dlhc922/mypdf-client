@@ -2,15 +2,10 @@ import React from 'react';
 import { Box, Container, Grid, Card, CardContent, Typography, Button, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Merge, Create, CallSplit } from '@mui/icons-material';
+import { Compress } from '@mui/icons-material';
 
 function HomePage() {
   const features = [
-    {
-      title: 'PDF 合并',
-      description: '将多个 PDF 文件合并为一个文件',
-      icon: <Merge sx={{ fontSize: 40 }} />,
-      path: '/merge'
-    },
     {
       title: 'PDF 盖章',
       description: '在 PDF 文件上添加电子印章',
@@ -18,10 +13,22 @@ function HomePage() {
       path: '/stamp'
     },
     {
+      title: 'PDF 合并',
+      description: '将多个 PDF 文件合并为一个文件',
+      icon: <Merge sx={{ fontSize: 40 }} />,
+      path: '/merge'
+    },
+    {
       title: 'PDF 拆分',
       description: '将 PDF 文件拆分为单页文件，方便单独下载和使用',
       icon: <CallSplit sx={{ fontSize: 40 }} />,
       path: '/split'
+    },
+    {
+      title: 'PDF 压缩',
+      description: '在浏览器中压缩 PDF 文件，减小文件体积',
+      icon: <Compress sx={{ fontSize: 40 }} />,
+      path: '/compress'
     }
   ];
 
@@ -33,7 +40,7 @@ function HomePage() {
           component="h1" 
           to="/"
           sx={{ 
-            color: '#e91e63',
+            color: '#00BFFF',
             textDecoration: 'none',
             fontWeight: 'bold',
             flexGrow: 0,
@@ -58,7 +65,7 @@ function HomePage() {
               }}
             >
               <CardContent sx={{ flexGrow: 1, textAlign: 'center' }}>
-                <Box sx={{ color: '#e91e63', mb: 2 }}>
+                <Box sx={{ color: '#00BFFF', mb: 2 }}>
                   {feature.icon}
                 </Box>
                 <Typography gutterBottom variant="h5" component="h2">
@@ -72,9 +79,9 @@ function HomePage() {
                   to={feature.path}
                   variant="contained"
                   sx={{ 
-                    bgcolor: '#e91e63',
+                    bgcolor: '#00BFFF',
                     '&:hover': {
-                      bgcolor: '#c2185b'
+                      bgcolor: '#0090E0'
                     }
                   }}
                 >

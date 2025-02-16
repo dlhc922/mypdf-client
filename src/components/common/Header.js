@@ -9,7 +9,8 @@ function Header() {
     { path: '/', label: '首页' },
     { path: '/merge', label: 'PDF合并' },
     { path: '/stamp', label: 'PDF盖章' },
-    { path: '/split', label: 'PDF拆分' }
+    { path: '/split', label: 'PDF拆分' },
+    { path: '/compress', label: 'PDF压缩' }
   ];
 
   return (
@@ -26,7 +27,7 @@ function Header() {
           component={Link} 
           to="/"
           sx={{ 
-            color: '#e91e63',
+            color: '#00BFFF',
             textDecoration: 'none',
             fontWeight: 'bold',
             flexGrow: 0,
@@ -43,7 +44,7 @@ function Header() {
               to={item.path}
               sx={{
                 mx: 1,
-                color: location.pathname === item.path ? '#e91e63' : 'text.primary',
+                color: location.pathname === item.path ? '#00BFFF' : 'text.primary',
                 '&:hover': {
                   bgcolor: 'rgba(233, 30, 99, 0.04)'
                 },

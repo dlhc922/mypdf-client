@@ -7,6 +7,7 @@ import StampPage from './pages/stamp/StampPage';
 import SplitPage from './pages/split/SplitPage';
 import Footer from './components/Footer';
 import { Box } from '@mui/material';
+import CompressPage from './pages/compress/CompressPage';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route path="/merge" element={<MergePage />} />
               <Route path="/stamp" element={<StampPage />} />
               <Route path="/split" element={<SplitPage />} />
+              <Route path="/compress" element={<CompressPage />} />
             </Routes>
           </Layout>
         </BrowserRouter>

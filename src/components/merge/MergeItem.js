@@ -24,7 +24,7 @@ function MergeItem({ file, index, onRemove }) {
             <IconButton
               edge="end"
               onClick={() => onRemove(file.id)}
-              sx={{ color: '#e91e63' }}
+              sx={{ color: '#00BFFF' }}
             >
               <Delete />
             </IconButton>

@@ -40,8 +40,8 @@ function MergeToolbar() {
           onClick={() => fileInputRef.current?.click()}
           startIcon={<Upload />}
           sx={{ 
-            borderColor: '#e91e63',
-            color: '#e91e63',
+            borderColor: '#00BFFF',
+            color: '#00BFFF',
             '&:hover': {
               borderColor: '#c2185b',
               backgroundColor: 'rgba(233, 30, 99, 0.04)'
@@ -57,7 +57,7 @@ function MergeToolbar() {
           onClick={handleMerge}
           disabled={loading || files.length < 2}
           sx={{ 
-            bgcolor: '#e91e63',
+            bgcolor: '#00BFFF',
             '&:hover': {
               bgcolor: '#c2185b'
             },
