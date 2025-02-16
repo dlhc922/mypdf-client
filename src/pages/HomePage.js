@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box, Container, Grid, Card, CardContent, Typography, Button } from '@mui/material';
+import { Box, Container, Grid, Card, CardContent, Typography, Button, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { Merge, Create } from '@mui/icons-material';
+import { Merge, Create, CallSplit } from '@mui/icons-material';
 
 function HomePage() {
   const features = [
@@ -16,14 +16,33 @@ function HomePage() {
       description: '在 PDF 文件上添加电子印章',
       icon: <Create sx={{ fontSize: 40 }} />,
       path: '/stamp'
+    },
+    {
+      title: 'PDF 拆分',
+      description: '将 PDF 文件拆分为单页文件，方便单独下载和使用',
+      icon: <CallSplit sx={{ fontSize: 40 }} />,
+      path: '/split'
     }
   ];
 
   return (
     <Container maxWidth="lg" sx={{ py: 8 }}>
-      <Typography variant="h4" component="h1" gutterBottom align="center">
-        PDF 工具箱
-      </Typography>
+      <Typography 
+          variant="h4" 
+          align="center" 
+          component="h1" 
+          to="/"
+          sx={{ 
+            color: '#e91e63',
+            textDecoration: 'none',
+            fontWeight: 'bold',
+            flexGrow: 0,
+            mr: 4,
+            mb: 6
+          }}
+        >
+          WSBN.tech PDF 工具箱
+        </Typography>
       <Grid container spacing={4} justifyContent="center">
         {features.map((feature) => (
           <Grid item xs={12} sm={6} md={4} key={feature.path}>
@@ -65,6 +84,8 @@ function HomePage() {
             </Card>
           </Grid>
         ))}
+
+       
       </Grid>
     </Container>
   );

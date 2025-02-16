@@ -8,7 +8,8 @@ function Header() {
   const menuItems = [
     { path: '/', label: '首页' },
     { path: '/merge', label: 'PDF合并' },
-    { path: '/stamp', label: 'PDF盖章' }
+    { path: '/stamp', label: 'PDF盖章' },
+    { path: '/split', label: 'PDF拆分' }
   ];
 
   return (
@@ -32,7 +33,7 @@ function Header() {
             mr: 4
           }}
         >
-          MYPDF
+          WSBN.tech
         </Typography>
         <Box sx={{ flexGrow: 1 }}>
           {menuItems.map(item => (
