@@ -4,7 +4,7 @@ const urlsToCache = [
   '/index.html',
   '/static/js/bundle.js',
   '/static/css/main.css',
-  // 添加其他需要缓存的资源
+  '/pdf.worker.mjs',
   'https://unpkg.com/pdf-lib/dist/pdf-lib.min.js',
   'https://unpkg.com/react-pdf/dist/esm/entry.webpack.js'
 ];
