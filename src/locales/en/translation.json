@@ -7,6 +7,12 @@
     "split": "PDF Split",
     "compress": "PDF Compress"
   },
+  "meta": {
+    "description": "Free online PDF stamp, merge, split, and compress tool without the need for registration.",
+    "ogTitle": "Free PDF Stamping & Splitting - No Registration, Forever Free",
+    "ogDescription": "An efficient PDF processing and e-stamping solution",
+    "ogImage": "https://www.wsbn.tech/logo.png"
+  },
   "stamp": {
     "title": "Select Stamp Pages",
     "quickSelectPlaceholder": "e.g.: 1,3-5,8",

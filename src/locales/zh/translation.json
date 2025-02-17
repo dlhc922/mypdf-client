@@ -7,6 +7,12 @@
     "split": "PDF 拆分",
     "compress": "PDF 压缩"
   },
+  "meta": {
+    "description": "在线免费 PDF 盖章、合并、拆分和压缩工具，永久免费使用，无需注册。",
+    "ogTitle": "免费PDF盖章 & 骑缝章 - 免注册，永久免费",
+    "ogDescription": "便捷高效的电子印章及PDF处理工具",
+    "ogImage": "https://www.wsbn.tech/logo.png"
+  },
   "stamp": {
     "title": "选择盖章页面",
     "quickSelectPlaceholder": "例如: 1,3-5,8",

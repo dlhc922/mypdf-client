@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Box, Container, Grid, Card, CardContent, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Merge, Create, CallSplit, Compress } from '@mui/icons-material';
@@ -40,6 +41,16 @@ function HomePage() {
 
   return (
     <Container maxWidth="lg" sx={{ py: 8, position: 'relative' }}>
+      <Helmet>
+        {/* 根据当前语言动态设置 lang 属性和 meta 信息 */}
+        <html lang={i18n.language} />
+        <title>{t('home.appTitle')}</title>
+        <meta name="description" content={t('meta.description')} />
+        <meta property="og:title" content={t('meta.ogTitle')} />
+        <meta property="og:description" content={t('meta.ogDescription')} />
+        <meta property="og:image" content={t('meta.ogImage')} />
+      </Helmet>
+      
       {/* Logo 定位于左上角 */}
       <Box sx={{ position: 'absolute', top: 16, left: 16 }}>
         <Typography
