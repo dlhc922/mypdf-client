@@ -3,8 +3,11 @@ import { ListItem, ListItemText, ListItemSecondaryAction, IconButton, Box } from
 import { Delete, DragHandle } from '@mui/icons-material';
 import { Draggable } from 'react-beautiful-dnd';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 function MergeItem({ file, index, onRemove }) {
+  const { t } = useTranslation();
+
   return (
     <Draggable draggableId={file.id} index={index}>
       {(provided) => (
@@ -18,7 +21,7 @@ function MergeItem({ file, index, onRemove }) {
           </Box>
           <ListItemText 
             primary={file.name}
-            secondary={`文件 ${index + 1}`}
+            secondary={t('merge.fileOrder', { order: index + 1 })}
           />
           <ListItemSecondaryAction>
             <IconButton

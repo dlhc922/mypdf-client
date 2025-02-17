@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { PDFDocument } from 'pdf-lib';
+import { useTranslation } from 'react-i18next';
 
 // 格式化文件大小的工具函数
 const formatFileSize = (bytes) => {
@@ -11,6 +12,7 @@ const formatFileSize = (bytes) => {
 };
 
 export const useCompress = () => {
+  const { t } = useTranslation();
   const [file, setFile] = useState(null);
   const [compressedFile, setCompressedFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -24,18 +26,18 @@ export const useCompress = () => {
     if (!selectedFiles?.[0]) return;
     const pdfFile = selectedFiles[0];
     if (pdfFile.type !== 'application/pdf') {
-      setError('请选择 PDF 文件');
+      setError(t('compress.selectPDF'));
       return;
     }
     setFile(pdfFile);
     setCompressedFile(null);
     setError(null);
     setMessage(null);
-  }, []);
+  }, [t]);
 
   const handleCompress = async () => {
     if (!file) {
-      setError('请先选择文件');
+      setError(t('compress.selectFile'));
       return;
     }
 
@@ -98,14 +100,18 @@ export const useCompress = () => {
       const ratio = ((originalSize - compressedSize) / originalSize * 100).toFixed(1);
 
       if (compressedSize >= originalSize) {
-        setMessage(`当前文件已经是最优大小（${formatFileSize(originalSize)}），无需进一步压缩。`);
+        setMessage(t('compress.alreadyOptimal', { fileSize: formatFileSize(originalSize) }));
         setCompressedFile(null);
       } else {
-        setMessage(`压缩完成！文件大小从 ${formatFileSize(originalSize)} 减小到 ${formatFileSize(compressedSize)}，压缩率 ${ratio}%`);
+        setMessage(t('compress.compressSuccess', { 
+          originalSize: formatFileSize(originalSize), 
+          compressedSize: formatFileSize(compressedSize), 
+          ratio 
+        }));
       }
     } catch (err) {
       console.error('压缩失败:', err);
-      setError(err.message || '文件处理失败');
+      setError(err.message || t('compress.fileProcessingFailed'));
       setCompressedFile(null);
     } finally {
       setLoading(false);

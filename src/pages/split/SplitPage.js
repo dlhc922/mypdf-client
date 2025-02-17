@@ -24,6 +24,7 @@ import { Add as AddIcon, Remove as RemoveIcon, ZoomIn, ZoomOut, Close as CloseIc
 import { Document, Page } from 'react-pdf';
 import { useSplit } from '../../hooks/split/useSplit';
 import { styled } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 
 // 自定义样式的 Tab
 const StyledTab = styled(Tab)(({ theme }) => ({
@@ -51,6 +52,8 @@ export default function SplitPage() {
     setError,
     setMessage
   } = useSplit();
+
+  const { t } = useTranslation();
 
   // 状态管理
   const [ranges, setRanges] = useState([{ start: '', end: '' }]);
@@ -164,7 +167,7 @@ export default function SplitPage() {
             }}
           >
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-              <Typography variant="h6">PDF 预览</Typography>
+              <Typography variant="h6">{t('split.previewTitle')}</Typography>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 {file && (
                   <>
@@ -194,7 +197,7 @@ export default function SplitPage() {
                       <ZoomIn />
                     </IconButton>
                     <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
-                    <Tooltip title="关闭文件">
+                    <Tooltip title={t('split.closeFile')}>
                       <IconButton 
                         onClick={handleClosePDF}
                         size="small"
@@ -234,7 +237,7 @@ export default function SplitPage() {
                     '&:hover': { bgcolor: 'primary.dark' }
                   }}
                 >
-                  选择 PDF 文件
+                  {t('split.selectFile')}
                   <input 
                     type="file" 
                     hidden 
@@ -334,7 +337,7 @@ export default function SplitPage() {
                               fontWeight: 500
                             }}
                           >
-                            {index + 1}
+                            {t('split.page', { number: index + 1 })}
                           </Box>
                         </Box>
                       </Grid>
@@ -371,7 +374,7 @@ export default function SplitPage() {
             }}
           >
             <Typography variant="h6" gutterBottom sx={{ mb: 3, fontWeight: 500 }}>
-              拆分设置
+              {t('split.settingTitle')}
             </Typography>
 
             <Tabs 
@@ -387,8 +390,8 @@ export default function SplitPage() {
                 }
               }}
             >
-              <StyledTab label="范围选择" />
-              <StyledTab label="自定义选择" />
+              <StyledTab label={t('split.rangeSelection')} />
+              <StyledTab label={t('split.customSelection')} />
             </Tabs>
 
             {/* 选项内容区域 - 添加独立滚动 */}
@@ -429,12 +432,12 @@ export default function SplitPage() {
                         <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                             <Chip 
-                              label={`范围 ${index + 1}`} 
+                              label={`${t('split.range')} ${index + 1}`} 
                               size="small" 
                               sx={{ mb: 1 }}
                             />
                             <Box sx={{ flex: 1 }} />
-                            <Tooltip title="删除范围">
+                            <Tooltip title={t('split.deleteRange')}>
                               <IconButton 
                                 size="small"
                                 onClick={() => removeRange(index)}
@@ -447,7 +450,7 @@ export default function SplitPage() {
                           </Box>
                           <Stack direction="row" spacing={1} alignItems="center">
                             <TextField
-                              label="起始页"
+                              label={t('split.startPage')}
                               size="small"
                               value={range.start}
                               onChange={(e) => updateRange(index, 'start', e.target.value)}
@@ -455,9 +458,9 @@ export default function SplitPage() {
                               inputProps={{ min: 1, max: numPages }}
                               sx={{ width: '45%' }}
                             />
-                            <Typography color="text.secondary">至</Typography>
+                            <Typography color="text.secondary">{t('split.to')}</Typography>
                             <TextField
-                              label="结束页"
+                              label={t('split.endPage')}
                               size="small"
                               value={range.end}
                               onChange={(e) => updateRange(index, 'end', e.target.value)}
@@ -481,7 +484,7 @@ export default function SplitPage() {
                         }
                       }}
                     >
-                      添加范围
+                      {t('split.addRange')}
                     </Button>
                   </Stack>
                 </Box>
@@ -503,11 +506,11 @@ export default function SplitPage() {
                         <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                             <Chip 
-                              label={`选择 ${index + 1}`} 
+                              label={`${t('split.selection')} ${index + 1}`} 
                               size="small"
                             />
                             <Box sx={{ flex: 1 }} />
-                            <Tooltip title="删除选择">
+                            <Tooltip title={t('split.deleteSelection')}>
                               <IconButton 
                                 size="small"
                                 onClick={() => removeCustomSelection(index)}
@@ -523,8 +526,8 @@ export default function SplitPage() {
                             size="small"
                             value={selection}
                             onChange={(e) => handleCustomSelectionChange(index, e.target.value)}
-                            placeholder="例如：1-3,5,7-9"
-                            helperText="支持范围(1-5)、单页(2,5,8)或混合模式"
+                            placeholder={t('split.customPlaceholder')}
+                            helperText={t('split.customHelper')}
                             multiline
                             rows={2}
                             sx={{
@@ -548,7 +551,7 @@ export default function SplitPage() {
                         }
                       }}
                     >
-                      添加选择
+                      {t('split.addSelection')}
                     </Button>
                   </Stack>
                 </Box>
@@ -578,7 +581,7 @@ export default function SplitPage() {
                   }
                 }}
               >
-                开始拆分
+                {t('split.startSplit')}
               </Button>
 
               {/* 状态提示 */}
@@ -618,7 +621,7 @@ export default function SplitPage() {
                     variant="subtitle2" 
                     sx={{ mt: 3, mb: 1, fontWeight: 500 }}
                   >
-                    拆分结果：
+                    {t('split.resultTitle')}
                   </Typography>
                   <List 
                     sx={{ 
@@ -641,8 +644,8 @@ export default function SplitPage() {
                         }}
                       >
                         <ListItemText 
-                          primary={`页面 ${pageNumber}`}
-                          secondary="点击下载"
+                          primary={t('split.page', { number: pageNumber })}
+                          secondary={t('split.clickToDownload')}
                           primaryTypographyProps={{
                             variant: 'body2',
                             fontWeight: 500

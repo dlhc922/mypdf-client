@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const useStamp = () => {
+  const { t } = useTranslation();
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -27,7 +29,7 @@ export const useStamp = () => {
     if (!selectedFile) return;
 
     if (selectedFile.type !== 'application/pdf') {
-      setError('请选择 PDF 文件');
+      setError(t('stamp.selectPDFFile'));
       return;
     }
 
@@ -35,7 +37,7 @@ export const useStamp = () => {
     setError(null);
     setCurrentPage(1);
     setNumPages(null);
-  }, []);
+  }, [t]);
 
   const handleZoomIn = useCallback(() => {
     setZoom(prev => Math.min(prev + 0.1, 2));
@@ -74,7 +76,7 @@ export const useStamp = () => {
     if (!file) return;
 
     if (!file.type.includes('png')) {
-      setError('请选择PNG格式的图片');
+      setError(t('stamp.selectPNGImage'));
       return;
     }
 
@@ -87,7 +89,7 @@ export const useStamp = () => {
       setError(null);
     };
     reader.readAsDataURL(file);
-  }, []);
+  }, [t]);
 
   // 添加清除印章图片的方法
   const handleClearStampImage = useCallback(() => {

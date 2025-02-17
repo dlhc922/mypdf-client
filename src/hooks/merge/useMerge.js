@@ -1,7 +1,9 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { PDFDocument } from 'pdf-lib';
+import { useTranslation } from 'react-i18next';
 
 export const useMerge = () => {
+  const { t } = useTranslation();
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -120,7 +122,7 @@ export const useMerge = () => {
 
   const handleMerge = async () => {
     if (files.length < 2) {
-      setError('至少需要两个 PDF 文件');
+      setError(t('merge.atLeastTwoFiles'));
       return;
     }
 
@@ -157,12 +159,12 @@ export const useMerge = () => {
       setMergedFileUrl(url);
       // 客户端合并的结果不属于"服务器文件"
       setHasServerFiles(false);
-      setMessage('PDF 合并成功');
+      setMessage(t('merge.mergeSuccess'));
       console.log('Merged PDF successfully, URL:', url);
       return url;
     } catch (err) {
       console.error('Merge failed:', err);
-      setError(err.message);
+      setError(err.message || t('merge.mergeFailed'));
       return null;
     } finally {
       setLoading(false);
@@ -171,7 +173,7 @@ export const useMerge = () => {
 
   const handleDownload = useCallback((url = mergedFileUrl) => {
     if (!url) {
-      setError('没有可下载的文件');
+      setError(t('merge.noFileToDownload'));
       return;
     }
 
@@ -188,8 +190,8 @@ export const useMerge = () => {
       URL.revokeObjectURL(mergedFileUrl);
     }
     setMergedFileUrl(null);
-    setMessage('已清理合并文件');
-  }, [mergedFileUrl]);
+    setMessage(t('merge.cleanupSuccess'));
+  }, [mergedFileUrl, t]);
 
   // 组件卸载时清理
   useEffect(() => {

@@ -17,17 +17,24 @@ import {
   Close as CloseIcon
 } from '@mui/icons-material';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
-const FileDownload = ({
+function FileDownload({
   fileUrl,
   loading,
   error,
-  fileName = 'merged.pdf',
-  successMessage = '处理完成',
-  loadingMessage = '正在处理...',
+  fileName,
+  successMessage,
+  loadingMessage,
   onClose,
   open
-}) => {
+}) {
+  const { t } = useTranslation();
+
+  // 如果未传入提示信息，则使用翻译来默认赋值
+  const finalSuccessMessage = successMessage || t('fileDownload.successMessage');
+  const finalLoadingMessage = loadingMessage || t('fileDownload.loadingMessage');
+
   // 生成带时间戳的文件名
   const downloadFileName = useMemo(() => {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
@@ -51,7 +58,7 @@ const FileDownload = ({
     // 如果正在加载，阻止关闭
     if (loading) return;
     
-    // 调用父组件的 onClose
+    // 调用父组件的 onClose 回调
     if (onClose) {
       onClose();
     }
@@ -88,7 +95,7 @@ const FileDownload = ({
         justifyContent: 'space-between'
       }}>
         <Typography variant="h6">
-          PDF 处理状态
+          {t('fileDownload.title')}
         </Typography>
         {!loading && (
           <IconButton
@@ -114,7 +121,7 @@ const FileDownload = ({
           }}>
             <CircularProgress size={24} />
             <Typography variant="h6">
-              {loadingMessage}
+              {finalLoadingMessage}
             </Typography>
           </Box>
         )}
@@ -150,12 +157,12 @@ const FileDownload = ({
                 color="success.main"
                 fontWeight="medium"
               >
-                {successMessage}
+                {finalSuccessMessage}
               </Typography>
             </Box>
             
             <Typography variant="body2" color="text.secondary">
-              文件名：{downloadFileName}
+              {t('fileDownload.fileName', { fileName: downloadFileName })}
             </Typography>
           </Box>
         )}
@@ -171,7 +178,7 @@ const FileDownload = ({
             onClick={handleClose}
             color="inherit"
           >
-            关闭
+            {t('fileDownload.close')}
           </Button>
           <Button
             variant="contained"
@@ -183,13 +190,13 @@ const FileDownload = ({
               py: 1
             }}
           >
-            下载文件
+            {t('fileDownload.downloadFile')}
           </Button>
         </DialogActions>
       )}
     </Dialog>
   );
-};
+}
 
 FileDownload.propTypes = {
   fileUrl: PropTypes.string,

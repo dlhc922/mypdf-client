@@ -1,58 +1,96 @@
 import React from 'react';
-import { Box, Container, Grid, Card, CardContent, Typography, Button, Paper } from '@mui/material';
+import { Box, Container, Grid, Card, CardContent, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { Merge, Create, CallSplit } from '@mui/icons-material';
-import { Compress } from '@mui/icons-material';
+import { Merge, Create, CallSplit, Compress } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 function HomePage() {
+  const { t, i18n } = useTranslation();
+
   const features = [
     {
-      title: 'PDF 盖章',
-      description: '在 PDF 文件上添加电子印章',
+      title: t('home.features.stamp.title'),
+      description: t('home.features.stamp.description'),
       icon: <Create sx={{ fontSize: 40 }} />,
       path: '/stamp'
     },
     {
-      title: 'PDF 合并',
-      description: '将多个 PDF 文件合并为一个文件',
+      title: t('home.features.merge.title'),
+      description: t('home.features.merge.description'),
       icon: <Merge sx={{ fontSize: 40 }} />,
       path: '/merge'
     },
     {
-      title: 'PDF 拆分',
-      description: '将 PDF 文件拆分为单页文件，方便单独下载和使用',
+      title: t('home.features.split.title'),
+      description: t('home.features.split.description'),
       icon: <CallSplit sx={{ fontSize: 40 }} />,
       path: '/split'
     },
     {
-      title: 'PDF 压缩',
-      description: '在浏览器中压缩 PDF 文件，减小文件体积',
+      title: t('home.features.compress.title'),
+      description: t('home.features.compress.description'),
       icon: <Compress sx={{ fontSize: 40 }} />,
       path: '/compress'
     }
   ];
 
+  const handleChangeLanguage = (lang) => {
+    i18n.changeLanguage(lang);
+  };
+
   return (
-    <Container maxWidth="lg" sx={{ py: 8 }}>
+    <Container maxWidth="lg" sx={{ py: 8, position: 'relative' }}>
+      {/* Logo 定位于左上角 */}
+      <Box sx={{ position: 'absolute', top: 16, left: 16 }}>
+        <Typography
+          variant="h6"
+          component={Link}
+          to="/"
+          sx={{ 
+            color: 'primary.main',
+            textDecoration: 'none',
+            fontWeight: 'bold'
+          }}
+        >
+          WSBN.tech
+        </Typography>
+      </Box>
+
+      {/* 语言切换按钮定位于右上角 */}
+      <Box sx={{ position: 'absolute', top: 16, right: 16 }}>
+        <Button 
+          variant={i18n.language === 'zh' ? 'contained' : 'outlined'} 
+          onClick={() => handleChangeLanguage('zh')}
+          size="small"
+          sx={{ mr: 1 }}
+        >
+          中文
+        </Button>
+        <Button 
+          variant={i18n.language === 'en' ? 'contained' : 'outlined'} 
+          onClick={() => handleChangeLanguage('en')}
+          size="small"
+        >
+          English
+        </Button>
+      </Box>
+      
       <Typography 
           variant="h4" 
           align="center" 
           component="h1" 
-          to="/"
           sx={{ 
-            color: '#00BFFF',
+            color: 'primary.main',
             textDecoration: 'none',
             fontWeight: 'bold',
-            flexGrow: 0,
-            mr: 4,
             mb: 6
           }}
         >
-          WSBN.tech PDF 工具箱
-        </Typography>
+          {t('home.appTitle')}
+      </Typography>
       <Grid container spacing={4} justifyContent="center">
         {features.map((feature) => (
-          <Grid item xs={12} sm={6} md={4} key={feature.path}>
+          <Grid item xs={12} sm={6} md={6} key={feature.path}>
             <Card 
               sx={{ 
                 height: '100%',
@@ -65,7 +103,7 @@ function HomePage() {
               }}
             >
               <CardContent sx={{ flexGrow: 1, textAlign: 'center' }}>
-                <Box sx={{ color: '#00BFFF', mb: 2 }}>
+                <Box sx={{ color: 'primary.main', mb: 2 }}>
                   {feature.icon}
                 </Box>
                 <Typography gutterBottom variant="h5" component="h2">
@@ -78,21 +116,14 @@ function HomePage() {
                   component={Link}
                   to={feature.path}
                   variant="contained"
-                  sx={{ 
-                    bgcolor: '#00BFFF',
-                    '&:hover': {
-                      bgcolor: '#0090E0'
-                    }
-                  }}
+                  color="primary"
                 >
-                  开始使用
+                  {t('home.startUsing')}
                 </Button>
               </CardContent>
             </Card>
           </Grid>
         ))}
-
-       
       </Grid>
     </Container>
   );

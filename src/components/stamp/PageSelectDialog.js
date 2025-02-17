@@ -25,6 +25,7 @@ import {
 } from '@mui/icons-material';
 import { Document, Page } from 'react-pdf';
 import { useStampContext } from '../../contexts/StampContext';
+import { useTranslation } from 'react-i18next';
 
 function PageSelectDialog({
   open,
@@ -34,6 +35,7 @@ function PageSelectDialog({
   selectedPages,
   onPagesChange
 }) {
+  const { t } = useTranslation();
   const { stampConfig, toggleRandomAngle, handleStampConfigChange } = useStampContext();
   const [pageInput, setPageInput] = useState('');
   const [documentNumPages, setDocumentNumPages] = useState(null);
@@ -68,7 +70,7 @@ function PageSelectDialog({
     onPagesChange(newSelected);
   };
 
-  // 修改后的全选处理，补充设置每个页面的印章初始位置
+  // 全选处理，补充设置每个页面的印章初始位置
   const handleSelectAll = () => {
     if (!documentNumPages) return;
     const allPages = Array.from({ length: documentNumPages }, (_, i) => i + 1);
@@ -121,19 +123,19 @@ function PageSelectDialog({
       maxWidth="md"
       fullWidth
     >
-      <DialogTitle>选择盖章页面</DialogTitle>
+      <DialogTitle>{t('stamp.title')}</DialogTitle>
       <DialogContent>
         <Stack spacing={2}>
           {/* 快速选择工具栏 */}
           <Paper sx={{ p: 2 }}>
             <Stack spacing={2}>
               <Stack direction="row" spacing={2} alignItems="center">
-                <Tooltip title="全选">
+                <Tooltip title={t('stamp.selectAll')}>
                   <IconButton onClick={handleSelectAll} disabled={!documentNumPages}>
                     <SelectAll />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="清除">
+                <Tooltip title={t('stamp.clearAll')}>
                   <IconButton onClick={handleClearAll} disabled={selectedPages.length === 0}>
                     <ClearAll />
                   </IconButton>
@@ -141,7 +143,7 @@ function PageSelectDialog({
                 <Divider orientation="vertical" flexItem />
                 <TextField
                   size="small"
-                  placeholder="例如: 1,3-5,8"
+                  placeholder={t('stamp.quickSelectPlaceholder')}
                   value={pageInput}
                   onChange={(e) => setPageInput(e.target.value)}
                   sx={{ flex: 1 }}
@@ -151,11 +153,11 @@ function PageSelectDialog({
                   onClick={handleQuickSelect}
                   disabled={!pageInput.trim() || !documentNumPages}
                 >
-                  应用
+                  {t('stamp.apply')}
                 </Button>
               </Stack>
               <Typography variant="caption" color="text.secondary">
-                提示：可以输入页码范围（如1-5）或单页（如1,3,8），用逗号分隔
+                {t('stamp.quickSelectHelper')}
               </Typography>
             </Stack>
           </Paper>
@@ -237,7 +239,7 @@ function PageSelectDialog({
                               py: 0.5
                             }}
                           >
-                            第 {index + 1} 页
+                            {t('stamp.pageIndicator', { pageNumber: index + 1 })}
                           </Typography>
                         </Box>
                       </Paper>
@@ -259,19 +261,19 @@ function PageSelectDialog({
                 color="primary"
               />
             }
-            label="每个印章采用随机的角度"
+            label={t('stamp.randomAngleSwitch')}
           />
           <Box sx={{ flex: 1 }} />
           <Typography variant="body2">
-            已选择 {selectedPages.length} 页
+            {t('stamp.selectedPages', { count: selectedPages.length })}
           </Typography>
-          <Button onClick={onClose}>取消</Button>
+          <Button onClick={onClose}>{t('stamp.cancel')}</Button>
           <Button
             variant="contained"
             onClick={onClose}
             disabled={selectedPages.length === 0}
           >
-            确定
+            {t('stamp.confirm')}
           </Button>
         </Stack>
       </DialogActions>

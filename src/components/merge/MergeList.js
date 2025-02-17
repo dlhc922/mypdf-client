@@ -3,6 +3,7 @@ import { Box, Typography } from '@mui/material';
 import PDFPreviewCard from './PDFPreviewCard';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { useMergeContext } from '../../contexts/MergeContext';
+import { useTranslation } from 'react-i18next';
 
 // 重排数组的辅助函数
 const reorder = (list, startIndex, endIndex) => {
@@ -13,6 +14,7 @@ const reorder = (list, startIndex, endIndex) => {
 };
 
 function MergeList() {
+  const { t } = useTranslation();
   const { files, updateFilesOrder, handleRemoveFile } = useMergeContext();
 
   const onDragEnd = (result) => {
@@ -21,13 +23,13 @@ function MergeList() {
     const reorderedFiles = reorder(files, result.source.index, result.destination.index);
     // 更新 context 中的文件顺序
     updateFilesOrder(reorderedFiles);
-    console.log('新顺序：', reorderedFiles);
+    console.log(t('merge.newOrder'), reorderedFiles);
   };
 
   if (files.length === 0) {
     return (
       <Box sx={{ p: 2 }}>
-        <Typography>请选择要合并的 PDF 文件</Typography>
+        <Typography>{t('merge.selectFiles')}</Typography>
       </Box>
     );
   }
@@ -35,7 +37,7 @@ function MergeList() {
   return (
     <Box>
       <Typography sx={{ mb: 2 }}>
-        选择 {files.length} 个文件（可拖动调整顺序）
+        {t('merge.selectedFiles', { count: files.length })}
       </Typography>
       <Droppable 
         droppableId="pdf-list" 

@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Button, CircularProgress, Alert, Stack, Snackbar } from '@mui/material';
 import { Upload, FileUpload } from '@mui/icons-material';
 import { useMergeContext } from '../../contexts/MergeContext';
+import { useTranslation } from 'react-i18next';
 
 function MergeToolbar() {
   const { 
@@ -15,6 +16,7 @@ function MergeToolbar() {
   } = useMergeContext();
   
   const fileInputRef = useRef(null);
+  const { t } = useTranslation();
 
   console.log('MergeToolbar render:', { 
     loading,
@@ -43,12 +45,12 @@ function MergeToolbar() {
             borderColor: '#00BFFF',
             color: '#00BFFF',
             '&:hover': {
-              borderColor: '#c2185b',
+              borderColor: '#0090E0',
               backgroundColor: 'rgba(233, 30, 99, 0.04)'
             }
           }}
         >
-          添加文件
+          {t('merge.addFile')}
         </Button>
 
         <Button
@@ -59,14 +61,14 @@ function MergeToolbar() {
           sx={{ 
             bgcolor: '#00BFFF',
             '&:hover': {
-              bgcolor: '#c2185b'
+              bgcolor: '#0090E0'
             },
             '&.Mui-disabled': {
               bgcolor: 'rgba(233, 30, 99, 0.12)'
             }
           }}
         >
-          {loading ? '合并中...' : '合并'}
+          {loading ? t('merge.merging') : t('merge.merge')}
         </Button>
 
         {error && (

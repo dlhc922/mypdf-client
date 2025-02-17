@@ -1,0 +1,156 @@
+{
+  "appName": "WSBN.tech PDF Toolkit",
+  "tools": {
+    "home": "Home",
+    "merge": "PDF Merge",
+    "stamp": "PDF Stamp",
+    "split": "PDF Split",
+    "compress": "PDF Compress"
+  },
+  "stamp": {
+    "title": "Select Stamp Pages",
+    "quickSelectPlaceholder": "e.g.: 1,3-5,8",
+    "quickSelectHelper": "Hint: Enter page ranges (e.g., 1-5) or individual pages (e.g., 1,3,8) separated by commas",
+    "selectAll": "Select All",
+    "clearAll": "Clear All",
+    "apply": "Apply",
+    "randomAngleSwitch": "Use random angle for each stamp",
+    "selectedPages": "{{count}} pages selected",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "pageIndicator": "Page {{pageNumber}}",
+    "selectFile": "Select PDF File",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "resetZoom": "Reset Zoom",
+    "noFileSelected": "Please select a PDF file",
+    "stampPreviewText": "Stamp Preview",
+    "stampSettings": "Stamp Settings",
+    "image": "Stamp Image",
+    "selectStampImage": "Select Stamp Image",
+    "transparentPngHint": "Please select a transparent PNG image",
+    "size": "Stamp Size (mm)",
+    "sizeHelper": "Recommended stamp size: 30-50mm",
+    "positionAndAngle": "Stamp Position & Angle",
+    "positionHint": "Adjust the stamp angle after selecting a page",
+    "pages": "Stamp Pages",
+    "selectPages": "Select Stamp Pages",
+    "straddle": "Straddle Stamp",
+    "enableStraddle": "Enable Straddle Stamp",
+    "verticalPosition": "Vertical Position (mm)",
+    "verticalPositionHint": "Value between 0-297 indicating distance from the top",
+    "straddleDistribution": "The stamp will be evenly distributed on the right side of all pages",
+    "processing": "Processing...",
+    "addStamp": "Add Stamp",
+    "successMessage": "PDF stamping successful!",
+    "loadingMessage": "Stamp processing...",
+    "selectPDFFile": "Please select a PDF file",
+    "selectPNGImage": "Please select a PNG image"
+    
+  },
+  "split": {
+    "previewTitle": "PDF Preview",
+    "closeFile": "Close File",
+    "selectFile": "Select PDF File",
+    "settingTitle": "Split Settings",
+    "rangeSelection": "Range Selection",
+    "customSelection": "Custom Selection",
+    "addRange": "Add Range",
+    "addSelection": "Add Selection",
+    "startSplit": "Start Splitting",
+    "page": "Page {{number}}",
+    "clickToDownload": "Click to download",
+    "range": "Range",
+    "deleteRange": "Delete Range",
+    "startPage": "Start Page",
+    "to": "to",
+    "endPage": "End Page",
+    "selection": "Selection",
+    "deleteSelection": "Delete Selection",
+    "customPlaceholder": "e.g. 1-3,5,7-9",
+    "customHelper": "Supports range (1-5), single pages (2,5,8) or mixed mode",
+    "resultTitle": "Split Results:",
+    "invalidPdfFile": "Please select a PDF file",
+    "enterValidPageRange": "Please enter a valid page range",
+    "pageRangeMustBeBetween": "Page range must be between 1 and {{totalPages}}, with start page not greater than end page",
+    "invalidPageRange": "Invalid page range",
+    "pageMustBeBetween": "Page numbers must be between 1 and {{totalPages}}, with start page not greater than end page",
+    "invalidPageNumber": "Invalid page number",
+    "pageNumberMustBeBetween": "Page number must be between 1 and {{totalPages}}",
+    "pageFormatError": "Page format error: {{error}}",
+    "pleaseSelectFile": "Please select a file first",
+    "fileProcessingFailed": "File processing failed",
+    "successfullyCreatedFiles": "Successfully created {{count}} PDF file(s)"
+  },
+  "compress": {
+    "title": "File Preview",
+    "selectFile": "Select PDF File",
+    "settings": "Compression Settings",
+    "quality": "Quality",
+    "startCompress": "Start Compression",
+    "compressing": "Compressing...",
+    "download": "Download Compressed File",
+    "fileInfo": {
+      "fileName": "File Name",
+      "fileSize": "File Size",
+      "pages": "Pages",
+      "pageUnit": "pages",
+      "modifiedDate": "Modified Date",
+      "selectPDF": "Please select a PDF file",
+      "selectFile": "Please select a file first",
+      "alreadyOptimal": "The file is already at optimal size ({{fileSize}}), no further compression is needed.",
+      "compressSuccess": "Compression complete! File size reduced from {{originalSize}} to {{compressedSize}}, with a compression ratio of {{ratio}}%",
+      "fileProcessingFailed": "File processing failed"
+    }
+  },
+  "merge": {
+    "fileOrder": "File {{order}}",
+    "selectFiles": "Select PDF Files to Merge",
+    "selectedFiles": "Selected {{count}} files (Drag to reorder)",
+    "newOrder": "New Order:",
+    "addFile": "Add File",
+    "merge": "Merge",
+    "merging": "Merging...",
+    "deleteFile": "Delete File",
+    "mergeTitle": "PDF Merge",
+    "dropToAdd": "Release mouse to add PDF files",
+    "onlyPDF": "Please drop only PDF files",
+    "successMessage": "PDF merged successfully!",
+    "loadingMessage": "Merging PDF files...",
+    "atLeastTwoFiles": "At least two PDF files are required",
+    "mergeSuccess": "PDF merged successfully",
+    "mergeFailed": "PDF merge failed",
+    "noFileToDownload": "No files to download",
+    "cleanupSuccess": "Merged files cleaned up"
+  },
+  "fileDownload": {
+    "title": "PDF Processing Status",
+    "loadingMessage": "Processing...",
+    "successMessage": "Processing complete",
+    "fileName": "File Name: {{fileName}}",
+    "close": "Close",
+    "downloadFile": "Download File"
+  },
+  "home": {
+    "appTitle": "PDF Toolkit",
+    "startUsing": "Start Using",
+    "features": {
+      "stamp": {
+        "title": "PDF Stamp",
+        "description": "Add an electronic stamp to a PDF file"
+      },
+      "merge": {
+        "title": "PDF Merge",
+        "description": "Merge multiple PDF files into one"
+      },
+      "split": {
+        "title": "PDF Split",
+        "description": "Split a PDF file into individual pages"
+      },
+      "compress": {
+        "title": "PDF Compress",
+        "description": "Compress a PDF file in the browser to reduce file size"
+      }
+    }
+  }
+} 

@@ -20,8 +20,10 @@ import {
 import { Document, Page } from 'react-pdf';
 import { useStampContext } from '../../contexts/StampContext';
 import { calculateStraddlePosition, shouldShowStraddleStamp, mmToPx, pxToMm } from '../../utils/stampUtils';
+import { useTranslation } from 'react-i18next';
 
 function PDFPreview() {
+  const { t } = useTranslation();
   const { 
     file, 
     zoom,
@@ -189,7 +191,7 @@ function PDFPreview() {
         >
           <img
             src={stampConfig.imageUrl}
-            alt="印章预览"
+            alt={t('stamp.stampPreviewText')}
             style={{
               width: "100%",
               height: "100%",
@@ -233,7 +235,7 @@ function PDFPreview() {
       >
         <img
           src={stampConfig.imageUrl}
-          alt="骑缝章"
+          alt={t('stamp.stampPreviewText')}
           style={{
             width: '100%',
             height: '100%',
@@ -313,7 +315,7 @@ function PDFPreview() {
               }
             }}
           >
-            选择 PDF 文件
+            {t('stamp.selectFile')}
           </Button>
 
           {file && (
@@ -324,17 +326,17 @@ function PDFPreview() {
         </Stack>
 
         <Stack direction="row" spacing={1} alignItems="center">
-          <Tooltip title="放大">
+          <Tooltip title={t('stamp.zoomIn')}>
             <IconButton onClick={handleZoomIn} size="small">
               <ZoomIn />
             </IconButton>
           </Tooltip>
-          <Tooltip title="缩小">
+          <Tooltip title={t('stamp.zoomOut')}>
             <IconButton onClick={handleZoomOut} size="small">
               <ZoomOut />
             </IconButton>
           </Tooltip>
-          <Tooltip title="重置缩放">
+          <Tooltip title={t('stamp.resetZoom')}>
             <IconButton onClick={handleResetZoom} size="small">
               <RestartAlt />
             </IconButton>
@@ -421,7 +423,7 @@ function PDFPreview() {
           </Document>
         ) : (
           <Typography color="text.secondary">
-            请选择一个 PDF 文件
+            {t('stamp.noFileSelected')}
           </Typography>
         )}
       </Box>

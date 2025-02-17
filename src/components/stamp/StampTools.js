@@ -27,8 +27,10 @@ import {
 import { useStampContext } from '../../contexts/StampContext';
 import PageSelectDialog from './PageSelectDialog';
 import FileDownload from '../common/FileDownload';
+import { useTranslation } from 'react-i18next';
 
 function StampTools() {
+  const { t } = useTranslation();
   const { 
     file,
     numPages,
@@ -88,7 +90,7 @@ function StampTools() {
       }}>
         <img 
           src={stampConfig.imageUrl}
-          alt="印章预览"
+          alt={t('stamp.stampPreviewText')}
           style={{
             maxWidth: '100%',
             maxHeight: '100%',
@@ -202,7 +204,7 @@ function StampTools() {
       }}
     >
       <Typography variant="h6" sx={{ mb: 1, flexShrink: 0 }}>
-        印章设置
+        {t('stamp.stampSettings')}
       </Typography>
 
       <Box sx={{ flex: 1, overflow: 'auto', minHeight: 0 }}>
@@ -211,7 +213,7 @@ function StampTools() {
             {/* 印章图片上传 */}
             <Stack spacing={0.5}>
               <Typography variant="subtitle2">
-                印章图片
+                {t('stamp.image')}
               </Typography>
               <input
                 type="file"
@@ -229,11 +231,11 @@ function StampTools() {
                   startIcon={<AddPhotoAlternate />}
                   size="small"
                 >
-                  选择印章图片
+                  {t('stamp.selectStampImage')}
                 </Button>
               ) : renderStampPreview()}
               <Typography variant="caption" color="text.secondary">
-                请选择透明背景的PNG图片
+                {t('stamp.transparentPngHint')}
               </Typography>
             </Stack>
 
@@ -242,7 +244,7 @@ function StampTools() {
             {/* 印章尺寸设置 */}
             <Stack spacing={0.5}>
               <Typography variant="subtitle2">
-                印章尺寸 (mm)
+                {t('stamp.size')}
               </Typography>
               <TextField
                 type="number"
@@ -257,7 +259,7 @@ function StampTools() {
                   max: 100,
                   step: 1
                 }}
-                helperText="建议骑缝章尺寸：30-50mm"
+                helperText={t('stamp.sizeHelper')}
                 sx={{ width: '100%', maxWidth: 200 }}
               />
             </Stack>
@@ -267,7 +269,7 @@ function StampTools() {
             {/* 印章位置和角度 */}
             <Stack spacing={0.5}>
               <Typography variant="subtitle2">
-                印章位置和角度
+                {t('stamp.positionAndAngle')}
               </Typography>
               <Stack direction="row" spacing={1} sx={{ width: '90%' }}>
                 <TextField
@@ -309,7 +311,7 @@ function StampTools() {
                 </Stack>
               ) : (
                 <Typography variant="caption" color="text.secondary">
-                  选择页面后可以调整印章角度
+                  {t('stamp.positionHint')}
                 </Typography>
               )}
             </Stack>
@@ -319,17 +321,17 @@ function StampTools() {
             {/* 页面选择 */}
             <Stack spacing={0.5}>
               <Typography variant="subtitle2">
-                印章页面
+                {t('stamp.pages')}
               </Typography>
               <Button
                 variant="outlined"
                 onClick={() => setPageSelectOpen(true)}
                 size="small"
               >
-                选择盖章页面
+                {t('stamp.selectPages')}
               </Button>
               <Typography variant="caption">
-                已选择 {stampConfig.selectedPages.length} 页
+                {t('stamp.selectedPages', { count: stampConfig.selectedPages.length })}
               </Typography>
             </Stack>
 
@@ -338,7 +340,7 @@ function StampTools() {
             {/* 骑缝章设置 */}
             <Stack spacing={0.5}>
               <Typography variant="subtitle2">
-                骑缝章
+                {t('stamp.straddle')}
               </Typography>
               <FormControlLabel
                 control={
@@ -355,12 +357,12 @@ function StampTools() {
                     size="small"
                   />
                 }
-                label="启用骑缝章"
+                label={t('stamp.enableStraddle')}
               />
               {stampConfig.isStraddle && (
                 <>
                   <TextField
-                    label="纵向位置 (mm)"
+                    label={t('stamp.verticalPosition')}
                     type="number"
                     size="small"
                     value={stampConfig.straddleY || 140}
@@ -373,11 +375,11 @@ function StampTools() {
                       max: 297,
                       step: 1
                     }}
-                    helperText="0-297之间的数值，表示距离页面顶部的距离"
+                    helperText={t('stamp.verticalPositionHint')}
                     sx={{ width: '100%', maxWidth: 200 }}
                   />
                   <Typography variant="caption" color="text.secondary">
-                    印章将均匀分布在所有页面的右侧边缘
+                    {t('stamp.straddleDistribution')}
                   </Typography>
                 </>
               )}
@@ -393,12 +395,12 @@ function StampTools() {
               disabled={loading}
               startIcon={loading ? <CircularProgress size={20} /> : null}
             >
-              {loading ? '处理中...' : '添加印章'}
+              {loading ? t('stamp.processing') : t('stamp.addStamp')}
             </Button>
           </Stack>
         ) : (
           <Typography color="text.secondary">
-            请先选择 PDF 文件
+            {t('stamp.noFileSelected')}
           </Typography>
         )}
       </Box>
@@ -419,8 +421,8 @@ function StampTools() {
         loading={loading}
         error={error}
         fileName="stamped.pdf"
-        successMessage="PDF 盖章完成！"
-        loadingMessage="正在处理盖章..."
+        successMessage={t('stamp.successMessage')}
+        loadingMessage={t('stamp.loadingMessage')}
         onClose={handleDownloadClose}
         open={downloadOpen}
       />

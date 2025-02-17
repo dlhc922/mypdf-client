@@ -1,10 +1,12 @@
 import React, { useState, useEffect, memo } from 'react';
-import { Card, CardContent, Typography, IconButton, Box, CircularProgress } from '@mui/material';
+import { Card, CardContent, Typography, IconButton, Box, CircularProgress, Tooltip } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import { Document, Page, pdfjs } from 'react-pdf';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 const PDFPreviewCard = memo(({ file, index, onRemove, isDragging }) => {
+  const { t } = useTranslation();
   console.log('PDFPreviewCard constructing:', file.name);
   
   const [loading, setLoading] = useState(true);
@@ -35,9 +37,7 @@ const PDFPreviewCard = memo(({ file, index, onRemove, isDragging }) => {
         position: 'relative',
         boxShadow: (theme) => isDragging ? theme.shadows[8] : theme.shadows[1],
         '&:hover': {
-          boxShadow: (theme) => isDragging ? 
-            theme.shadows[12] : 
-            theme.shadows[4]
+          boxShadow: (theme) => isDragging ? theme.shadows[12] : theme.shadows[4]
         },
         cursor: 'grab',
         '&:active': {
@@ -163,19 +163,21 @@ const PDFPreviewCard = memo(({ file, index, onRemove, isDragging }) => {
           >
             {file.name}
           </Typography>
-          <IconButton 
-            size="small" 
-            onClick={() => onRemove(file.id)}
-            sx={{ 
-              color: 'error.light',
-              p: 0.5,
-              '&:hover': {
-                bgcolor: 'error.lighter'
-              }
-            }}
-          >
-            <Delete fontSize="small" />
-          </IconButton>
+          <Tooltip title={t('merge.deleteFile')}>
+            <IconButton 
+              size="small" 
+              onClick={() => onRemove(file.id)}
+              sx={{ 
+                color: 'error.light',
+                p: 0.5,
+                '&:hover': {
+                  bgcolor: 'error.lighter'
+                }
+              }}
+            >
+              <Delete fontSize="small" />
+            </IconButton>
+          </Tooltip>
         </Box>
       </CardContent>
     </Card>

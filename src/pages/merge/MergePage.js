@@ -6,10 +6,12 @@
    import { MergeProvider, useMergeContext } from '../../contexts/MergeContext';
    import { DragDropContext } from 'react-beautiful-dnd';
    import FileDownload from '../../components/common/FileDownload';
+   import { useTranslation } from 'react-i18next';
 
 
    // 将需要使用 context 的内容抽离到内部组件中
    function MergePageContent() {
+     const { t } = useTranslation();
      const { 
        handleDragEnd,
        loading,
@@ -46,8 +48,8 @@
        const pdfFiles = files.filter(file => file.type === 'application/pdf');
        
        if (pdfFiles.length !== files.length) {
-         // 如果有非 PDF 文件，显示警告
-         alert('请只拖放 PDF 文件');
+         // 如果有非 PDF 文件，则显示警告提示
+         alert(t('merge.onlyPDF'));
          return;
        }
 
@@ -58,7 +60,7 @@
          }
        };
        handleFileSelect(mockEvent);
-     }, [handleFileSelect]);
+     }, [handleFileSelect, t]);
 
      // 当有文件 URL、加载状态或错误时，打开对话框
      React.useEffect(() => {
@@ -115,7 +117,7 @@
                    boxShadow: 1
                  }}
                >
-                 释放鼠标添加 PDF 文件
+                 {t('merge.dropToAdd')}
                </Typography>
              </Box>
            )}
@@ -140,7 +142,7 @@
                  alignItems: 'center'
                }}
              >
-               <Typography variant="h5">PDF 合并</Typography>
+               <Typography variant="h5">{t('merge.mergeTitle')}</Typography>
                <MergeToolbar />
              </Box>
              
@@ -154,8 +156,8 @@
              loading={loading}
              error={error}
              fileName="merged.pdf"
-             successMessage="PDF 合并完成！"
-             loadingMessage="正在合并 PDF 文件..."
+             successMessage={t('merge.successMessage')}
+             loadingMessage={t('merge.loadingMessage')}
              onClose={handleDialogClose}
              open={dialogOpen}
            />

@@ -1,0 +1,156 @@
+{
+  "appName": "WSBN.tech PDF 工具箱",
+  "tools": {
+    "home": "首页",
+    "merge": "PDF 合并",
+    "stamp": "PDF 印章",
+    "split": "PDF 拆分",
+    "compress": "PDF 压缩"
+  },
+  "stamp": {
+    "title": "选择盖章页面",
+    "quickSelectPlaceholder": "例如: 1,3-5,8",
+    "quickSelectHelper": "提示：可以输入页码范围（如1-5）或单页（如1,3,8），用逗号分隔",
+    "selectAll": "全选",
+    "clearAll": "清除",
+    "apply": "应用",
+    "randomAngleSwitch": "每个印章采用随机的角度",
+    "selectedPages": "已选择 {{count}} 页",
+    "cancel": "取消",
+    "confirm": "确定",
+    "pageIndicator": "第 {{pageNumber}} 页",
+    "selectFile": "选择 PDF 文件",
+    "zoomIn": "放大",
+    "zoomOut": "缩小",
+    "resetZoom": "重置缩放",
+    "noFileSelected": "请选择一个 PDF 文件",
+    "stampPreviewText": "印章预览",
+    "stampSettings": "印章设置",
+    "image": "印章图片",
+    "selectStampImage": "选择印章图片",
+    "transparentPngHint": "请选择透明背景的PNG图片",
+    "size": "印章尺寸 (mm)",
+    "sizeHelper": "建议骑缝章尺寸：30-50mm",
+    "positionAndAngle": "印章位置和角度",
+    "positionHint": "选择页面后可以调整印章角度",
+    "pages": "印章页面",
+    "selectPages": "选择盖章页面",
+    "straddle": "骑缝章",
+    "enableStraddle": "启用骑缝章",
+    "verticalPosition": "纵向位置 (mm)",
+    "verticalPositionHint": "0-297之间的数值，表示距离页面顶部的距离",
+    "straddleDistribution": "印章将均匀分布在所有页面的右侧边缘",
+    "processing": "处理中...",
+    "addStamp": "添加印章",
+    "successMessage": "PDF 盖章成功！",
+    "loadingMessage": "正在处理盖章...",
+        "selectPDFFile": "请选择 PDF 文件",
+    "selectPNGImage": "请选择 PNG 格式的图片"
+  },
+  "split": {
+    "previewTitle": "PDF 预览",
+    "closeFile": "关闭文件",
+    "selectFile": "选择 PDF 文件",
+    "settingTitle": "拆分设置",
+    "rangeSelection": "范围选择",
+    "customSelection": "自定义选择",
+    "addRange": "添加范围",
+    "addSelection": "添加选择",
+    "startSplit": "开始拆分",
+    "page": "页面 {{number}}",
+    "clickToDownload": "点击下载",
+    "range": "范围",
+    "deleteRange": "删除范围",
+    "startPage": "起始页",
+    "to": "至",
+    "endPage": "结束页",
+    "selection": "选择",
+    "deleteSelection": "删除选择",
+    "customPlaceholder": "例如：1-3,5,7-9",
+    "customHelper": "支持范围(1-5)、单页(2,5,8)或混合模式",
+    "resultTitle": "拆分结果：",
+    "invalidPdfFile": "请选择 PDF 文件",
+    "enterValidPageRange": "请输入有效的页码范围",
+    "pageRangeMustBeBetween": "页码范围必须在 1-{{totalPages}} 之间，且起始页不能大于结束页",
+    "invalidPageRange": "无效的页码范围",
+    "pageMustBeBetween": "页码必须在 1-{{totalPages}} 之间，且起始页不能大于结束页",
+    "invalidPageNumber": "无效的页码",
+    "pageNumberMustBeBetween": "页码必须在 1-{{totalPages}} 之间",
+    "pageFormatError": "页码格式错误: {{error}}",
+    "pleaseSelectFile": "请先选择文件",
+    "fileProcessingFailed": "文件处理失败",
+    "successfullyCreatedFiles": "成功创建 {{count}} 个PDF文件"
+  },
+  "compress": {
+    "title": "文件预览",
+    "selectFile": "选择 PDF 文件",
+    "settings": "压缩设置",
+    "quality": "压缩质量",
+    "startCompress": "开始压缩",
+    "compressing": "压缩中...",
+    "download": "下载压缩后的文件",
+    "fileInfo": {
+      "fileName": "文件名",
+      "fileSize": "文件大小",
+      "pages": "页数",
+      "pageUnit": "页",
+      "modifiedDate": "修改时间",
+      "selectPDF": "请选择 PDF 文件",
+      "selectFile": "请先选择文件",
+      "alreadyOptimal": "当前文件已经是最优大小（{{fileSize}}），无需进一步压缩。",
+      "compressSuccess": "压缩完成！文件大小从 {{originalSize}} 减小到 {{compressedSize}}，压缩率 {{ratio}}%",
+      "fileProcessingFailed": "文件处理失败"
+    }
+  },
+  "merge": {
+    "fileOrder": "文件 {{order}}",
+    "selectFiles": "请选择要合并的 PDF 文件",
+    "selectedFiles": "选择 {{count}} 个文件（可拖动调整顺序）",
+    "newOrder": "新顺序：",
+    "addFile": "添加文件",
+    "merge": "合并",
+    "merging": "合并中...",
+    "deleteFile": "删除文件",
+    "mergeTitle": "PDF 合并",
+    "dropToAdd": "释放鼠标添加 PDF 文件",
+    "onlyPDF": "请只拖放 PDF 文件",
+    "successMessage": "PDF 合并完成！",
+    "loadingMessage": "正在合并 PDF 文件...",
+    "atLeastTwoFiles": "至少需要两个 PDF 文件",
+    "mergeSuccess": "PDF 合并成功",
+    "mergeFailed": "PDF 合并失败",
+    "noFileToDownload": "没有可下载的文件",
+    "cleanupSuccess": "已清理合并文件"
+    
+  },
+  "fileDownload": {
+    "title": "PDF 处理状态",
+    "loadingMessage": "正在处理...",
+    "successMessage": "处理完成",
+    "fileName": "文件名：{{fileName}}",
+    "close": "关闭",
+    "downloadFile": "下载文件"
+  },
+  "home": {
+    "appTitle": "PDF 工具箱",
+    "startUsing": "开始使用",
+    "features": {
+      "stamp": {
+        "title": "PDF 盖章",
+        "description": "在 PDF 文件上添加电子印章"
+      },
+      "merge": {
+        "title": "PDF 合并",
+        "description": "将多个 PDF 文件合并为一个文件"
+      },
+      "split": {
+        "title": "PDF 拆分",
+        "description": "将 PDF 文件拆分为单页文件，方便单独下载和使用"
+      },
+      "compress": {
+        "title": "PDF 压缩",
+        "description": "在浏览器中压缩 PDF 文件，减小文件体积"
+      }
+    }
+  }
+} 

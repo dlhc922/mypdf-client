@@ -1,7 +1,9 @@
 import { useState, useCallback } from 'react';
 import { PDFDocument } from 'pdf-lib';
+import { useTranslation } from 'react-i18next';
 
 export const useSplit = () => {
+  const { t } = useTranslation();
   const [file, setFile] = useState(null);
   const [splitFiles, setSplitFiles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -14,14 +16,14 @@ export const useSplit = () => {
     if (!selectedFiles?.[0]) return;
     const pdfFile = selectedFiles[0];
     if (pdfFile.type !== 'application/pdf') {
-      setError('请选择 PDF 文件');
+      setError(t('split.invalidPdfFile'));
       return;
     }
     setFile(pdfFile);
     setSplitFiles([]);
     setError(null);
     setMessage(null);
-  }, []);
+  }, [t]);
 
   // 验证页码范围
   const validateRanges = (ranges, totalPages) => {
@@ -30,11 +32,11 @@ export const useSplit = () => {
       const end = parseInt(range.end);
       
       if (isNaN(start) || isNaN(end)) {
-        throw new Error('请输入有效的页码范围');
+        throw new Error(t('split.enterValidPageRange'));
       }
       
       if (start < 1 || end > totalPages || start > end) {
-        throw new Error(`页码范围必须在 1-${totalPages} 之间，且起始页不能大于结束页`);
+        throw new Error(t('split.pageRangeMustBeBetween', { totalPages }));
       }
     }
   };
@@ -50,10 +52,10 @@ export const useSplit = () => {
           // 处理范围，如 "1-5"
           const [start, end] = part.split('-').map(num => parseInt(num));
           if (isNaN(start) || isNaN(end)) {
-            throw new Error('无效的页码范围');
+            throw new Error(t('split.invalidPageRange'));
           }
           if (start < 1 || end > totalPages || start > end) {
-            throw new Error(`页码必须在 1-${totalPages} 之间，且起始页不能大于结束页`);
+            throw new Error(t('split.pageMustBeBetween', { totalPages }));
           }
           for (let i = start; i <= end; i++) {
             pages.add(i);
@@ -62,10 +64,10 @@ export const useSplit = () => {
           // 处理单页，如 "3"
           const pageNum = parseInt(part);
           if (isNaN(pageNum)) {
-            throw new Error('无效的页码');
+            throw new Error(t('split.invalidPageNumber'));
           }
           if (pageNum < 1 || pageNum > totalPages) {
-            throw new Error(`页码必须在 1-${totalPages} 之间`);
+            throw new Error(t('split.pageNumberMustBeBetween', { totalPages }));
           }
           pages.add(pageNum);
         }
@@ -73,14 +75,14 @@ export const useSplit = () => {
 
       return Array.from(pages).sort((a, b) => a - b);
     } catch (err) {
-      throw new Error(`页码格式错误: ${err.message}`);
+      throw new Error(t('split.pageFormatError', { error: err.message }));
     }
   };
 
   // 修改 handleSplit 函数支持两种模式
   const handleSplit = async (input) => {
     if (!file) {
-      setError('请先选择文件');
+      setError(t('split.pleaseSelectFile'));
       return;
     }
 
@@ -132,10 +134,10 @@ export const useSplit = () => {
       }
 
       setSplitFiles(newFiles);
-      setMessage(`成功创建 ${newFiles.length} 个PDF文件`);
+      setMessage(t('split.successfullyCreatedFiles', { count: newFiles.length }));
     } catch (err) {
       console.error('拆分失败:', err);
-      setError(err.message || '文件处理失败');
+      setError(err.message || t('split.fileProcessingFailed'));
     } finally {
       setLoading(false);
     }

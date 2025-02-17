@@ -28,6 +28,7 @@ import {
 } from '@mui/icons-material';
 import { Document, Page } from 'react-pdf';
 import { useCompress } from '../../hooks/compress/useCompress';
+import { useTranslation } from 'react-i18next';
 
 export default function CompressPage() {
   const {
@@ -51,6 +52,8 @@ export default function CompressPage() {
 
   const [numPages, setNumPages] = useState(null);
   const [scale, setScale] = useState(0.8); // 增大初始预览大小
+
+  const { t } = useTranslation();
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
@@ -88,7 +91,7 @@ export default function CompressPage() {
               alignItems: 'center', 
               mb: 2 
             }}>
-              <Typography variant="h6">文件预览</Typography>
+              <Typography variant="h6">{t('compress.title')}</Typography>
               {file && (
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Tooltip title="关闭文件">
@@ -121,7 +124,7 @@ export default function CompressPage() {
                   variant="contained" 
                   component="label"
                 >
-                  选择 PDF 文件
+                  {t('compress.selectFile')}
                   <input 
                     type="file" 
                     hidden 
@@ -223,7 +226,7 @@ export default function CompressPage() {
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         <PageIcon fontSize="small" />
                         <Typography variant="body2">
-                          {numPages} 页
+                          {numPages} {t('compress.fileInfo.pageUnit')}
                         </Typography>
                       </Box>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -244,12 +247,12 @@ export default function CompressPage() {
         <Grid item xs={12} md={4}>
           <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h6" gutterBottom>
-              压缩设置
+              {t('compress.settings')}
             </Typography>
             
             <Box sx={{ my: 3 }}>
               <Typography gutterBottom>
-                压缩质量: {quality}%
+                {t('compress.quality')}: {quality}%
               </Typography>
               <Slider
                 value={quality}
@@ -279,7 +282,7 @@ export default function CompressPage() {
                     left: 16
                   }} 
                 />
-              ) : '开始压缩'}
+              ) : t('compress.startCompress')}
             </Button>
 
             {loading && (
@@ -320,7 +323,7 @@ export default function CompressPage() {
                 onClick={() => handleDownload(compressedFile)}
                 sx={{ mt: 2 }}
               >
-                下载压缩后的文件
+                {t('compress.download')}
               </Button>
             )}
           </Paper>
