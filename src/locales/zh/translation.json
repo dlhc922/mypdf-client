@@ -95,17 +95,16 @@
     "startCompress": "开始压缩",
     "compressing": "压缩中...",
     "download": "下载压缩后的文件",
+    "selectPDF": "请选择 PDF 文件",
+    "alreadyOptimal": "当前文件已经是最优大小（{{fileSize}}），无需进一步压缩。",
+    "compressSuccess": "压缩完成！文件大小从 {{originalSize}} 减小到 {{compressedSize}}，压缩率 {{ratio}}%",
+    "fileProcessingFailed": "文件处理失败",
     "fileInfo": {
       "fileName": "文件名",
       "fileSize": "文件大小",
       "pages": "页数",
       "pageUnit": "页",
-      "modifiedDate": "修改时间",
-      "selectPDF": "请选择 PDF 文件",
-      "selectFile": "请先选择文件",
-      "alreadyOptimal": "当前文件已经是最优大小（{{fileSize}}），无需进一步压缩。",
-      "compressSuccess": "压缩完成！文件大小从 {{originalSize}} 减小到 {{compressedSize}}，压缩率 {{ratio}}%",
-      "fileProcessingFailed": "文件处理失败"
+      "modifiedDate": "修改时间"
     }
   },
   "merge": {

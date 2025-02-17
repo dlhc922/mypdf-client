@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/common/Layout';
 import HomePage from './pages/HomePage';
@@ -14,6 +14,21 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme';
 
 function App() {
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -24,6 +39,19 @@ function App() {
           minHeight: '100vh',
         }}
       >
+        {!isOnline && (
+          <div style={{ 
+            position: 'fixed', 
+            top: 0, 
+            width: '100%', 
+            background: '#ff4444', 
+            color: 'white', 
+            padding: '10px', 
+            textAlign: 'center' 
+          }}>
+            您当前处于离线状态，但仍可以使用所有PDF处理功能
+          </div>
+        )}
         <Box sx={{ flex: 1 }}>
           <BrowserRouter>
             <Layout>

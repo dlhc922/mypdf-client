@@ -50,6 +50,10 @@
 
     <!-- Robots 指令，建议索引所有页面 -->
     <meta name="robots" content="index,follow" />
+
+    <!-- 添加预加载指令 -->
+    <link rel="preload" href="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js" as="script">
+    <link rel="preload" href="https://unpkg.com/react-pdf/dist/esm/entry.webpack.js" as="script">
   </head>
   <body>
     <noscript>请启用 JavaScript 以便正确显示此应用</noscript>
@@ -64,5 +68,18 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(registration => {
+              console.log('ServiceWorker registration successful');
+            })
+            .catch(err => {
+              console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+      }
+    </script>
   </body>
 </html>

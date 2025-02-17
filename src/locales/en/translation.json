@@ -96,17 +96,16 @@
     "startCompress": "Start Compression",
     "compressing": "Compressing...",
     "download": "Download Compressed File",
+    "selectPDF": "Please select a PDF file",
+    "alreadyOptimal": "The file is already at optimal size ({{fileSize}}), no further compression is needed.",
+    "compressSuccess": "Compression complete! File size reduced from {{originalSize}} to {{compressedSize}}, with a compression ratio of {{ratio}}%",
+    "fileProcessingFailed": "File processing failed",
     "fileInfo": {
       "fileName": "File Name",
       "fileSize": "File Size",
       "pages": "Pages",
       "pageUnit": "pages",
-      "modifiedDate": "Modified Date",
-      "selectPDF": "Please select a PDF file",
-      "selectFile": "Please select a file first",
-      "alreadyOptimal": "The file is already at optimal size ({{fileSize}}), no further compression is needed.",
-      "compressSuccess": "Compression complete! File size reduced from {{originalSize}} to {{compressedSize}}, with a compression ratio of {{ratio}}%",
-      "fileProcessingFailed": "File processing failed"
+      "modifiedDate": "Modified Date"
     }
   },
   "merge": {

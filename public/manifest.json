@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "PDF工具",
+  "name": "PDF在线处理工具",
   "icons": [
     {
       "src": "favicon.ico",
