@@ -26,7 +26,6 @@ function Header() {
   const currentLanguage = i18n.language; // 获取当前语言
 
   const menuItems = [
-    { path: '/', label: t('tools.home') },
     { path: '/stamp', label: t('tools.stamp') },
     { path: '/merge', label: t('tools.merge') },
     { path: '/split', label: t('tools.split') },
