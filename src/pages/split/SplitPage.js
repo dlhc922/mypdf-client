@@ -337,7 +337,7 @@ export default function SplitPage() {
                               fontWeight: 500
                             }}
                           >
-                            {t('split.page', { number: index + 1 })}
+                            {index + 1}
                           </Box>
                         </Box>
                       </Grid>
