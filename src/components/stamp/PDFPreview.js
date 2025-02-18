@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import Draggable from 'react-draggable';
-import { 
-  Box, 
-  Paper, 
+import {
+  Box,
+  Paper,
   Typography,
   IconButton,
   Button,
@@ -11,11 +11,12 @@ import {
   CircularProgress,
   Grid
 } from '@mui/material';
-import { 
-  ZoomIn, 
-  ZoomOut, 
+import {
+  ZoomIn,
+  ZoomOut,
   RestartAlt,
-  Upload
+  Upload,
+  Close
 } from '@mui/icons-material';
 import { Document, Page } from 'react-pdf';
 import { useStampContext } from '../../contexts/StampContext';
@@ -24,8 +25,8 @@ import { useTranslation } from 'react-i18next';
 
 function PDFPreview() {
   const { t } = useTranslation();
-  const { 
-    file, 
+  const {
+    file,
     zoom,
     stampConfig,
     handleFileSelect,
@@ -35,6 +36,7 @@ function PDFPreview() {
     handlePageSelect,
     handleStampPositionChange,
     handleStampRotationChange,
+    handleCleanup,  // 从 context 中获取 handleCleanup
   } = useStampContext();
 
   const fileInputRef = React.useRef(null);
@@ -50,20 +52,79 @@ function PDFPreview() {
     setLoading(false);
   }, []);
 
+   // 添加关闭处理函数
+   const handleClose = useCallback(() => {
+    // 先清理文件输入框的值
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+
+    // 清理组件内部状态
+    setNumPages(null);
+    setLoading(false);
+    setForceUpdate(false);
+    setIsDragging(false);
+    setCurrentRotation(0);
+    setPageSize({ width: 0, height: 0 });
+    setOriginalOrientations({});
+    setPageRotations({});
+    
+    // 最后调用 handleCleanup 来清理上下文状态
+    handleCleanup();
+  }, [handleCleanup]);
+
   // 添加页面点击处理
   const handlePageClick = (pageNumber) => {
     if (!stampConfig?.selectedPages.includes(pageNumber)) return;
     handlePageSelect(pageNumber);
   };
 
-  // 修改页面加载处理函数
-  const handlePageLoadSuccess = useCallback(({ width, height }) => {
+  // 在组件顶部添加状态来存储页面原始方向
+  const [originalOrientations, setOriginalOrientations] = useState({});
+  const [pageRotations, setPageRotations] = useState({});
+
+  // 修改 onLoadSuccess 回调，接收页面数据并传入页面编号
+  const handlePageLoadSuccess = useCallback((pageData, pageNum) => {
+    const { width, height } = pageData;
+    // 用 PDF 数据中的尺寸判断方向，不受缩放影响
+    const orientation = width > height ? 'landscape' : 'portrait';
+    // 保存原始方向（只记录一次，不随缩放而更新）
+    setOriginalOrientations(prev => ({ ...prev, [pageNum]: orientation }));
+
+    // 预留设置页面大小等（如有需要转换单位）
     const PT_TO_MM = 25.4 / 72;
-    setPageSize({ 
+    setPageSize({
       width: width * PT_TO_MM,
-      height: height * PT_TO_MM 
+      height: height * PT_TO_MM,
     });
-  }, []);
+
+    // 如果启用了骑缝章且当前页面为横向，则设定旋转 -90°
+    if (stampConfig?.isStraddle && orientation === 'landscape') {
+      setPageRotations(prev => ({ ...prev, [pageNum]: -90 }));
+    }
+  }, [stampConfig?.isStraddle]);
+
+
+
+
+
+  // 在 PDFPreview 组件内部，渲染 PDF 页面之前添加判断逻辑
+  const shouldRotate = (pageNumber) => {
+    const pageElement = document.querySelector(`[data-page="${pageNumber}"]`);
+    if (!pageElement) return false;
+
+    const pageRect = pageElement.getBoundingClientRect();
+    const isLandscape = pageRect.width > pageRect.height;
+
+    // 检查是否存在纵向页面
+    const allPages = Array.from(document.querySelectorAll("[data-page]"));
+    const hasPortrait = allPages.some((el) => {
+      const r = el.getBoundingClientRect();
+      return r.width < r.height;
+    });
+
+    return hasPortrait && isLandscape && stampConfig?.isStraddle;
+  };
 
   // 修改印章渲染函数
   const renderNormalStamp = (pageNumber) => {
@@ -205,7 +266,7 @@ function PDFPreview() {
     );
   };
 
-  // 添加骑缝章渲染函数
+  // 修改骑缝章渲染函数
   const renderStraddleStamp = (pageNumber) => {
     if (!stampConfig?.imageUrl || !stampConfig.isStraddle) {
       return null;
@@ -215,11 +276,25 @@ function PDFPreview() {
     if (!pageElement) return null;
     const pageRect = pageElement.getBoundingClientRect();
 
-    const mmToPixelRatio = pageRect.width / 210;
+    // 判断当前页面是否为横向
+    const isLandscape = pageRect.width > pageRect.height;
+
+    // 检查所有页面中是否存在纵向页面
+    const allPages = Array.from(document.querySelectorAll("[data-page]"));
+    const hasPortrait = allPages.some((el) => {
+      const r = el.getBoundingClientRect();
+      return r.width < r.height;
+    });
+
+    // 如果存在纵向页面且当前页面为横向，需要将页面逆时针旋转90度
+    const shouldRotate = hasPortrait && isLandscape;
+
+    // 计算 mmToPixelRatio（使用较小的尺寸作为参考）
+    const mmToPixelRatio = shouldRotate ? pageRect.height / 210 : pageRect.width / 210;
     const stampSizeInPixels = stampConfig.size * mmToPixelRatio;
 
     const position = calculateStraddlePosition(pageNumber, numPages, stampConfig.size);
-    const straddleY = stampConfig.straddleY || 50; // 使用骑缝章纵向位置
+    const straddleY = stampConfig.straddleY || 50;
 
     return (
       <Box
@@ -228,7 +303,7 @@ function PDFPreview() {
           width: `${stampSizeInPixels}px`,
           height: `${stampSizeInPixels}px`,
           right: 0,
-          top: straddleY * mmToPixelRatio, // 使用骑缝章纵向位置
+          top: straddleY * mmToPixelRatio,
           transform: `translateX(50%) ${position.transform}`,
           pointerEvents: 'none'
         }}
@@ -247,6 +322,33 @@ function PDFPreview() {
     );
   };
 
+  // 监听骑缝章状态变化
+useEffect(() => {
+  if (!stampConfig?.isStraddle) {
+    // 当关闭骑缝章时，清除所有旋转
+    setPageRotations({});
+  } else {
+    // 当启用骑缝章时，重新检查并设置旋转
+    const allPages = Array.from(document.querySelectorAll("[data-page]"));
+    const hasPortrait = allPages.some((el) => {
+      const r = el.getBoundingClientRect();
+      return r.width < r.height;
+    });
+    if (hasPortrait) {
+      allPages.forEach((page, index) => {
+        const rect = page.getBoundingClientRect();
+        const isLandscape = rect.width > rect.height;
+        if (isLandscape) {
+          setPageRotations(prev => ({
+            ...prev,
+            [index + 1]: -90
+          }));
+        }
+      });
+    }
+  }
+}, [stampConfig?.isStraddle]);
+
   // 添加滚动和缩放监听
   useEffect(() => {
     const container = document.querySelector('.pdf-container');
@@ -260,6 +362,8 @@ function PDFPreview() {
     return () => container.removeEventListener('scroll', handleScroll);
   }, []);
 
+
+
   // 监听 pageSettings 的变化
   useEffect(() => {
     if (stampConfig?.currentPage) {
@@ -269,8 +373,8 @@ function PDFPreview() {
   }, [stampConfig?.currentPage, stampConfig?.pageSettings]);
 
   return (
-    <Box sx={{ 
-      display: 'flex', 
+    <Box sx={{
+      display: 'flex',
       flexDirection: 'column',
       height: '100%',
       position: 'absolute',
@@ -280,9 +384,9 @@ function PDFPreview() {
       bottom: 0
     }}>
       {/* 顶部工具栏 */}
-      <Paper 
+      <Paper
         elevation={1}
-        sx={{ 
+        sx={{
           p: 1,
           display: 'flex',
           justifyContent: 'space-between',
@@ -300,13 +404,13 @@ function PDFPreview() {
             style={{ display: 'none' }}
             onChange={handleFileSelect}
           />
-          
+
           <Button
             variant="outlined"
             startIcon={<Upload />}
             onClick={() => fileInputRef.current?.click()}
             size="small"
-            sx={{ 
+            sx={{
               borderColor: '#00BFFF',
               color: '#00BFFF',
               '&:hover': {
@@ -319,9 +423,12 @@ function PDFPreview() {
           </Button>
 
           {file && (
-            <Typography variant="body2" noWrap sx={{ maxWidth: 200 }}>
-              {file.name}
-            </Typography>
+            <>
+              <Typography variant="body2" noWrap sx={{ maxWidth: 200 }}>
+                {file.name}
+              </Typography>
+              
+            </>
           )}
         </Stack>
 
@@ -348,9 +455,9 @@ function PDFPreview() {
       </Paper>
 
       {/* PDF 预览区域 */}
-      <Box 
-        className="pdf-container" 
-        sx={{ 
+      <Box
+        className="pdf-container"
+        sx={{
           flex: 1,
           p: 2,
           bgcolor: '#f5f5f5',
@@ -364,18 +471,18 @@ function PDFPreview() {
             onLoadSuccess={handleDocumentLoadSuccess}
             loading={<CircularProgress />}
           >
-            <Grid 
-              container 
+            <Grid
+              container
               spacing={2}
               justifyContent="center"
               sx={{ width: 'fit-content', margin: '0 auto' }}
             >
               {Array.from(new Array(numPages), (_, index) => (
                 <Grid item key={index + 1}>
-                  <Paper 
+                  <Paper
                     elevation={2}
-                    sx={{ 
-                      position: 'relative', 
+                    sx={{
+                      position: 'relative',
                       bgcolor: 'white',
                       cursor: stampConfig?.selectedPages.includes(index + 1) ? 'pointer' : 'default',
                       outline: stampConfig?.currentPage === (index + 1) ? '2px solid #1976d2' : 'none'
@@ -389,7 +496,10 @@ function PDFPreview() {
                         scale={zoom * 0.6}
                         renderAnnotationLayer={false}
                         renderTextLayer={false}
-                        onLoadSuccess={handlePageLoadSuccess}
+                        onLoadSuccess={(pageData) => handlePageLoadSuccess(pageData, index + 1)}
+                        // 根据原始方向决定是否旋转（不会受缩放影响）
+                        rotate={stampConfig?.isStraddle && originalOrientations[index + 1] === 'landscape' ? -90 : 0}
+
                       />
                       {/* 普通印章预览 */}
                       {renderNormalStamp(index + 1)}
@@ -422,6 +532,7 @@ function PDFPreview() {
             </Grid>
           </Document>
         ) : (
+          
           <Typography color="text.secondary">
             {t('stamp.noFileSelected')}
           </Typography>

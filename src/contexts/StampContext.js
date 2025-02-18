@@ -86,14 +86,11 @@ export const StampProvider = ({ children }) => {
     zoom,
     currentPage,
     numPages,
-    handleFileSelect,
     handleZoomIn,
     handleZoomOut,
-    handleResetZoom,
     handlePageChange,
     handleAddStamp,
     handleDownload,
-    handleCleanup,
     setMessage,
     setLoading,
     stampConfig,
@@ -102,14 +99,20 @@ export const StampProvider = ({ children }) => {
     handleClearStampImage,
     handlePageSelect,
     handleStampPositionChange,
-    handleStampRotationChange
+    handleStampRotationChange,
+    handleFileSelect,  // 使用 useStamp 中的 handleFileSelect
+    handleResetZoom,
   } = useStamp();
+
+
 
   const [stampedFileUrl, setStampedFileUrl] = useState(null);
   // 从环境变量读取 API_URL （仅用于调试或后续其他用途）
   const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
-  // 新增状态
+  
+
+  // 新增状态 
   const [pageOrientations, setPageOrientations] = useState({});
 
   // 修改页面加载处理
@@ -157,29 +160,87 @@ export const StampProvider = ({ children }) => {
         const pageCount = pages.length;
         const partWidthPt = stampWidthPt / pageCount;
         const partWidthPx = Math.floor(stampWidthPx / pageCount);
-        const convertedStampY = config.straddleY * MM_TO_PT;
+
+        // 判断整个 PDF 文件中是否存在纵向页面
+        const hasPortrait = pages.some((page) => {
+          const { width, height } = page.getSize();
+          return width < height;
+        });
+
+        // 如果存在纵向页面，需要调整骑缝章位置
+        let adjustedStraddleY;
+        if (hasPortrait) {
+          // 对于混合方向的情况，将横向页面的骑缝章Y坐标转换为等效的纵向坐标
+          // 297mm（A4纸长边）- 原始Y值 - 印章尺寸
+          adjustedStraddleY = 297 - config.straddleY - config.size;
+        } else {
+          adjustedStraddleY = config.straddleY;
+        }
+
+        const convertedStampY = adjustedStraddleY * MM_TO_PT;
         console.log(`骑缝章：stampWidthPt=${stampWidthPt}, 每页宽度(点)=${partWidthPt}, convertedStampY=${convertedStampY}`);
 
         for (let i = 0; i < pageCount; i++) {
           const page = pages[i];
           const { width, height } = page.getSize();
-          const stampY = height - (convertedStampY + stampHeightPt);
-          console.log(`处理骑缝章-页面${i + 1}: 页面尺寸=${width}x${height}, stampY=${stampY}`);
+          const isLandscape = width > height;
 
-          // 裁剪对应部分
+          // 裁剪对应部分印章图片
           const cropLeft = i * partWidthPx;
-          const croppedDataUrl = cropImage(resizedCanvas, cropLeft, 0, partWidthPx, stampWidthPx);
-          const croppedImageEmbed = await pdfDoc.embedPng(croppedDataUrl);
-          console.log(`骑缝章-页面${i + 1}: 裁剪区域左侧偏移=${cropLeft}, 裁剪区域宽度(px)=${partWidthPx}`);
+          let croppedDataUrl;
 
-          page.drawImage(croppedImageEmbed, {
-            x: width - partWidthPt,
-            y: stampY,
-            width: partWidthPt,
-            height: stampHeightPt,
-            opacity: 0.8,
-          });
-          console.log(`骑缝章-页面${i + 1}: 印章绘制完成`);
+          if (hasPortrait && isLandscape) {
+            // 对于横向页面，先裁剪再旋转90度
+            const croppedCanvas = document.createElement('canvas');
+            croppedCanvas.width = partWidthPx;
+            croppedCanvas.height = stampWidthPx;
+            const ctx = croppedCanvas.getContext('2d');
+            ctx.drawImage(resizedCanvas, cropLeft, 0, partWidthPx, stampWidthPx, 0, 0, partWidthPx, stampWidthPx);
+            
+            // 创建新的画布进行旋转
+            const rotatedCanvas = document.createElement('canvas');
+            rotatedCanvas.width = stampWidthPx;
+            rotatedCanvas.height = partWidthPx;
+            const rotatedCtx = rotatedCanvas.getContext('2d');
+            
+            // 移动到中心点，旋转，然后绘制
+            rotatedCtx.translate(stampWidthPx/2, partWidthPx/2);
+            rotatedCtx.rotate(90 * Math.PI / 180);
+            rotatedCtx.drawImage(croppedCanvas, -partWidthPx/2, -stampWidthPx/2);
+            
+            croppedDataUrl = rotatedCanvas.toDataURL('image/png');
+          } else {
+            // 纵向页面直接裁剪
+            croppedDataUrl = cropImage(resizedCanvas, cropLeft, 0, partWidthPx, stampWidthPx);
+          }
+
+
+          const croppedImageEmbed = await pdfDoc.embedPng(croppedDataUrl);
+
+          if (hasPortrait && isLandscape) {
+            // 对于混合方向的 PDF：如果当前页面是横向，则旋转页面 -90°
+            page.setRotation(degrees(-90));
+
+            page.drawImage(croppedImageEmbed, {
+              x: convertedStampY,       // 原来的 Y 坐标变成了 X 坐标
+              y: 0,                     // 从底部开始
+              height: partWidthPt,
+              width: stampHeightPt,
+              opacity: 0.8,
+            });
+            console.log(`骑缝章-页面${i + 1}【旋转后】: 印章绘制完成`);
+          } else {
+            // 纵向页面保持原有逻辑
+            const stampY = height - (convertedStampY + stampHeightPt);
+            page.drawImage(croppedImageEmbed, {
+              x: width - partWidthPt,
+              y: stampY,
+              width: partWidthPt,
+              height: stampHeightPt,
+              opacity: 0.8,
+            });
+            console.log(`骑缝章-页面${i + 1}【未旋转】: 印章绘制完成`);
+          }
         }
       }
 
@@ -277,6 +338,36 @@ export const StampProvider = ({ children }) => {
       setLoading(false);
     }
   };
+
+
+  const handleCleanup = useCallback(() => {
+    handleFileSelect({ target: { files: null } });  // 使用 handleFileSelect 清理文件
+    setMessage(null);
+    setLoading(false);
+    handleResetZoom();  // 使用 handleResetZoom 替代 setZoom
+    handlePageChange(null); 
+
+    console.log("handleCleanup执行");
+    // 清理印章相关状态
+    handleStampConfigChange({
+      imageUrl: null,
+      size: 20,
+      position: { x: 120, y: 190 },
+      rotation: 0,
+      isStraddle: false,
+      straddleY: 148.5,
+      selectedPages: [],
+      currentPage: null,
+      pageSettings: {}
+    });
+    // 清理已生成的 PDF URL
+    if (stampedFileUrl) {
+      URL.revokeObjectURL(stampedFileUrl);
+      setStampedFileUrl(null);
+    }
+    // 清理页面方向相关状态
+    setPageOrientations({});
+  }, []);
 
   return (
     <StampContext.Provider
