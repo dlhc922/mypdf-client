@@ -27,8 +27,8 @@ function Header() {
 
   const menuItems = [
     { path: '/', label: t('tools.home') },
-    { path: '/merge', label: t('tools.merge') },
     { path: '/stamp', label: t('tools.stamp') },
+    { path: '/merge', label: t('tools.merge') },
     { path: '/split', label: t('tools.split') },
     { path: '/compress', label: t('tools.compress') }
   ];
