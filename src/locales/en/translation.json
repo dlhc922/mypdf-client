@@ -65,7 +65,7 @@
     "addSelection": "Add Selection",
     "startSplit": "Start Splitting",
     "page": "Page {{number}}",
-    "clickToDownload": "Click to download",
+    "clickToDownload": "Click to save",
     "range": "Range",
     "deleteRange": "Delete Range",
     "startPage": "Start Page",
@@ -95,7 +95,7 @@
     "quality": "Quality",
     "startCompress": "Start Compression",
     "compressing": "Compressing...",
-    "download": "Download Compressed File",
+    "download": "Save Compressed File",
     "selectPDF": "Please select a PDF file",
     "alreadyOptimal": "The file is already at optimal size ({{fileSize}}), no further compression is needed.",
     "compressSuccess": "Compression complete! File size reduced from {{originalSize}} to {{compressedSize}}, with a compression ratio of {{ratio}}%",
@@ -125,7 +125,7 @@
     "atLeastTwoFiles": "At least two PDF files are required",
     "mergeSuccess": "PDF merged successfully",
     "mergeFailed": "PDF merge failed",
-    "noFileToDownload": "No files to download",
+    "noFileToDownload": "No files to save",
     "cleanupSuccess": "Merged files cleaned up"
   },
   "fileDownload": {
@@ -134,7 +134,7 @@
     "successMessage": "Processing complete",
     "fileName": "File Name: {{fileName}}",
     "close": "Close",
-    "downloadFile": "Download File"
+    "downloadFile": "Save File"
   },
   "home": {
     "appTitle": "PDF Toolkit",

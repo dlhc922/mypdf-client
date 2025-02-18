@@ -50,7 +50,7 @@
     "addStamp": "添加印章",
     "successMessage": "PDF 盖章成功！",
     "loadingMessage": "正在处理盖章...",
-        "selectPDFFile": "请选择 PDF 文件",
+    "selectPDFFile": "请选择 PDF 文件",
     "selectPNGImage": "请选择 PNG 格式的图片"
   },
   "split": {
@@ -64,7 +64,7 @@
     "addSelection": "添加选择",
     "startSplit": "开始拆分",
     "page": "页面 {{number}}",
-    "clickToDownload": "点击下载",
+    "clickToDownload": "点击保存",
     "range": "范围",
     "deleteRange": "删除范围",
     "startPage": "起始页",
@@ -94,7 +94,7 @@
     "quality": "压缩质量",
     "startCompress": "开始压缩",
     "compressing": "压缩中...",
-    "download": "下载压缩后的文件",
+    "download": "保存压缩后的文件",
     "selectPDF": "请选择 PDF 文件",
     "alreadyOptimal": "当前文件已经是最优大小（{{fileSize}}），无需进一步压缩。",
     "compressSuccess": "压缩完成！文件大小从 {{originalSize}} 减小到 {{compressedSize}}，压缩率 {{ratio}}%",
@@ -119,14 +119,13 @@
     "mergeTitle": "PDF 合并",
     "dropToAdd": "释放鼠标添加 PDF 文件",
     "onlyPDF": "请只拖放 PDF 文件",
-    "successMessage": "PDF 合并完成！",
+    "successMessage": "PDF 合并完成，请保存！",
     "loadingMessage": "正在合并 PDF 文件...",
     "atLeastTwoFiles": "至少需要两个 PDF 文件",
     "mergeSuccess": "PDF 合并成功",
     "mergeFailed": "PDF 合并失败",
-    "noFileToDownload": "没有可下载的文件",
+    "noFileToDownload": "没有可保存的文件",
     "cleanupSuccess": "已清理合并文件"
-    
   },
   "fileDownload": {
     "title": "PDF 处理状态",
@@ -134,7 +133,7 @@
     "successMessage": "处理完成",
     "fileName": "文件名：{{fileName}}",
     "close": "关闭",
-    "downloadFile": "下载文件"
+    "downloadFile": "保存文件"
   },
   "home": {
     "appTitle": "PDF 工具箱",
@@ -150,7 +149,7 @@
       },
       "split": {
         "title": "PDF 拆分",
-        "description": "将 PDF 文件拆分为单页文件，方便单独下载和使用"
+        "description": "将 PDF 文件拆分为单页文件，方便单独保存和使用"
       },
       "compress": {
         "title": "PDF 压缩",
