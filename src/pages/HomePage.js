@@ -87,18 +87,43 @@ function HomePage() {
       </Box>
       
       <Typography 
-          variant="h4" 
-          align="center" 
-          component="h1" 
+        variant="h4" 
+        align="center" 
+        component="h1" 
+        sx={{ 
+          color: 'primary.main',
+          textDecoration: 'none',
+          fontWeight: 'bold',
+          mb: 2
+        }}
+      >
+        {t('home.appTitle')}
+      </Typography>
+
+      <Typography 
+        variant="subtitle1" 
+        align="center" 
+        sx={{ 
+          mb: 6,
+          color: 'text.secondary',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Box 
+          component="span" 
           sx={{ 
-            color: 'primary.main',
-            textDecoration: 'none',
-            fontWeight: 'bold',
-            mb: 6
+            px: 2,
+            py: 0.5,
+            fontSize: '0.95rem',
+            opacity: 0.85,
           }}
         >
-          {t('home.appTitle')}
+          {t('home.privacyHint')}
+        </Box>
       </Typography>
+
       <Grid container spacing={4} justifyContent="center">
         {features.map((feature) => (
           <Grid item xs={12} sm={6} md={6} key={feature.path}>

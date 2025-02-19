@@ -33,8 +33,8 @@
     "stampPreviewText": "Stamp Preview",
     "stampSettings": "Stamp Settings",
     "image": "Stamp Image",
-    "selectStampImage": "Select Stamp Image",
-    "transparentPngHint": "Please select a transparent PNG image",
+    "selectStampImage": "Select Image",
+    "transparentPngHint": "Supports PNG with transparency, or click 'Make Transparent Stamp' to process regular images",
     "size": "Stamp Size (mm)",
     "sizeHelper": "Recommended stamp size: 30-50mm",
     "positionAndAngle": "Stamp Position & Angle",
@@ -51,8 +51,18 @@
     "successMessage": "PDF stamping successful!",
     "loadingMessage": "Stamp processing...",
     "selectPDFFile": "Please select a PDF file",
-    "selectPNGImage": "Please select a PNG image"
-    
+    "selectPNGImage": "Please select a PNG image",
+    "makeTransparentStamp": "Make Stamp",
+    "selectImage": "Select Image",
+    "threshold": "Transparency Threshold",
+    "process": "Process Image",
+    "reprocess": "Reprocess",
+    "dragImageHint": "Drag and drop an image here, or click the button to select",
+    "previewHint": "The processed preview will be displayed here",
+    "save": "Save Image",
+    "useAsStamp": "Use as Stamp",
+    "changeImage": "Change Image",
+     "cropHint": "Tip: Crop the stamp to its edges without leaving white margins for best results"
   },
   "split": {
     "previewTitle": "PDF Preview",
@@ -139,10 +149,11 @@
   "home": {
     "appTitle": "PDF Toolkit",
     "startUsing": "Start Using",
+    "privacyHint": "All PDF files are processed locally on your device, no data is uploaded to any server",
     "features": {
       "stamp": {
         "title": "PDF Stamp",
-        "description": "Add an electronic stamp to a PDF file"
+        "description": "Add Electronic Stamps and Page Stamps to PDF"
       },
       "merge": {
         "title": "PDF Merge",
@@ -157,5 +168,9 @@
         "description": "Compress a PDF file in the browser to reduce file size"
       }
     }
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   }
 } 

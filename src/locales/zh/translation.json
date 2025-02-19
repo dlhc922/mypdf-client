@@ -34,7 +34,7 @@
     "stampSettings": "印章设置",
     "image": "印章图片",
     "selectStampImage": "选择印章图片",
-    "transparentPngHint": "请选择透明背景的PNG图片",
+    "transparentPngHint": "支持PNG透明图片，或点击制作透明印章处理普通图片",
     "size": "印章尺寸 (mm)",
     "sizeHelper": "建议骑缝章尺寸：30-50mm",
     "positionAndAngle": "印章位置和角度",
@@ -51,7 +51,18 @@
     "successMessage": "PDF 盖章成功！",
     "loadingMessage": "正在处理盖章...",
     "selectPDFFile": "请选择 PDF 文件",
-    "selectPNGImage": "请选择 PNG 格式的图片"
+    "selectPNGImage": "请选择 PNG 格式的图片",
+    "makeTransparentStamp": "制作透明印章",
+    "selectImage": "选择图片",
+    "threshold": "透明度阈值",
+    "process": "处理图片",
+    "reprocess": "重新处理",
+    "dragImageHint": "拖拽图片到此处，或点击按钮选择",
+    "previewHint": "处理后的预览将在此显示",
+    "save": "保存图片",
+    "useAsStamp": "用作印章",
+    "changeImage": "更换图片",
+    "cropHint": "提示：请将印章裁剪至边缘，不要留有空白边框，以获得最佳效果"
   },
   "split": {
     "previewTitle": "PDF 预览",
@@ -138,10 +149,11 @@
   "home": {
     "appTitle": "PDF 工具箱",
     "startUsing": "开始使用",
+    "privacyHint": "所有 PDF 文件均在本地处理，不会上传到服务器，请放心使用",
     "features": {
       "stamp": {
         "title": "PDF 盖章",
-        "description": "在 PDF 文件上添加电子印章"
+        "description": "在 PDF 文件上添加电子印章、骑缝章"
       },
       "merge": {
         "title": "PDF 合并",
@@ -156,5 +168,9 @@
         "description": "在浏览器中压缩 PDF 文件，减小文件体积"
       }
     }
+  },
+  "common": {
+    "cancel": "取消",
+    "confirm": "确认"
   }
-} 
+}

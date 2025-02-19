@@ -22,12 +22,14 @@ import {
 import { 
   AddPhotoAlternate,
   Delete,
-  Rotate90DegreesCcw
+  Rotate90DegreesCcw,
+  Create
 } from '@mui/icons-material';
 import { useStampContext } from '../../contexts/StampContext';
 import PageSelectDialog from './PageSelectDialog';
 import FileDownload from '../common/FileDownload';
 import { useTranslation } from 'react-i18next';
+import StampMakerDialog from './StampMakerDialog';
 
 function StampTools() {
   const { t } = useTranslation();
@@ -51,6 +53,8 @@ function StampTools() {
   const [pageSelectOpen, setPageSelectOpen] = useState(false);
   // 下载对话框控制
   const [downloadOpen, setDownloadOpen] = useState(false);
+  // 添加状态控制制作印章对话框
+  const [stampMakerOpen, setStampMakerOpen] = useState(false);
 
   // 监听处理状态，显示下载对话框
   useEffect(() => {
@@ -173,6 +177,13 @@ function StampTools() {
     handleStampConfigChange('straddleY', newValue);
   };
 
+  // 处理制作的印章图片
+  const handleStampMade = (processedImageUrl) => {
+    // 可以直接用作印章图片
+    handleStampConfigChange('imageUrl', processedImageUrl);
+    setStampMakerOpen(false);
+  };
+
   return (
     <Paper 
       elevation={0}
@@ -224,17 +235,37 @@ function StampTools() {
                 key={stampConfig?.imageUrl || 'no-image'}
               />
               {!stampConfig.imageUrl ? (
-                <Button
-                  variant="outlined"
-                  component="label"
-                  htmlFor="stamp-image-input"
-                  startIcon={<AddPhotoAlternate />}
-                  size="small"
+                <Stack 
+                  direction="row" 
+                  spacing={1}
+                  sx={{ 
+                    ml: 0  // 移除负边距
+                  }}
                 >
-                  {t('stamp.selectStampImage')}
-                </Button>
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    htmlFor="stamp-image-input"
+                    startIcon={<AddPhotoAlternate />}
+                    size="small"
+                  >
+                    {t('stamp.selectStampImage')}
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => setStampMakerOpen(true)}
+                    startIcon={<Create />}
+                    size="small"
+                  >
+                    {t('stamp.makeTransparentStamp')}
+                  </Button>
+                </Stack>
               ) : renderStampPreview()}
-              <Typography variant="caption" color="text.secondary">
+              <Typography 
+                variant="caption" 
+                color="text.secondary"
+                sx={{ ml: 0 }}  // 确保提示文字也没有额外的边距
+              >
                 {t('stamp.transparentPngHint')}
               </Typography>
             </Stack>
@@ -425,6 +456,13 @@ function StampTools() {
         loadingMessage={t('stamp.loadingMessage')}
         onClose={handleDownloadClose}
         open={downloadOpen}
+      />
+
+      {/* 添加制作印章对话框 */}
+      <StampMakerDialog
+        open={stampMakerOpen}
+        onClose={() => setStampMakerOpen(false)}
+        onStampMade={handleStampMade}
       />
     </Paper>
   );
