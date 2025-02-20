@@ -12,6 +12,7 @@ import './i18n';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme';
+import SignPage from './pages/sign/SignPage';
 
 function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -61,6 +62,7 @@ function App() {
                 <Route path="/stamp" element={<StampPage />} />
                 <Route path="/split" element={<SplitPage />} />
                 <Route path="/compress" element={<CompressPage />} />
+                <Route path="/sign" element={<SignPage />} />
               </Routes>
             </Layout>
           </BrowserRouter>

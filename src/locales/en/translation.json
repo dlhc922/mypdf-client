@@ -2,6 +2,7 @@
   "appName": "WSBN.tech PDF Toolkit",
   "tools": {
     "home": "Home",
+    "sign": "PDF Signature",
     "merge": "PDF Merge",
     "stamp": "PDF Stamp",
     "split": "PDF Split",
@@ -155,6 +156,10 @@
         "title": "PDF Stamp",
         "description": "Add Electronic Stamps and Page Stamps to PDF"
       },
+      "sign": {
+        "title": "PDF Signature",
+        "description": "Add Electronic Signatures to PDF"
+      },
       "merge": {
         "title": "PDF Merge",
         "description": "Merge multiple PDF files into one"
@@ -172,5 +177,48 @@
   "common": {
     "cancel": "Cancel",
     "confirm": "Confirm"
+  },
+  "sign": {
+    "settings": "Signature Settings",
+    "addNewSignature": "Add New Signature",
+    "signature": "Signature",
+    "signatureAdded": "Signature Added",
+    "noSignature": "No Signature",
+    "signatureImage": "Signature Image",
+    "selectImage": "Select Image",
+    "createSignature": "Create Signature",
+    "selectFile": "Select File",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "resetZoom": "Reset Zoom",
+    "addSignatureTip": "After setting the signature, click on the PDF page in the preview area to add it",
+    "noFileSelected": "No file selected",
+    "pageTitle": "PDF Electronic Signature Tool",
+    "pageDescription": "Add electronic signatures to PDF files with support for multiple signatures and custom positioning",
+    "size": "Signature Size",
+    "position": "Position",
+    "rotation": "Rotation",
+    "pages": "Signature Pages",
+    "selectPages": "Select Pages",
+    "draw": "Draw",
+    "text": "Text",
+    "lineWidth": "Line Width",
+    "fontSize": "Font Size",
+    "addText": "Add Text",
+    "confirm": "Confirm",
+    "image": "Image",
+    "threshold": "Threshold",
+    "noContent": "Please add signature content first",
+    "saveImage": "Save Signature Image",
+    "imageSupport": "Supports PNG, JPEG, BMP, GIF, TIFF, etc.",
+    "selectAddSignature": "Add Signature",
+    "choosePreview": "Choose preview",
+    "signatureName": "Signature {{number}}",
+    "signatureInfo": "Size: {{size}} mm, Rotation: {{rotation}}°",
+    "signaturePreview": "Signature Preview {{number}}",
+    "clickToAdd": "Click to add signature",
+    "noSignatureAvailable": "No signature available",
+    "addSignatureToPdf": "Add Signature to PDF",
+    "pdfSuccessMessage": "PDF signature added successfully! (PDF签名添加成功！)"
   }
 } 

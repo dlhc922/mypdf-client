@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Box, Container, Grid, Card, CardContent, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { Merge, Create, CallSplit, Compress } from '@mui/icons-material';
+import { VerifiedUser, Gesture, Merge, CallSplit, Compress } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 
 function HomePage() {
@@ -12,8 +12,14 @@ function HomePage() {
     {
       title: t('home.features.stamp.title'),
       description: t('home.features.stamp.description'),
-      icon: <Create sx={{ fontSize: 40 }} />,
+      icon: <VerifiedUser sx={{ fontSize: 40 }} />,
       path: '/stamp'
+    },
+    {
+      title: t('home.features.sign.title'),
+      description: t('home.features.sign.description'),
+      icon: <Gesture sx={{ fontSize: 40 }} />,
+      path: '/sign'
     },
     {
       title: t('home.features.merge.title'),
@@ -126,7 +132,7 @@ function HomePage() {
 
       <Grid container spacing={4} justifyContent="center">
         {features.map((feature) => (
-          <Grid item xs={12} sm={6} md={6} key={feature.path}>
+          <Grid item xs={12} sm={6} md={4} key={feature.path}>
             <Card 
               sx={{ 
                 height: '100%',

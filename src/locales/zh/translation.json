@@ -2,6 +2,7 @@
   "appName": "WSBN.tech PDF 工具箱",
   "tools": {
     "home": "首页",
+    "sign": "PDF 签名",
     "merge": "PDF 合并",
     "stamp": "PDF 印章",
     "split": "PDF 拆分",
@@ -155,6 +156,10 @@
         "title": "PDF 盖章",
         "description": "在 PDF 文件上添加电子印章、骑缝章"
       },
+      "sign": {
+        "title": "PDF 电子签名",
+        "description": "在 PDF 文件上添加电子签名"
+      },
       "merge": {
         "title": "PDF 合并",
         "description": "将多个 PDF 文件合并为一个文件"
@@ -172,5 +177,48 @@
   "common": {
     "cancel": "取消",
     "confirm": "确认"
+  },
+  "sign": {
+    "settings": "签名设置",
+    "addNewSignature": "添加新签名",
+    "signature": "签名",
+    "signatureAdded": "已添加签名",
+    "noSignature": "未添加签名",
+    "signatureImage": "签名图片",
+    "selectImage": "选择图片",
+    "createSignature": "制作签名",
+    "selectFile": "选择文件",
+    "zoomIn": "放大",
+    "zoomOut": "缩小",
+    "resetZoom": "重置缩放",
+    "addSignatureTip": "设置好签名后，点击预览区的PDF页面进行添加",
+    "noFileSelected": "未选择文件",
+    "signaturePreview": "签名预览 {{number}}",
+    "pageTitle": "PDF 电子签名工具",
+    "pageDescription": "支持多个签名和自定义位置的 PDF 电子签名工具",
+    "size": "签名尺寸",
+    "position": "位置",
+    "rotation": "旋转",
+    "pages": "签名页面",
+    "selectPages": "选择页面",
+    "draw": "手写",
+    "text": "文字",
+    "lineWidth": "线条粗细",
+    "fontSize": "字体大小",
+    "addText": "添加文字",
+    "confirm": "确认",
+    "image": "图片",
+    "threshold": "阈值",
+    "noContent": "请先添加签名内容",
+    "saveImage": "保存签名图片",
+    "imageSupport": "支持PNG、JPEG、BMP、GIF、TIFF等格式",
+    "selectAddSignature": "添加签名",
+    "signatureName": "签名 {{number}}",
+    "signatureInfo": "大小：{{size}} mm, 旋转：{{rotation}}°",
+    "clickToAdd": "点击添加签名",
+    "noSignatureAvailable": "没有可用签名",
+    "choosePreview": "请选择签名预览",
+    "addSignatureToPdf": "添加签名到PDF",
+    "pdfSuccessMessage": "PDF签名添加成功！ (PDF signature added successfully!)"
   }
 }
