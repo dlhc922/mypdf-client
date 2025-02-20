@@ -157,8 +157,8 @@
         "description": "在 PDF 文件上添加电子印章、骑缝章"
       },
       "sign": {
-        "title": "PDF 电子签名",
-        "description": "在 PDF 文件上添加电子签名"
+        "title": "PDF 签名",
+        "description": "在 PDF 文件上添加签名"
       },
       "merge": {
         "title": "PDF 合并",

@@ -158,7 +158,7 @@
       },
       "sign": {
         "title": "PDF Signature",
-        "description": "Add Electronic Signatures to PDF"
+        "description": "Add Signatures to PDF"
       },
       "merge": {
         "title": "PDF Merge",
