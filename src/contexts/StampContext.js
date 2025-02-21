@@ -167,18 +167,10 @@ export const StampProvider = ({ children }) => {
           return width < height;
         });
 
-        // 如果存在纵向页面，需要调整骑缝章位置
-        let adjustedStraddleY;
-        if (hasPortrait) {
-          // 对于混合方向的情况，将横向页面的骑缝章Y坐标转换为等效的纵向坐标
-          // 297mm（A4纸长边）- 原始Y值 - 印章尺寸
-          adjustedStraddleY = 297 - config.straddleY - config.size;
-        } else {
-          adjustedStraddleY = config.straddleY;
-        }
-
-        const convertedStampY = adjustedStraddleY * MM_TO_PT;
-        console.log(`骑缝章：stampWidthPt=${stampWidthPt}, 每页宽度(点)=${partWidthPt}, convertedStampY=${convertedStampY}`);
+        // 修改这里：考虑印章高度进行坐标转换
+        // 用户输入的 Y 坐标是印章中心位置，需要考虑印章高度的一半
+        const convertedStampY = (297 - config.straddleY) * MM_TO_PT - stampHeightPt;
+        console.log(`骑缝章：stampWidthPt=${stampWidthPt}, 每页宽度(点)=${partWidthPt}, convertedStampY=${convertedStampY}, stampHeightPt=${stampHeightPt}`);
 
         for (let i = 0; i < pageCount; i++) {
           const page = pages[i];
@@ -230,11 +222,10 @@ export const StampProvider = ({ children }) => {
             });
             console.log(`骑缝章-页面${i + 1}【旋转后】: 印章绘制完成`);
           } else {
-            // 纵向页面保持原有逻辑
-            const stampY = height - (convertedStampY + stampHeightPt);
+            // 纵向页面保持原有逻辑，但修改 Y 坐标计算
             page.drawImage(croppedImageEmbed, {
               x: width - partWidthPt,
-              y: stampY,
+              y: convertedStampY,  // 直接使用转换后的 Y 坐标
               width: partWidthPt,
               height: stampHeightPt,
               opacity: 0.8,
