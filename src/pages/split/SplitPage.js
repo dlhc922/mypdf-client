@@ -637,9 +637,11 @@ export default function SplitPage() {
                         button
                         onClick={() => handleDownload(url, pageNumber)}
                         sx={{
+                          cursor: 'pointer',  // 添加手型指针
                           borderRadius: 1,
                           '&:hover': {
-                            bgcolor: 'action.hover'
+                            bgcolor: 'action.hover',
+                            transition: 'background-color 0.2s'
                           }
                         }}
                       >
