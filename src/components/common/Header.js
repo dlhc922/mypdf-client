@@ -150,21 +150,6 @@ function Header() {
       }}
     >
       <Toolbar>
-        {/* 移动端汉堡菜单按钮 */}
-        {isMobile && (
-          <IconButton
-            edge="start"
-            aria-label="menu"
-            onClick={() => setMobileMenuOpen(true)}
-            sx={{ 
-              mr: 2,
-              color: 'primary.main'
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-        )}
-
         <Typography 
           variant="h6" 
           component={Link} 
@@ -212,11 +197,26 @@ function Header() {
           alignItems: 'center',
           ml: 'auto'
         }}>
+          {/* 移动端汉堡菜单按钮移到这里 */}
+          {isMobile && (
+            <IconButton
+              edge="start"
+              aria-label="menu"
+              onClick={() => setMobileMenuOpen(true)}
+              sx={{ 
+                color: 'primary.main'
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+
           {/* 语言切换按钮 */}
           <Button
             startIcon={<LanguageIcon />}
             onClick={handleLanguageClick}
             sx={{ 
+              ml: 1,
               color: 'primary.main',
               textTransform: 'none'
             }}
@@ -270,7 +270,7 @@ function Header() {
 
         {/* 移动端抽屉菜单 */}
         <Drawer
-          anchor="left"
+          anchor="right"
           open={mobileMenuOpen}
           onClose={() => setMobileMenuOpen(false)}
           PaperProps={{
