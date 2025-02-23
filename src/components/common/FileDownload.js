@@ -72,9 +72,6 @@ function FileDownload({
     };
   }, [fileUrl]);
 
-  // 计算对话框是否应该显示
-  const showDialog = loading || error || Boolean(fileUrl);
-
   return (
     <Dialog
       open={open}
