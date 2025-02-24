@@ -2,8 +2,9 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Box, Container, Grid, Card, CardContent, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { VerifiedUser, Gesture, Merge, CallSplit, Compress } from '@mui/icons-material';
+import { VerifiedUser, Gesture, Merge, CallSplit, Compress, Image as ImageIcon } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import LanguageShareControls from '../components/LanguageShareControls';
 
 function HomePage() {
   const { t, i18n } = useTranslation();
@@ -38,6 +39,12 @@ function HomePage() {
       description: t('home.features.compress.description'),
       icon: <Compress sx={{ fontSize: 40 }} />,
       path: '/compress'
+    },
+    {
+      title: t('home.features.extract.title'),
+      description: t('home.features.extract.description'),
+      icon: <ImageIcon sx={{ fontSize: 40 }} />,
+      path: '/extract'
     }
   ];
 
@@ -73,23 +80,9 @@ function HomePage() {
         </Typography>
       </Box>
 
-      {/* 语言切换按钮定位于右上角 */}
+      {/* 语言切换和分享按钮（与 Header 中相同） */}
       <Box sx={{ position: 'absolute', top: 16, right: 16 }}>
-        <Button 
-          variant={i18n.language === 'zh' ? 'contained' : 'outlined'} 
-          onClick={() => handleChangeLanguage('zh')}
-          size="small"
-          sx={{ mr: 1 }}
-        >
-          中文
-        </Button>
-        <Button 
-          variant={i18n.language === 'en' ? 'contained' : 'outlined'} 
-          onClick={() => handleChangeLanguage('en')}
-          size="small"
-        >
-          English
-        </Button>
+        <LanguageShareControls />
       </Box>
       
       <Typography 

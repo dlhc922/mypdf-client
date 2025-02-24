@@ -6,7 +6,8 @@
     "merge": "PDF 合并",
     "stamp": "PDF 印章",
     "split": "PDF 拆分",
-    "compress": "PDF 压缩"
+    "compress": "PDF 压缩",
+    "extract": "PDF 提取图片"
   },
   "meta": {
     "description": "在线免费 PDF 盖章、合并、拆分和压缩工具，永久免费使用，无需注册。",
@@ -171,12 +172,19 @@
       "compress": {
         "title": "PDF 压缩",
         "description": "在浏览器中压缩 PDF 文件，减小文件体积"
+      },
+      "extract": {
+        "title": "PDF 提取图片",
+        "description": "提取 PDF 文件中的图片，方便单独保存和使用"
       }
     }
   },
   "common": {
     "cancel": "取消",
-    "confirm": "确认"
+    "confirm": "确认",
+    "selectFile": "选择文件",
+    "selectAll": "全选",
+    "deselectAll": "取消全选"
   },
   "sign": {
     "settings": "签名设置",
@@ -220,5 +228,21 @@
     "choosePreview": "请选择签名预览",
     "addSignatureToPdf": "添加签名到PDF",
     "pdfSuccessMessage": "PDF签名添加成功！ (PDF signature added successfully!)"
+  },
+  "extract": {
+    "preview": "PDF 提取图片",
+    "extractedImages": "提取的图片",
+    "extractImages": "提取图片",
+    "image": "图片",
+    "downloadSelected": "下载选中",
+    "documentLoaded": "文档已加载，共 {{pages}} 页",
+    "success": "成功提取 {{count}} 张图片",
+    "errors": {
+      "invalidFile": "请选择有效的 PDF 文件",
+      "extractFailed": "提取图片失败",
+      "noImages": "未在 PDF 中找到图片",
+      "partialExtraction": "部分页面提取失败，已提取可用图片",
+      "downloadFailed": "下载失败"
+    }
   }
 }

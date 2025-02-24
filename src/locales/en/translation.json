@@ -6,7 +6,8 @@
     "merge": "PDF Merge",
     "stamp": "PDF Stamp",
     "split": "PDF Split",
-    "compress": "PDF Compress"
+    "compress": "PDF Compress",
+    "extract": "PDF Extract Images"
   },
   "meta": {
     "description": "Free online PDF stamp, merge, split, and compress tool without the need for registration.",
@@ -171,12 +172,19 @@
       "compress": {
         "title": "PDF Compress",
         "description": "Compress a PDF file in the browser to reduce file size"
+      },
+      "extract": {
+        "title": "PDF Extract Images",
+        "description": "Extract images from a PDF file"
       }
     }
   },
   "common": {
     "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "selectFile": "Select File",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All"
   },
   "sign": {
     "settings": "Signature Settings",
@@ -220,5 +228,21 @@
     "noSignatureAvailable": "No signature available",
     "addSignatureToPdf": "Add Signature to PDF",
     "pdfSuccessMessage": "PDF signature added successfully! (PDF签名添加成功！)"
+  },
+  "extract": {
+    "preview": "PDF Extract Images",
+    "extractedImages": "Extracted Images",
+    "extractImages": "Extract Images",
+    "image": "Image",
+    "downloadSelected": "Download Selected",
+    "documentLoaded": "Document loaded, {{pages}} pages in total",
+    "success": "Successfully extracted {{count}} images",
+    "errors": {
+      "invalidFile": "Please select a valid PDF file",
+      "extractFailed": "Failed to extract images",
+      "noImages": "No images found in the PDF",
+      "partialExtraction": "Partial extraction successful, available images extracted",
+      "downloadFailed": "Download failed"
+    }
   }
 } 

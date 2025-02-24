@@ -18,20 +18,16 @@ import {
   useMediaQuery
 } from '@mui/material';
 import { 
-  Language as LanguageIcon,
-  Check as CheckIcon,
-  Share as ShareIcon,
   Menu as MenuIcon
 } from '@mui/icons-material';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { alpha } from '@mui/material/styles';
+import LanguageShareControls from '../LanguageShareControls';
 
 function Header() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const currentLanguage = i18n.language; // 获取当前语言
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
@@ -44,49 +40,11 @@ function Header() {
     { path: '/sign', label: t('tools.sign') },
     { path: '/merge', label: t('tools.merge') },
     { path: '/split', label: t('tools.split') },
-    { path: '/compress', label: t('tools.compress') }
+    { path: '/compress', label: t('tools.compress') },
+    { path: '/extract', label: t('tools.extract') }
   ];
 
-  const languages = [
-    { code: 'en', label: 'English', flag: '🇺🇸' },
-    { code: 'zh', label: '中文', flag: '🇨🇳' }
-  ];
-
-  const handleLanguageClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleLanguageClose = () => {
-    setAnchorEl(null);
-  };
-
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    handleLanguageClose();
-  };
-
-  // 分享功能
-  const handleShare = async () => {
-    const currentUrl = window.location.href;
-    
-    try {
-      if (navigator.share) {
-        // 如果浏览器支持原生分享API
-        await navigator.share({
-          title: document.title,
-          url: currentUrl
-        });
-      } else {
-        // 否则复制链接到剪贴板
-        await navigator.clipboard.writeText(currentUrl);
-        setSnackbarOpen(true);
-      }
-    } catch (error) {
-      console.error('分享失败:', error);
-    }
-  };
-
-  // 移动端导航菜单
+  // 移动端导航菜单抽屉
   const mobileMenu = (
     <Drawer
       anchor="left"
@@ -197,131 +155,25 @@ function Header() {
           alignItems: 'center',
           ml: 'auto'
         }}>
-          {/* 移动端汉堡菜单按钮移到这里 */}
+          {/* 移动端汉堡菜单 */}
           {isMobile && (
             <IconButton
               edge="start"
               aria-label="menu"
               onClick={() => setMobileMenuOpen(true)}
-              sx={{ 
-                color: 'primary.main'
-              }}
+              sx={{ color: 'primary.main' }}
             >
               <MenuIcon />
             </IconButton>
           )}
 
-          {/* 语言切换按钮 */}
-          <Button
-            startIcon={<LanguageIcon />}
-            onClick={handleLanguageClick}
-            sx={{ 
-              ml: 1,
-              color: 'primary.main',
-              textTransform: 'none'
-            }}
-          >
-            {isMobile ? '' : languages.find(lang => lang.code === currentLanguage)?.label || 'Language'}
-          </Button>
-
-          {/* 分享按钮 */}
-          <IconButton
-            onClick={handleShare}
-            sx={{ 
-              ml: 1,
-              color: 'primary.main'
-            }}
-          >
-            <ShareIcon />
-          </IconButton>
+          {/* 使用 LanguageShareControls 组件替换语言切换与分享按钮 */}
+          <LanguageShareControls />
         </Box>
 
-        {/* 语言菜单 */}
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleLanguageClose}
-          PaperProps={{
-            sx: {
-              minWidth: '120px'
-            }
-          }}
-        >
-          {languages.map((lang) => (
-            <MenuItem 
-              key={lang.code}
-              onClick={() => changeLanguage(lang.code)}
-              selected={currentLanguage === lang.code}
-              sx={{
-                py: 1,
-                px: 2
-              }}
-            >
-              <ListItemIcon sx={{ minWidth: '30px' }}>
-                {lang.flag}
-              </ListItemIcon>
-              <ListItemText primary={lang.label} />
-              {currentLanguage === lang.code && (
-                <CheckIcon sx={{ ml: 1, color: 'primary.dark' }} />
-              )}
-            </MenuItem>
-          ))}
-        </Menu>
+        {mobileMenu}
 
-        {/* 移动端抽屉菜单 */}
-        <Drawer
-          anchor="right"
-          open={mobileMenuOpen}
-          onClose={() => setMobileMenuOpen(false)}
-          PaperProps={{
-            sx: {
-              width: 240,
-              bgcolor: 'background.paper'
-            }
-          }}
-        >
-          <Box sx={{ py: 2, px: 1 }}>
-            <Typography
-              variant="h6"
-              component={Link}
-              to="/"
-              onClick={() => setMobileMenuOpen(false)}
-              sx={{
-                color: 'primary.main',
-                textDecoration: 'none',
-                fontWeight: 'bold',
-                px: 2,
-                display: 'block',
-                mb: 2
-              }}
-            >
-              WSBN.tech
-            </Typography>
-            <List>
-              {menuItems.map(item => (
-                <ListItem
-                  key={item.path}
-                  component={Link}
-                  to={item.path}
-                  onClick={() => setMobileMenuOpen(false)}
-                  sx={{
-                    color: location.pathname === item.path ? 'primary.main' : 'text.primary',
-                    bgcolor: location.pathname === item.path ? alpha(theme.palette.primary.main, 0.08) : 'transparent',
-                    borderRadius: 1,
-                    mb: 0.5,
-                    '&:hover': {
-                      bgcolor: alpha(theme.palette.primary.main, 0.04)
-                    }
-                  }}
-                >
-                  <ListItemText primary={item.label} />
-                </ListItem>
-              ))}
-            </List>
-          </Box>
-        </Drawer>
-
-        {/* Snackbar */}
+        {/* Snackbar 提示分享复制成功 */}
         <Snackbar
           open={snackbarOpen}
           autoHideDuration={2000}

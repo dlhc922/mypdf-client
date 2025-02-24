@@ -13,6 +13,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme';
 import SignPage from './pages/sign/SignPage';
+import ExtractPage from './pages/extract/ExtractPage';
 
 function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -63,6 +64,7 @@ function App() {
                 <Route path="/split" element={<SplitPage />} />
                 <Route path="/compress" element={<CompressPage />} />
                 <Route path="/sign" element={<SignPage />} />
+                <Route path="/extract" element={<ExtractPage />} />
               </Routes>
             </Layout>
           </BrowserRouter>
