@@ -24,6 +24,7 @@ export default function Footer() {
       <Box
         sx={{
           display: 'flex',
+          flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
           gap: 1
@@ -55,6 +56,17 @@ export default function Footer() {
           >
             WSBN.tech
           </Link>
+        </Typography>
+        
+        <Typography 
+          variant="body2" 
+          color="text.secondary"
+          sx={{ 
+            fontFamily: 'monospace',
+            letterSpacing: '0.5px'
+          }}
+        >
+          Contact: <Link href="mailto:dlhc922@gmail.com">dlhc922@gmail.com</Link>
         </Typography>
       </Box>
     </Box>
