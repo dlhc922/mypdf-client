@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import DeviceCompatibilityAlert from '../../components/common/DeviceCompatibilityAlert';
 import { 
   Container, 
   Grid, 
@@ -242,6 +243,7 @@ export default function CompressPage() {
             )}
           </Paper>
         </Grid>
+        <DeviceCompatibilityAlert mobileCompatible={true} toolName="PDF压缩"></DeviceCompatibilityAlert>
 
         {/* 右侧工具栏 */}
         <Grid item xs={12} md={4}>

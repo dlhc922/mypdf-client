@@ -7,6 +7,7 @@
    import { DragDropContext } from 'react-beautiful-dnd';
    import FileDownload from '../../components/common/FileDownload';
    import { useTranslation } from 'react-i18next';
+   import DeviceCompatibilityAlert from '../../components/common/DeviceCompatibilityAlert';
 
 
    // 将需要使用 context 的内容抽离到内部组件中
@@ -121,6 +122,7 @@
                </Typography>
              </Box>
            )}
+           <DeviceCompatibilityAlert mobileCompatible={true} toolName="PDF合并"></DeviceCompatibilityAlert>
 
            <Paper
              elevation={3}

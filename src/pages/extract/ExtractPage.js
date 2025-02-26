@@ -35,6 +35,7 @@ import { useExtract } from '../../hooks/extract/useExtract';
 import { styled } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 import { alpha } from '@mui/material/styles';
+import DeviceCompatibilityAlert from '../../components/common/DeviceCompatibilityAlert';
 
 // 自定义样式的预览图片容器
 const PreviewImage = styled('img')({
@@ -252,7 +253,7 @@ export default function ExtractPage() {
             </Box>
           </Paper>
         </Grid>
-
+        <DeviceCompatibilityAlert mobileCompatible={true} toolName="PDF提取"></DeviceCompatibilityAlert>
         {/* 右侧面板 */}
         <Grid item xs={12} md={4}>
           <Paper sx={{ p: 2, height: '100%' }}>

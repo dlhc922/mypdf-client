@@ -244,5 +244,17 @@
       "partialExtraction": "部分页面提取失败，已提取可用图片",
       "downloadFailed": "下载失败"
     }
+  },
+  "device": {
+    "desktopRecommended": "推荐使用电脑访问",
+    "mobileNotSupported": "{{toolName}}在移动设备上体验不佳，建议使用电脑访问以获得最佳体验。",
+    "shareLink": "分享链接",
+    "shareTitle": "PDF工具",
+    "shareText": "请在电脑上打开此链接以获得最佳体验",
+    "linkCopied": "链接已复制到剪贴板",
+    "thisTool": "此工具",
+    "backToHome": "返回首页",
+    "simpleMobileNotSupported": "此功能不适合在手机上使用，请复制链接在电脑上打开",
+    "desktopOnly": "请使用电脑访问"
   }
 }
