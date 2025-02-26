@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Rnd } from "react-rnd";
-import DeviceCompatibilityAlert from '../common/DeviceCompatibilityAlert';
 import {
   Box,
   Paper,
@@ -333,7 +332,6 @@ function SignPreview() {
       </Paper>
 
       {/* PDF 预览区域 */}
-      <DeviceCompatibilityAlert mobileCompatible={false} toolName="PDF签名"></DeviceCompatibilityAlert>
       <Box
         className="pdf-container"
         sx={{

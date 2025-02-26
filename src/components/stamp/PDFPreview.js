@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import Draggable from 'react-draggable';
-import DeviceCompatibilityAlert from '../common/DeviceCompatibilityAlert';
 import {
   Box,
   Paper,
@@ -374,8 +373,6 @@ useEffect(() => {
   }, [stampConfig?.currentPage, stampConfig?.pageSettings]);
 
   return (
-    <DeviceCompatibilityAlert mobileCompatible={false} toolName="PDF盖章">
-
     <Box sx={{
       display: 'flex',
       flexDirection: 'column',
@@ -542,7 +539,6 @@ useEffect(() => {
         )}
       </Box>
     </Box>
-    </DeviceCompatibilityAlert>
   );
 }
 

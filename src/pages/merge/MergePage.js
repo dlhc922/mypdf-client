@@ -77,52 +77,52 @@
      };
 
      return (
-       <DragDropContext onDragEnd={handleDragEnd}>
-         <Box 
-           sx={{ 
-             flex: 1, 
-             display: 'flex', 
-             flexDirection: 'column', 
-             p: 2,
-             position: 'relative'
-           }}
-           onDragOver={handleDragOver}
-           onDragLeave={handleDragLeave}
-           onDrop={handleDrop}
-         >
-           {isDragging && (
-             <Box
-               sx={{
-                 position: 'absolute',
-                 top: 0,
-                 left: 0,
-                 right: 0,
-                 bottom: 0,
-                 bgcolor: 'rgba(25, 118, 210, 0.08)',
-                 border: '2px dashed #1976d2',
-                 borderRadius: 2,
-                 zIndex: 1,
-                 display: 'flex',
-                 alignItems: 'center',
-                 justifyContent: 'center'
-               }}
-             >
-               <Typography 
-                 variant="h5" 
-                 color="primary"
-                 sx={{ 
-                   bgcolor: 'background.paper',
-                   px: 4,
-                   py: 2,
-                   borderRadius: 1,
-                   boxShadow: 1
+         <DragDropContext onDragEnd={handleDragEnd}>
+           <Box 
+             sx={{ 
+               flex: 1, 
+               display: 'flex', 
+               flexDirection: 'column', 
+               p: 2,
+               position: 'relative'
+             }}
+             onDragOver={handleDragOver}
+             onDragLeave={handleDragLeave}
+             onDrop={handleDrop}
+           >
+             {isDragging && (
+               <Box
+                 sx={{
+                   position: 'absolute',
+                   top: 0,
+                   left: 0,
+                   right: 0,
+                   bottom: 0,
+                   bgcolor: 'rgba(25, 118, 210, 0.08)',
+                   border: '2px dashed #1976d2',
+                   borderRadius: 2,
+                   zIndex: 1,
+                   display: 'flex',
+                   alignItems: 'center',
+                   justifyContent: 'center'
                  }}
                >
-                 {t('merge.dropToAdd')}
-               </Typography>
-             </Box>
-           )}
-           <DeviceCompatibilityAlert mobileCompatible={true} toolName="PDF合并"></DeviceCompatibilityAlert>
+                 <Typography 
+                   variant="h5" 
+                   color="primary"
+                   sx={{ 
+                     bgcolor: 'background.paper',
+                     px: 4,
+                     py: 2,
+                     borderRadius: 1,
+                     boxShadow: 1
+                   }}
+                 >
+                   {t('merge.dropToAdd')}
+                 </Typography>
+               </Box>
+             )}
+             <DeviceCompatibilityAlert mobileCompatible={true} toolName="PDF合并"></DeviceCompatibilityAlert>
 
            <Paper
              elevation={3}
@@ -165,8 +165,8 @@
            />
          </Box>
        </DragDropContext>
-     );
-   }
+   );
+ }
 
    function MergePage() {
      return (

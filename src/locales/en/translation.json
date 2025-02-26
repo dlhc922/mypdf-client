@@ -99,7 +99,7 @@
     "pleaseSelectFile": "Please select a file first",
     "fileProcessingFailed": "File processing failed",
     "successfullyCreatedFiles": "Successfully created {{count}} PDF file(s)"
-  },
+    },
   "compress": {
     "title": "File Preview",
     "selectFile": "Select PDF File",
@@ -227,14 +227,14 @@
     "clickToAdd": "Click to add signature",
     "noSignatureAvailable": "No signature available",
     "addSignatureToPdf": "Add Signature to PDF",
-    "pdfSuccessMessage": "PDF signature added successfully! (PDF签名添加成功！)"
+    "pdfSuccessMessage": "PDF signature added successfully! "
   },
   "extract": {
     "preview": "PDF Extract Images",
     "extractedImages": "Extracted Images",
     "extractImages": "Extract Images",
     "image": "Image",
-    "downloadSelected": "Download Selected",
+    "downloadSelected": "Save Selected",
     "documentLoaded": "Document loaded, {{pages}} pages in total",
     "success": "Successfully extracted {{count}} images",
     "errors": {
@@ -242,8 +242,8 @@
       "extractFailed": "Failed to extract images",
       "noImages": "No images found in the PDF",
       "partialExtraction": "Partial extraction successful, available images extracted",
-      "downloadFailed": "Download failed"
-    }
+      "downloadFailed": "Save failed"
+     }
   },
   "device": {
     "desktopRecommended": "Recommended to access on a desktop device",

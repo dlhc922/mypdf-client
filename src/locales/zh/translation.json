@@ -227,14 +227,14 @@
     "noSignatureAvailable": "没有可用签名",
     "choosePreview": "请选择签名预览",
     "addSignatureToPdf": "添加签名到PDF",
-    "pdfSuccessMessage": "PDF签名添加成功！ (PDF signature added successfully!)"
+    "pdfSuccessMessage": "PDF签名添加成功！ "
   },
   "extract": {
     "preview": "PDF 提取图片",
     "extractedImages": "提取的图片",
     "extractImages": "提取图片",
     "image": "图片",
-    "downloadSelected": "下载选中",
+    "downloadSelected": "保存选中",
     "documentLoaded": "文档已加载，共 {{pages}} 页",
     "success": "成功提取 {{count}} 张图片",
     "errors": {
@@ -242,7 +242,7 @@
       "extractFailed": "提取图片失败",
       "noImages": "未在 PDF 中找到图片",
       "partialExtraction": "部分页面提取失败，已提取可用图片",
-      "downloadFailed": "下载失败"
+      "downloadFailed": "保存失败"
     }
   },
   "device": {

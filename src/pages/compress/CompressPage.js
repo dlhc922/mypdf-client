@@ -73,6 +73,7 @@ export default function CompressPage() {
   };
 
   return (
+
     <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
       <Grid container spacing={3}>
         {/* 左侧预览区域 */}

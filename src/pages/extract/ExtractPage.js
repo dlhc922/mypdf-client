@@ -108,47 +108,47 @@ export default function ExtractPage() {
   const handleNextPage = () => setCurrentPage(prev => Math.min(prev + 1, numPages));
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Grid container spacing={3}>
-        {/* 左侧面板 */}
-        <Grid item xs={12} md={8}>
-          <Paper 
-            sx={{ 
-              p: 2,
-              display: 'flex',
-              flexDirection: 'column',
-              minHeight: 500
-            }}
-          >
-            <Box sx={{ mb: 2 }}>
-              <Typography variant="h6" gutterBottom>
-                {t('extract.preview')}
-              </Typography>
-              
-              {/* 文件选择和操作按钮 */}
-              <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
-                <Button
-                  variant="contained"
-                  component="label"
-                  startIcon={<ImageIcon />}
-                >
-                  {t('common.selectFile')}
-                  <input
-                    type="file"
-                    hidden
-                    accept=".pdf"
-                    onChange={handleFileSelect}
-                  />
-                </Button>
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Grid container spacing={3}>
+          {/* 左侧面板 */}
+          <Grid item xs={12} md={8}>
+            <Paper 
+              sx={{ 
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: 500
+              }}
+            >
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="h6" gutterBottom>
+                  {t('extract.preview')}
+                </Typography>
                 
-                <Button
-                  variant="contained"
-                  onClick={handleExtract}
-                  disabled={!file || loading}
-                  startIcon={loading ? <CircularProgress size={20} /> : null}
-                >
-                  {t('extract.extractImages')}
-                </Button>
+                {/* 文件选择和操作按钮 */}
+                <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
+                  <Button
+                    variant="contained"
+                    component="label"
+                    startIcon={<ImageIcon />}
+                  >
+                    {t('common.selectFile')}
+                    <input
+                      type="file"
+                      hidden
+                      accept=".pdf"
+                      onChange={handleFileSelect}
+                    />
+                  </Button>
+                  
+                  <Button
+                    variant="contained"
+                    onClick={handleExtract}
+                    disabled={!file || loading}
+                    startIcon={loading ? <CircularProgress size={20} /> : null}
+                  >
+                    {t('extract.extractImages')}
+                  </Button>
 
                 <IconButton onClick={handleZoomIn}>
                   <ZoomIn />

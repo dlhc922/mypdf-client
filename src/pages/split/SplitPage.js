@@ -129,94 +129,94 @@ export default function SplitPage() {
   };
 
   return (
-    <Container 
-      maxWidth="xl" 
-      sx={{ 
-        mt: 4, 
-        mb: 4,
-        height: 'calc(100vh - 140px)', // 减去顶部导航和边距的高度
-        display: 'flex'
-      }}
-    >
-      <Grid 
-        container 
-        spacing={3} 
+      <Container 
+        maxWidth="xl" 
         sx={{ 
-          height: '100%',
-          margin: 0,
-          width: '100%'
+          mt: 4, 
+          mb: 4,
+          height: 'calc(100vh - 140px)', // 减去顶部导航和边距的高度
+          display: 'flex'
         }}
       >
-        {/* 左侧预览区域 */}
         <Grid 
-          item 
-          xs={12} 
-          md={8}
+          container 
+          spacing={3} 
           sx={{ 
             height: '100%',
-            paddingTop: '0 !important',
-            paddingLeft: '0 !important'
+            margin: 0,
+            width: '100%'
           }}
         >
-          <Paper 
+          {/* 左侧预览区域 */}
+          <Grid 
+            item 
+            xs={12} 
+            md={8}
             sx={{ 
-              p: 2, 
-              display: 'flex', 
-              flexDirection: 'column',
               height: '100%',
-              overflow: 'hidden' // 防止内容溢出
+              paddingTop: '0 !important',
+              paddingLeft: '0 !important'
             }}
           >
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-              <Typography variant="h6">{t('split.previewTitle')}</Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                {file && (
-                  <>
-                    <IconButton 
-                      onClick={handleZoomOut} 
-                      size="small"
-                      disabled={scale <= 0.1}
-                      sx={{
-                        bgcolor: 'action.hover',
-                        '&:hover': { bgcolor: 'action.selected' }
-                      }}
-                    >
-                      <ZoomOut />
-                    </IconButton>
-                    <Typography variant="body2" sx={{ minWidth: 45, textAlign: 'center' }}>
-                      {Math.round(scale * 100)}%
-                    </Typography>
-                    <IconButton 
-                      onClick={handleZoomIn} 
-                      size="small"
-                      disabled={scale >= 3.0}
-                      sx={{
-                        bgcolor: 'action.hover',
-                        '&:hover': { bgcolor: 'action.selected' }
-                      }}
-                    >
-                      <ZoomIn />
-                    </IconButton>
-                    <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
-                    <Tooltip title={t('split.closeFile')}>
+            <Paper 
+              sx={{ 
+                p: 2, 
+                display: 'flex', 
+                flexDirection: 'column',
+                height: '100%',
+                overflow: 'hidden' // 防止内容溢出
+              }}
+            >
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                <Typography variant="h6">{t('split.previewTitle')}</Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  {file && (
+                    <>
                       <IconButton 
-                        onClick={handleClosePDF}
+                        onClick={handleZoomOut} 
                         size="small"
+                        disabled={scale <= 0.1}
                         sx={{
-                          color: 'error.main',
-                          '&:hover': { 
-                            bgcolor: 'error.lighter',
-                            color: 'error.dark'
-                          }
+                          bgcolor: 'action.hover',
+                          '&:hover': { bgcolor: 'action.selected' }
                         }}
                       >
-                        <CloseIcon />
+                        <ZoomOut />
                       </IconButton>
-                    </Tooltip>
-                  </>
-                )}
+                      <Typography variant="body2" sx={{ minWidth: 45, textAlign: 'center' }}>
+                        {Math.round(scale * 100)}%
+                      </Typography>
+                      <IconButton 
+                        onClick={handleZoomIn} 
+                        size="small"
+                        disabled={scale >= 3.0}
+                        sx={{
+                          bgcolor: 'action.hover',
+                          '&:hover': { bgcolor: 'action.selected' }
+                        }}
+                      >
+                        <ZoomIn />
+                      </IconButton>
+                      <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+                      <Tooltip title={t('split.closeFile')}>
+                        <IconButton 
+                          onClick={handleClosePDF}
+                          size="small"
+                          sx={{
+                            color: 'error.main',
+                            '&:hover': { 
+                              bgcolor: 'error.lighter',
+                              color: 'error.dark'
+                            }
+                          }}
+                        >
+                          <CloseIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </>
+                  )}
+                </Box>
               </Box>
-            </Box>
 
             {!file ? (
               <Box
