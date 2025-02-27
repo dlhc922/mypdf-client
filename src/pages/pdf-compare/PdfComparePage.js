@@ -422,13 +422,27 @@ function PdfComparePage() {
             <Tabs 
               value={activeTab} 
               onChange={handleTabChange}
-              variant={isMobile ? "scrollable" : "standard"}
+              variant={isMobile ? "scrollable" : "fullWidth"}
               scrollButtons={isMobile ? "auto" : false}
-              sx={{ px: 2, pt: 1 }}
             >
-              <Tab label={t('pdfCompare.originalTab') || "原始文档"} disabled={!originalPdf} />
-              <Tab label={t('pdfCompare.modifiedTab') || "修改后文档"} disabled={!modifiedPdf} />
-              <Tab label={t('pdfCompare.comparisonTab') || "比较结果"} disabled={!comparisonResult} />
+              <Tab 
+                label={t('pdfCompare.comparisonTab') || "比较结果"} 
+                disabled={!comparisonResult}
+                icon={<CompareIcon />}
+                iconPosition="start"
+              />
+              <Tab 
+                label={t('pdfCompare.originalTab') || "原始文档"} 
+                disabled={!originalPdf}
+                icon={<FileIcon />}
+                iconPosition="start"
+              />
+              <Tab 
+                label={t('pdfCompare.modifiedTab') || "修改后文档"} 
+                disabled={!modifiedPdf}
+                icon={<FileIcon />}
+                iconPosition="start"
+              />
             </Tabs>
             
             <Divider />
@@ -476,19 +490,19 @@ function PdfComparePage() {
             overflow: 'auto',
             bgcolor: '#f5f5f5'
           }}>
-            {activeTab === 0 && originalPdf && (
-              <PdfViewer file={originalPdf} zoom={zoom} />
-            )}
-            
-            {activeTab === 1 && modifiedPdf && (
-              <PdfViewer file={modifiedPdf} zoom={zoom} />
-            )}
-            
-            {activeTab === 2 && comparisonResult && (
+            {activeTab === 0 && comparisonResult && (
               <DifferenceViewer 
                 comparisonResult={comparisonResult} 
                 zoom={zoom}
               />
+            )}
+            
+            {activeTab === 1 && originalPdf && (
+              <PdfViewer file={originalPdf} zoom={zoom} />
+            )}
+            
+            {activeTab === 2 && modifiedPdf && (
+              <PdfViewer file={modifiedPdf} zoom={zoom} />
             )}
           </Box>
         </Paper>

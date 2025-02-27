@@ -311,14 +311,14 @@
     "comparisonTab": "Comparison Result",
     "zoomIn": "Zoom In",
     "zoomOut": "Zoom Out",
-    "downloadComparison": "Download Comparison Result",
+    "downloadComparison": "Save Comparison Result",
     "enterFullscreen": "Enter Fullscreen",
     "exitFullscreen": "Exit Fullscreen",
     "howItWorks": "How It Works",
     "howItWorksDescription": "This tool uses advanced PDF comparison algorithms to analyze content, layout, and format differences between two PDF files. The system identifies text changes, additions or deletions, as well as image and format changes, and highlights these differences in the comparison result.",
     "privacyNote": "Note: All processing is done in your browser, files are not uploaded to any server, ensuring your data privacy and security.",
     "comparisonComplete": "Comparison complete, please check the results",
-    "downloadComplete": "Comparison result has been downloaded",
+    "downloadComplete": "Comparison result has been saved",
     "summaryTitle": "Comparison Summary",
     "originalFile": "Original File",
     "modifiedFile": "Modified File",
@@ -335,7 +335,7 @@
       "notPdf": "Please upload a PDF file",
       "missingFiles": "Please upload two PDF files to compare",
       "comparisonFailed": "Comparison failed, please check if the PDF files are valid",
-      "downloadFailed": "Failed to download comparison result"
+      "downloadFailed": "Failed to save comparison result"
     },
     "pageDiff": {
       "pageNumber": "Page {{pageNumber}}",

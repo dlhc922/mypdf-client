@@ -95,9 +95,40 @@ export function usePdfCompare() {
         const page = await pdf.getPage(i);
         const textContent = await page.getTextContent();
         
-        // 提取文本
-        const pageText = textContent.items.map(item => item.str).join(' ');
-        fullText += pageText + ' ';
+        // 提取文本，保留更多的原始格式
+        let pageText = '';
+        let lastY;
+        let lastX;
+        
+        // 按位置排序文本项，尝试保持原始阅读顺序
+        const sortedItems = [...textContent.items].sort((a, b) => {
+          // 首先按y坐标排序（行）
+          if (Math.abs(a.transform[5] - b.transform[5]) > 5) {
+            return b.transform[5] - a.transform[5]; // PDF坐标系从底部开始
+          }
+          // 然后按x坐标排序（列）
+          return a.transform[4] - b.transform[4];
+        });
+        
+        for (const item of sortedItems) {
+          const x = item.transform[4];
+          const y = item.transform[5];
+          
+          // 检测新行
+          if (lastY !== undefined && Math.abs(y - lastY) > 5) {
+            pageText += '\n';
+          } 
+          // 检测同一行中的空格
+          else if (lastX !== undefined && x - lastX > 10) {
+            pageText += ' ';
+          }
+          
+          pageText += item.str;
+          lastY = y;
+          lastX = x + item.width;
+        }
+        
+        fullText += pageText + '\n\n'; // 页面之间添加两个换行
         pageTexts.push(pageText);
         
         // 检查页面是否包含图像
@@ -134,12 +165,20 @@ export function usePdfCompare() {
       const originalData = await extractTextFromPdf(originalPdf);
       const modifiedData = await extractTextFromPdf(modifiedPdf);
       
+      console.log("原始文本:", originalData.fullText);
+      console.log("修改后文本:", modifiedData.fullText);
+      
       // 创建差异匹配对象
       const dmp = new diff_match_patch();
+      // 设置更精确的差异检测参数
+      dmp.Diff_Timeout = 5; // 设置更长的超时时间
+      dmp.Diff_EditCost = 4; // 提高编辑成本，减少不必要的拆分
       
       // 比较全文
       const fullTextDiff = dmp.diff_main(originalData.fullText, modifiedData.fullText);
       dmp.diff_cleanupSemantic(fullTextDiff);
+      
+      console.log("差异结果:", fullTextDiff);
       
       // 计算统计信息
       let addedCount = 0;
@@ -154,6 +193,7 @@ export function usePdfCompare() {
         }
       });
       
+      // 更精确地计算修改内容
       changedCount = Math.min(addedCount, removedCount);
       
       // 比较每一页
@@ -176,7 +216,9 @@ export function usePdfCompare() {
         pageDiffs.push({
           pageNumber: i + 1,
           diff: pageDiff,
-          imageChanged
+          imageChanged,
+          originalText: originalPageText,
+          modifiedText: modifiedPageText
         });
       }
       
@@ -190,7 +232,8 @@ export function usePdfCompare() {
           changedCount,
           totalDifferences: addedCount + removedCount
         },
-        pageDiffs
+        pageDiffs,
+        fullTextDiff
       };
       
       setComparisonResult(result);
@@ -260,6 +303,37 @@ export function usePdfCompare() {
         if (pageDiff.imageChanged) {
           doc.text('  - 图像有变化', 30, y);
           y += 10;
+        }
+        
+        if (hasDifferences) {
+          // 添加具体的文本差异
+          doc.text('  - 文本变化:', 30, y);
+          y += 10;
+          
+          // 简化的差异显示
+          let diffSummary = '';
+          pageDiff.diff.forEach(([type, text]) => {
+            if (type === -1) {
+              diffSummary += `删除: "${text.substring(0, 50)}${text.length > 50 ? '...' : ''}"\n`;
+            } else if (type === 1) {
+              diffSummary += `添加: "${text.substring(0, 50)}${text.length > 50 ? '...' : ''}"\n`;
+            }
+          });
+          
+          // 分行显示差异摘要
+          const diffLines = diffSummary.split('\n');
+          diffLines.forEach(line => {
+            if (line.trim()) {
+              // 检查是否需要新页面
+              if (y > 270) {
+                doc.addPage();
+                y = 20;
+              }
+              
+              doc.text('    ' + line, 30, y, { maxWidth: 150 });
+              y += 10;
+            }
+          });
         }
       });
       

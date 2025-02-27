@@ -311,14 +311,14 @@
     "comparisonTab": "比较结果",
     "zoomIn": "放大",
     "zoomOut": "缩小",
-    "downloadComparison": "下载比较结果",
+    "downloadComparison": "保存比较结果",
     "enterFullscreen": "全屏查看",
     "exitFullscreen": "退出全屏",
     "howItWorks": "工作原理",
     "howItWorksDescription": "本工具使用先进的PDF比较算法，分析两个PDF文件的内容、布局和格式差异。系统会识别文本更改、添加或删除的内容，以及图像和格式的变化，并在比较结果中用不同颜色高亮显示这些差异。",
     "privacyNote": "注意：所有处理都在您的浏览器中完成，文件不会上传到服务器，确保您的数据隐私和安全。",
     "comparisonComplete": "比较完成，请查看结果",
-    "downloadComplete": "比较结果已下载",
+    "downloadComplete": "比较结果已保存",
     "summaryTitle": "比较摘要",
     "originalFile": "原始文件",
     "modifiedFile": "修改后文件",
@@ -335,7 +335,7 @@
       "notPdf": "请上传PDF文件",
       "missingFiles": "请上传两个PDF文件进行比较",
       "comparisonFailed": "比较失败，请检查PDF文件是否有效",
-      "downloadFailed": "下载比较结果失败"
+      "downloadFailed": "保存比较结果失败"
     },
     "pageDiff": {
       "pageNumber": "第 {{pageNumber}} 页",
