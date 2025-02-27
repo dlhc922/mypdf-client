@@ -8,7 +8,8 @@
     "split": "PDF 拆分",
     "compress": "PDF 压缩",
     "extract": "PDF 提取图片",
-    "imageToPdf": "图片转PDF"
+    "imageToPdf": "图片转PDF",
+    "pdfCompare": "PDF 比较"
   },
   "meta": {
     "description": "在线免费 PDF 盖章、合并、拆分和压缩工具，永久免费使用，无需注册。",
@@ -181,6 +182,10 @@
       "imageToPdf": {
         "title": "图片转PDF",
         "description": "将图片转换为PDF文件，方便保存和分享"
+      },
+      "pdfCompare": {
+        "title": "PDF 比较",
+        "description": "比较两个 PDF 文件的差异，方便查看和编辑"
       }
     }
   },
@@ -289,5 +294,57 @@
     "balancedOption": "平衡大小和质量",
     "largerFile": "文件较大，清晰度高",
     "dragToReorder": "拖动调整顺序"
+  },
+  "pdfCompare": {
+    "pageTitle": "PDF比对工具",
+    "pageDescription": "比较两个PDF文件的差异并高亮显示不同之处",
+    "title": "PDF比对工具",
+    "subtitle": "上传两个PDF文件进行比较并高亮显示差异",
+    "dropOriginalPdf": "拖放原始PDF文件到这里或点击上传",
+    "dropModifiedPdf": "拖放修改后PDF文件到这里或点击上传",
+    "onlyPdfSupported": "仅支持PDF格式",
+    "fileReady": "文件已就绪，请上传另一个PDF文件进行比较",
+    "comparing": "正在比较...",
+    "comparePdfs": "比较PDF文件",
+    "originalTab": "原始文档",
+    "modifiedTab": "修改后文档",
+    "comparisonTab": "比较结果",
+    "zoomIn": "放大",
+    "zoomOut": "缩小",
+    "downloadComparison": "下载比较结果",
+    "enterFullscreen": "全屏查看",
+    "exitFullscreen": "退出全屏",
+    "howItWorks": "工作原理",
+    "howItWorksDescription": "本工具使用先进的PDF比较算法，分析两个PDF文件的内容、布局和格式差异。系统会识别文本更改、添加或删除的内容，以及图像和格式的变化，并在比较结果中用不同颜色高亮显示这些差异。",
+    "privacyNote": "注意：所有处理都在您的浏览器中完成，文件不会上传到服务器，确保您的数据隐私和安全。",
+    "comparisonComplete": "比较完成，请查看结果",
+    "downloadComplete": "比较结果已下载",
+    "summaryTitle": "比较摘要",
+    "originalFile": "原始文件",
+    "modifiedFile": "修改后文件",
+    "addedContent": "添加内容",
+    "removedContent": "删除内容",
+    "changedContent": "修改内容",
+    "characters": "字符",
+    "imageChanges": "图像变化",
+    "detected": "已检测到",
+    "differencesFound": "处差异",
+    "noDifferencesFound": "未发现差异",
+    "pageWithDifferences": "有差异的页面",
+    "errors": {
+      "notPdf": "请上传PDF文件",
+      "missingFiles": "请上传两个PDF文件进行比较",
+      "comparisonFailed": "比较失败，请检查PDF文件是否有效",
+      "downloadFailed": "下载比较结果失败"
+    },
+    "pageDiff": {
+      "pageNumber": "第 {{pageNumber}} 页",
+      "hasDifferences": "有差异",
+      "noDifferences": "无差异",
+      "imageChanged": "图像有变化"
+    },
+    "originalPdf": "原始PDF",
+    "modifiedPdf": "修改后PDF"
+
   }
 }

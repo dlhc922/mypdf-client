@@ -15,6 +15,7 @@ import theme from './theme';
 import SignPage from './pages/sign/SignPage';
 import ExtractPage from './pages/extract/ExtractPage';
 import ImageToPdfPage from './pages/image-to-pdf/ImageToPdfPage';
+import PdfComparePage from './pages/pdf-compare/PdfComparePage';
 
 function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -67,6 +68,7 @@ function App() {
                 <Route path="/sign" element={<SignPage />} />
                 <Route path="/extract" element={<ExtractPage />} />
                 <Route path="/image-to-pdf" element={<ImageToPdfPage />} />
+                <Route path="/pdf-compare" element={<PdfComparePage />} />
               </Routes>
             </Layout>
           </BrowserRouter>

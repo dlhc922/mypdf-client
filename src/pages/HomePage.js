@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Box, Container, Grid, Card, CardContent, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { VerifiedUser, Gesture, Merge, CallSplit, Compress, Image as ImageIcon, ArrowForward } from '@mui/icons-material';
+import { VerifiedUser, Gesture, Merge, CallSplit, Compress, Image as ImageIcon, ArrowForward,CompareArrows } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import LanguageShareControls from '../components/LanguageShareControls';
 
@@ -51,6 +51,12 @@ function HomePage() {
       description: t('home.features.imageToPdf.description'),
       icon: <ImageIcon sx={{ fontSize: 40 }} />,
       path: '/image-to-pdf'
+    },
+    {
+      title: t('home.features.pdfCompare.title'),
+      description: t('home.features.pdfCompare.description'),
+      icon: <CompareArrows sx={{ fontSize: 40 }} />,
+      path: '/pdf-compare'
     }
   ];
 

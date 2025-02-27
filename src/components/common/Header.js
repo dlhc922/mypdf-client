@@ -42,7 +42,8 @@ function Header() {
     { path: '/split', label: t('tools.split') },
     { path: '/compress', label: t('tools.compress') },
     { path: '/extract', label: t('tools.extract') },
-    { path: '/image-to-pdf', label: t('tools.imageToPdf') }
+    { path: '/image-to-pdf', label: t('tools.imageToPdf') },
+    { path: '/pdf-compare', label: t('tools.pdfCompare') }
   ];
 
   // 移动端导航菜单抽屉

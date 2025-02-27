@@ -8,7 +8,8 @@
     "split": "PDF Split",
     "compress": "PDF Compress",
     "extract": "PDF Extract Images",
-    "imageToPdf": "Image to PDF"
+    "imageToPdf": "Image to PDF",
+    "pdfCompare": "PDF Compare"
   },
   "meta": {
     "description": "Free online PDF stamp, merge, split, and compress tool without the need for registration.",
@@ -181,6 +182,10 @@
       "imageToPdf": {
         "title": "Image to PDF",
         "description": "Convert images to PDF files for easy saving and sharing"
+      },
+      "pdfCompare": {
+        "title": "PDF Compare",
+        "description": "Compare two PDF files for differences, for easy viewing and editing"
       }
     }
   },
@@ -289,6 +294,57 @@
     "balancedOption": "Balanced size and quality",
     "largerFile": "Larger file, higher quality",
     "dragToReorder": "Drag to reorder"
+  },
+  "pdfCompare": {
+    "pageTitle": "PDF Comparison Tool",
+    "pageDescription": "Compare two PDF files and highlight the differences",
+    "title": "PDF Comparison Tool",
+    "subtitle": "Upload two PDF files to compare and highlight differences",
+    "dropOriginalPdf": "Drop original PDF here or click to upload",
+    "dropModifiedPdf": "Drop modified PDF here or click to upload",
+    "onlyPdfSupported": "Only PDF format is supported",
+    "fileReady": "File is ready, please upload the other PDF to compare",
+    "comparing": "Comparing...",
+    "comparePdfs": "Compare PDFs",
+    "originalTab": "Original Document",
+    "modifiedTab": "Modified Document",
+    "comparisonTab": "Comparison Result",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "downloadComparison": "Download Comparison Result",
+    "enterFullscreen": "Enter Fullscreen",
+    "exitFullscreen": "Exit Fullscreen",
+    "howItWorks": "How It Works",
+    "howItWorksDescription": "This tool uses advanced PDF comparison algorithms to analyze content, layout, and format differences between two PDF files. The system identifies text changes, additions or deletions, as well as image and format changes, and highlights these differences in the comparison result.",
+    "privacyNote": "Note: All processing is done in your browser, files are not uploaded to any server, ensuring your data privacy and security.",
+    "comparisonComplete": "Comparison complete, please check the results",
+    "downloadComplete": "Comparison result has been downloaded",
+    "summaryTitle": "Comparison Summary",
+    "originalFile": "Original File",
+    "modifiedFile": "Modified File",
+    "addedContent": "Added Content",
+    "removedContent": "Removed Content",
+    "changedContent": "Changed Content",
+    "characters": "characters",
+    "imageChanges": "Image Changes",
+    "detected": "detected",
+    "differencesFound": "differences found",
+    "noDifferencesFound": "No differences found",
+    "pageWithDifferences": "Page with differences",
+    "errors": {
+      "notPdf": "Please upload a PDF file",
+      "missingFiles": "Please upload two PDF files to compare",
+      "comparisonFailed": "Comparison failed, please check if the PDF files are valid",
+      "downloadFailed": "Failed to download comparison result"
+    },
+    "pageDiff": {
+      "pageNumber": "Page {{pageNumber}}",
+      "hasDifferences": "Has Differences",
+      "noDifferences": "No Differences",
+      "imageChanged": "Image Changed"
+    },
+    "originalPdf": "Original PDF",
+    "modifiedPdf": "Modified PDF"
   }
 
 } 
