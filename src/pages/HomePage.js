@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Box, Container, Grid, Card, CardContent, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { VerifiedUser, Gesture, Merge, CallSplit, Compress, Image as ImageIcon } from '@mui/icons-material';
+import { VerifiedUser, Gesture, Merge, CallSplit, Compress, Image as ImageIcon, ArrowForward } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import LanguageShareControls from '../components/LanguageShareControls';
 
@@ -45,6 +45,12 @@ function HomePage() {
       description: t('home.features.extract.description'),
       icon: <ImageIcon sx={{ fontSize: 40 }} />,
       path: '/extract'
+    },
+    {
+      title: t('home.features.imageToPdf.title'),
+      description: t('home.features.imageToPdf.description'),
+      icon: <ImageIcon sx={{ fontSize: 40 }} />,
+      path: '/image-to-pdf'
     }
   ];
 
@@ -123,9 +129,9 @@ function HomePage() {
         </Box>
       </Typography>
 
-      <Grid container spacing={4} justifyContent="center">
+      <Grid container spacing={3} justifyContent="center">
         {features.map((feature) => (
-          <Grid item xs={12} sm={6} md={4} key={feature.path}>
+          <Grid item xs={12} sm={6} md={3} key={feature.path}>
             <Card 
               sx={{ 
                 height: '100%',
@@ -141,10 +147,10 @@ function HomePage() {
                 <Box sx={{ color: 'primary.main', mb: 2 }}>
                   {feature.icon}
                 </Box>
-                <Typography gutterBottom variant="h5" component="h2">
+                <Typography gutterBottom variant="h6" component="h2">
                   {feature.title}
                 </Typography>
-                <Typography color="text.secondary" paragraph>
+                <Typography color="text.secondary" paragraph variant="body2">
                   {feature.description}
                 </Typography>
                 <Button
@@ -152,6 +158,7 @@ function HomePage() {
                   to={feature.path}
                   variant="contained"
                   color="primary"
+                  size="small"
                 >
                   {t('home.startUsing')}
                 </Button>

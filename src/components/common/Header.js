@@ -41,7 +41,8 @@ function Header() {
     { path: '/merge', label: t('tools.merge') },
     { path: '/split', label: t('tools.split') },
     { path: '/compress', label: t('tools.compress') },
-    { path: '/extract', label: t('tools.extract') }
+    { path: '/extract', label: t('tools.extract') },
+    { path: '/image-to-pdf', label: t('tools.imageToPdf') }
   ];
 
   // 移动端导航菜单抽屉

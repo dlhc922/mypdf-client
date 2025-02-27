@@ -14,6 +14,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme';
 import SignPage from './pages/sign/SignPage';
 import ExtractPage from './pages/extract/ExtractPage';
+import ImageToPdfPage from './pages/image-to-pdf/ImageToPdfPage';
 
 function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -65,6 +66,7 @@ function App() {
                 <Route path="/compress" element={<CompressPage />} />
                 <Route path="/sign" element={<SignPage />} />
                 <Route path="/extract" element={<ExtractPage />} />
+                <Route path="/image-to-pdf" element={<ImageToPdfPage />} />
               </Routes>
             </Layout>
           </BrowserRouter>

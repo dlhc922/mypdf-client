@@ -7,7 +7,8 @@
     "stamp": "PDF 印章",
     "split": "PDF 拆分",
     "compress": "PDF 压缩",
-    "extract": "PDF 提取图片"
+    "extract": "PDF 提取图片",
+    "imageToPdf": "图片转PDF"
   },
   "meta": {
     "description": "在线免费 PDF 盖章、合并、拆分和压缩工具，永久免费使用，无需注册。",
@@ -176,6 +177,10 @@
       "extract": {
         "title": "PDF 提取图片",
         "description": "提取 PDF 文件中的图片，方便单独保存和使用"
+      },
+      "imageToPdf": {
+        "title": "图片转PDF",
+        "description": "将图片转换为PDF文件，方便保存和分享"
       }
     }
   },
@@ -256,5 +261,33 @@
     "backToHome": "返回首页",
     "simpleMobileNotSupported": "此功能不适合在手机上使用，请复制链接在电脑上打开",
     "desktopOnly": "请使用电脑访问"
+  },
+  "imageToPdf": {
+    "title": "图片转PDF",
+    "dropImages": "拖放图片到这里或点击选择图片",
+    "supportedFormats": "支持JPG、PNG、GIF等格式",
+    "selectedImages": "已选择 {{count}} 张图片",
+    "settings": "设置",
+    "removeAll": "移除所有图片",
+    "pdfQuality": "PDF质量",
+    "lowQuality": "低质量 (较小文件)",
+    "mediumQuality": "中等质量",
+    "highQuality": "高质量 (较大文件)",
+    "generatePdf": "生成PDF",
+    "generating": "正在生成PDF...",
+    "howToUse": "使用说明",
+    "step1": "上传一张或多张图片",
+    "step2": "拖动图片调整顺序（可选）",
+    "step3": "调整PDF质量设置（可选）",
+    "step4": "点击生成PDF按钮",
+    "privacyNote": "注意：所有处理都在您的浏览器中完成，图片不会上传到服务器。",
+    "noImagesSelected": "请选择有效的图片文件",
+    "imagesAdded": "已添加 {{count}} 张图片",
+    "pdfGenerated": "PDF已成功生成并保存",
+    "pdfGenerationError": "生成PDF时出错，请重试",
+    "smallerFile": "文件较小，适合分享",
+    "balancedOption": "平衡大小和质量",
+    "largerFile": "文件较大，清晰度高",
+    "dragToReorder": "拖动调整顺序"
   }
 }
