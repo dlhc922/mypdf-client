@@ -1,4 +1,4 @@
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Link, Typography, Stack } from '@mui/material';
 
 export default function Footer() {
   return (
@@ -58,16 +58,24 @@ export default function Footer() {
           </Link>
         </Typography>
         
-        <Typography 
-          variant="body2" 
-          color="text.secondary"
+        <Stack 
+          direction="row" 
+          spacing={2} 
           sx={{ 
             fontFamily: 'monospace',
             letterSpacing: '0.5px'
           }}
         >
-          Contact: <Link href="mailto:dlhc922@gmail.com">dlhc922@gmail.com</Link>
-        </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Contact: <Link href="mailto:dlhc922@gmail.com">dlhc922@gmail.com</Link>
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <Link href="/privacy">Privacy Policy</Link>
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <Link href="/disclaimer">Disclaimer</Link>
+          </Typography>
+        </Stack>
       </Box>
     </Box>
   );

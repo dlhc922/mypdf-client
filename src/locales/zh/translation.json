@@ -319,7 +319,13 @@
     "privacyNote": "注意：所有处理都在您的浏览器中完成，文件不会上传到服务器，确保您的数据隐私和安全。",
     "comparisonComplete": "比较完成，请查看结果",
     "downloadComplete": "比较结果已保存",
-    "summaryTitle": "比较摘要",
+    "": {
+      "originalFile": "原始文件",
+      "modifiedFile": "修改后文件",
+      "addedContent": "添加内容",
+      "removedContent": "删除内容",
+      "changedContent": "修改内容"
+    },
     "originalFile": "原始文件",
     "modifiedFile": "修改后文件",
     "addedContent": "添加内容",
@@ -344,7 +350,13 @@
       "imageChanged": "图像有变化"
     },
     "originalPdf": "原始PDF",
-    "modifiedPdf": "修改后PDF"
+    "modifiedPdf": "修改后PDF",
+
+    "pageNumber": "第 {{pageNumber}} 页",
+    "pageIndicator": "第 {{pageNumber}} 页，共 {{totalPages}} 页",
+    "imageChanged": "图像有变化",
+    "hasDifferences": "有差异",
+    "noDifferences": "无差异"
 
   }
 }

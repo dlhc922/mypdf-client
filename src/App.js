@@ -16,6 +16,8 @@ import SignPage from './pages/sign/SignPage';
 import ExtractPage from './pages/extract/ExtractPage';
 import ImageToPdfPage from './pages/image-to-pdf/ImageToPdfPage';
 import PdfComparePage from './pages/pdf-compare/PdfComparePage';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import Disclaimer from './pages/Disclaimer';
 
 function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -69,6 +71,8 @@ function App() {
                 <Route path="/extract" element={<ExtractPage />} />
                 <Route path="/image-to-pdf" element={<ImageToPdfPage />} />
                 <Route path="/pdf-compare" element={<PdfComparePage />} />
+                <Route path="/privacy" element={<PrivacyPolicy />} />
+                <Route path="/disclaimer" element={<Disclaimer />} />
               </Routes>
             </Layout>
           </BrowserRouter>
