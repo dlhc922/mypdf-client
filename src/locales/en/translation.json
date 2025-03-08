@@ -507,5 +507,12 @@
       "largeFiles": "Why are some large files processed slowly?",
       "issues": "What should I do if I encounter issues while using the tools?"
     }
+  },
+  "footer": {
+    "poweredBy": "Powered by",
+    "contact": "Contact",
+    "privacyPolicy": "Privacy Policy",
+    "disclaimer": "Disclaimer"
   }
+
 } 

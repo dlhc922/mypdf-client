@@ -1,6 +1,12 @@
 import { Box, Link, Typography, Stack } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 export default function Footer() {
+  const { t } = useTranslation();
+  
+  // 使用一个变量来存储联系我们的文本，这样更容易调试
+  const contactText = t('footer.contact', '联系我们');
+  
   return (
     <Box
       component="footer"
@@ -39,10 +45,10 @@ export default function Footer() {
           }}
         >
           <Typography variant="body2" color="text.secondary">
-            <Link href="/guides">使用指南</Link>
+            <Link href="/guides">{t('guides.pageTitle', '使用指南')}</Link>
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <Link href="/faq">常见问题</Link>
+            <Link href="/faq">{t('faq.pageTitle', '常见问题')}</Link>
           </Typography>
         </Stack>
         
@@ -57,7 +63,7 @@ export default function Footer() {
             gap: 0.5
           }}
         >
-          Powered by{' '}
+          {t('footer.poweredBy', '技术支持')}{' '}
           <Link 
             href="https://wsbn.tech" 
             target="_blank"
@@ -83,13 +89,14 @@ export default function Footer() {
           }}
         >
           <Typography variant="body2" color="text.secondary">
-            Contact: <Link href="mailto:dlhc922@gmail.com">dlhc922@gmail.com</Link>
+            {/* 使用硬编码的文本作为备选，确保至少有一个可见的文本 */}
+            {contactText || '联系我们'}: <Link href="mailto:dlhc922@gmail.com">dlhc922@gmail.com</Link>
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <Link href="/privacy">Privacy Policy</Link>
+            <Link href="/privacy">{t('footer.privacyPolicy', '隐私政策')}</Link>
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <Link href="/disclaimer">Disclaimer</Link>
+            <Link href="/disclaimer">{t('footer.disclaimer', '免责声明')}</Link>
           </Typography>
         </Stack>
       </Box>

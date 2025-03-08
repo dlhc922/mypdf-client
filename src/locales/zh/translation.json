@@ -518,5 +518,11 @@
       "largeFiles": "为什么某些大文件处理较慢？",
       "issues": "如果我在使用工具时遇到问题怎么办？"
     }
+  },
+  "footer": {
+    "poweredBy": "技术支持",
+    "contact": "联系我们",
+    "privacyPolicy": "隐私政策",
+    "disclaimer": "免责声明"
   }
 }
