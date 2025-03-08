@@ -2,37 +2,103 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.wsbn.tech</loc>
-    <lastmod>2025-02-23</lastmod>
+    <lastmod>2025-03-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.wsbn.tech/stamp</loc>
-    <lastmod>2025-02-23</lastmod>
+    <lastmod>2025-03-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.wsbn.tech/sign</loc>
-    <lastmod>2025-02-23</lastmod>
+    <lastmod>2025-03-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.wsbn.tech/merge</loc>
-    <lastmod>2025-02-23</lastmod>
+    <lastmod>2025-03-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.wsbn.tech/split</loc>
-    <lastmod>2025-02-23</lastmod>
+    <lastmod>2025-03-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.wsbn.tech/compress</loc>
-    <lastmod>2025-02-23</lastmod>
+    <lastmod>2025-03-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wsbn.tech/extract</loc>
+    <lastmod>2025-03-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wsbn.tech/image-to-pdf</loc>
+    <lastmod>2025-03-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wsbn.tech/pdf-compare</loc>
+    <lastmod>2025-03-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wsbn.tech/guides/stamp</loc>
+    <lastmod>2025-03-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wsbn.tech/guides/merge</loc>
+    <lastmod>2025-03-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wsbn.tech/guides/split</loc>
+    <lastmod>2025-03-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wsbn.tech/guides/compress</loc>
+    <lastmod>2025-03-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wsbn.tech/guides</loc>
+    <lastmod>2025-03-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wsbn.tech/faq</loc>
+    <lastmod>2025-03-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wsbn.tech/privacy</loc>
+    <lastmod>2025-03-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wsbn.tech/disclaimer</loc>
+    <lastmod>2025-03-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
