@@ -15,7 +15,9 @@
     "description": "Free online PDF stamp, merge, split, and compress tool without the need for registration.",
     "ogTitle": "Free PDF Stamping & Splitting - No Registration, Forever Free",
     "ogDescription": "An efficient PDF processing and e-stamping solution",
-    "ogImage": "https://www.wsbn.tech/logo.png"
+    "ogImage": "https://www.wsbn.tech/logo.png",
+    "title": "Free Online PDF Tools",
+    "keywords": "PDF tools, merge PDF, split PDF, compress PDF, PDF stamp, PDF signature, free PDF tools, online PDF editor"
   },
   "stamp": {
     "title": "Select Stamp Pages",
@@ -187,6 +189,42 @@
         "title": "PDF Compare",
         "description": "Compare two PDF files for differences, for easy viewing and editing"
       }
+    },
+    "quickGuides": {
+      "title": "Quick Guides",
+      "viewAll": "View All Guides"
+    },
+    "faqSection": {
+      "title": "Frequently Asked Questions",
+      "viewAll": "View All FAQs"
+    },
+    "guides": {
+      "stamp": "How to Add Stamps to PDF",
+      "merge": "How to Merge PDF Files",
+      "split": "How to Split PDF Files",
+      "compress": "How to Compress PDF Files"
+    },
+    "faq": {
+      "free": "Is WSBN.tech PDF Toolkit completely free?",
+      "security": "Are my files secure when using these tools?",
+      "mobile": "Can I use these tools on mobile devices?",
+      "fileSize": "Is there a file size limit?"
+    },
+    "privacy": {
+      "title": "Privacy & Security",
+      "description": "All PDF processing is done locally in your browser. Your files are never uploaded to any server, ensuring complete privacy and security.",
+      "noRegistration": {
+        "title": "No Registration Required",
+        "description": "Use all our tools without creating an account or providing any personal information."
+      },
+      "localProcessing": {
+        "title": "Local Processing",
+        "description": "All file processing happens directly in your browser. Your files never leave your device."
+      },
+      "noStorage": {
+        "title": "No File Storage",
+        "description": "We don't store your files. Once you close the browser tab, all data is automatically cleared."
+      }
     }
   },
   "common": {
@@ -345,6 +383,129 @@
     },
     "originalPdf": "Original PDF",
     "modifiedPdf": "Modified PDF"
+  },
+  "guides": {
+    "pageTitle": "User Guides",
+    "pageDescription": "Detailed guides on how to use our PDF tools, including steps for stamping, merging, splitting, and compressing PDFs.",
+    "subtitle": "Learn how to effectively use our PDF tools with these step-by-step guides.",
+    "stepsTitle": "Steps to Follow",
+    "tipsTitle": "Tips for Best Results",
+    "faqsTitle": "Common Questions",
+    "step": "Step",
+    "howTo": "How to",
+    "useToolNow": "Use",
+    "localProcessingTitle": "All Tools Process Files Locally",
+    "localProcessingDescription": "All our PDF tools process your files locally in your browser, without uploading them to any server. This ensures your data privacy and security. No registration required, no waiting for uploads and downloads, and faster processing.",
+    
+    "stamp": {
+      "steps": {
+        "step1": "Upload your PDF file by clicking 'Select PDF File'",
+        "step2": "Upload a stamp image or create a transparent stamp",
+        "step3": "Adjust stamp size, position, and angle",
+        "step4": "Select pages to apply the stamp",
+        "step5": "Click 'Add Stamp' to process your PDF",
+        "step6": "Download your stamped PDF"
+      },
+      "tips": {
+        "tip1": "Use PNG images with transparency for cleaner stamps",
+        "tip2": "For non-transparent images, use our 'Make Transparent Stamp' tool",
+        "tip3": "Recommended stamp size is 30-50mm for most documents"
+      },
+      "faqs": {
+        "q1": "What file formats are supported for stamps?",
+        "a1": "Our tool supports PNG, JPEG, and other common image formats. PNG with transparency works best for stamps with clean backgrounds.",
+        "q2": "Is there a file size limit?",
+        "a2": "Since all processing is done in your browser, the file size limit depends on your device's memory. Generally, files up to 100MB should work well."
+      }
+    },
+    
+    "merge": {
+      "steps": {
+        "step1": "Click 'Add File' to select multiple PDF files",
+        "step2": "Drag and drop to reorder files as needed",
+        "step3": "Click 'Merge' to combine the files",
+        "step4": "Download your merged PDF"
+      },
+      "tips": {
+        "tip1": "Ensure all PDFs have similar page sizes for best appearance",
+        "tip2": "You can merge up to 20 files at once for optimal performance"
+      },
+      "faqs": {
+        "q1": "Will the merged PDF maintain bookmarks and links?",
+        "a1": "Yes, our merge tool preserves most PDF features including bookmarks, links, and form fields from the original documents.",
+        "q2": "Can I merge password-protected PDFs?",
+        "a2": "Currently, our tool doesn't support merging password-protected PDFs. Please remove the password protection before uploading."
+      }
+    },
+    
+    "split": {
+      "steps": {
+        "step1": "Upload your PDF file",
+        "step2": "Choose between Range Selection or Custom Selection",
+        "step3": "Define page ranges (e.g., 1-3, 5, 7-9)",
+        "step4": "Click 'Start Splitting'",
+        "step5": "Download each split PDF file"
+      },
+      "tips": {
+        "tip1": "Use the preview to confirm page selections before splitting",
+        "tip2": "For complex splitting, you can add multiple range selections"
+      },
+      "faqs": {
+        "q1": "Can I split a PDF into individual pages?",
+        "a1": "Yes, you can split a PDF into individual pages by creating a separate range for each page or using the custom selection option."
+      }
+    },
+    
+    "compress": {
+      "steps": {
+        "step1": "Upload your PDF file",
+        "step2": "Select compression quality level",
+        "step3": "Click 'Start Compression'",
+        "step4": "Download your compressed PDF file"
+      },
+      "tips": {
+        "tip1": "For documents with mostly text, you can choose higher compression",
+        "tip2": "For documents with high-quality images, choose medium compression to maintain image quality"
+      },
+      "faqs": {
+        "q1": "Will compression affect the quality of my PDF?",
+        "a1": "Compression will slightly reduce image quality based on the level chosen, but text is usually unaffected. You can choose a compression level that suits your needs.",
+        "q2": "Is there a maximum file size limit?",
+        "a2": "Since processing happens in the browser, large files may require more time and memory. We recommend files under 100MB."
+      }
+    }
+  },
+  
+  "faq": {
+    "pageTitle": "Frequently Asked Questions",
+    "pageDescription": "Find answers to common questions about our free PDF tools, including security, features, and technical support.",
+    "heading": "Frequently Asked Questions",
+    "subtitle": "Find answers to common questions about our PDF tools. If you don't find the information you need, feel free to contact us.",
+    "moreQuestions": "Have more questions?",
+    "contactUs": "If you didn't find the answer you need, feel free to contact us. We're happy to help!",
+    
+    "categories": {
+      "general": "General Questions",
+      "features": "Features",
+      "technical": "Technical Questions"
+    },
+    
+    "answers": {
+      "free": "Yes, all our PDF tools are completely free to use with no hidden fees or premium features. We believe in providing accessible tools for everyone.",
+      "security": "Your data is completely secure as all processing happens locally in your browser. Your files are never uploaded to any server, ensuring maximum privacy and security.",
+      "mobile": "Yes, our tools are designed to work on both desktop and mobile devices. However, for complex operations or large files, we recommend using a desktop for the best experience.",
+      "fileSize": "Since all processing is done in your browser, limitations depend on your device's capabilities. Generally, files up to 100MB work well, but larger files may require more processing time or memory."
+    },
+    
+    "questions": {
+      "pdfVersions": "Which PDF versions are supported?",
+      "processingTime": "How long does it take to process a PDF?",
+      "encryptedPdfs": "Can I process encrypted or password-protected PDFs?",
+      "quality": "How is the quality of processed PDFs?",
+      "whyBrowser": "Why choose browser-based processing instead of server processing?",
+      "browsers": "What browsers do I need to use these tools?",
+      "largeFiles": "Why are some large files processed slowly?",
+      "issues": "What should I do if I encounter issues while using the tools?"
+    }
   }
-
 } 

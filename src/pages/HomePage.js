@@ -1,15 +1,61 @@
-import React from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { Box, Container, Grid, Card, CardContent, Typography, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { VerifiedUser, Gesture, Merge, CallSplit, Compress, Image as ImageIcon, ArrowForward,CompareArrows } from '@mui/icons-material';
+import { 
+  Box, 
+  Container, 
+  Grid, 
+  Card, 
+  CardContent, 
+  Typography, 
+  Button, 
+  Paper,
+  Divider,
+  useTheme,
+  useMediaQuery
+} from '@mui/material';
+import { 
+  Link 
+} from 'react-router-dom';
+import { 
+  VerifiedUser, 
+  Gesture, 
+  Merge, 
+  CallSplit, 
+  Compress, 
+  Image as ImageIcon, 
+  ArrowForward,
+  CompareArrows,
+  Security as SecurityIcon,
+  MenuBook as GuideIcon,
+  Help as HelpIcon,
+  QuestionAnswer as FAQIcon
+} from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import LanguageShareControls from '../components/LanguageShareControls';
 
 function HomePage() {
   const { t, i18n } = useTranslation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
 
-  const features = [
+  // 当语言变化时强制重新渲染组件
+  const [forceUpdate, setForceUpdate] = React.useState(0);
+  
+  // 监听语言变化
+  useEffect(() => {
+    const handleLanguageChanged = () => {
+      setForceUpdate(prev => prev + 1);
+    };
+    
+    i18n.on('languageChanged', handleLanguageChanged);
+    
+    return () => {
+      i18n.off('languageChanged', handleLanguageChanged);
+    };
+  }, [i18n]);
+
+  const features = useMemo(() => [
     {
       title: t('home.features.stamp.title'),
       description: t('home.features.stamp.description'),
@@ -58,22 +104,82 @@ function HomePage() {
       icon: <CompareArrows sx={{ fontSize: 40 }} />,
       path: '/pdf-compare'
     }
-  ];
+  ], [t]);
 
-  const handleChangeLanguage = (lang) => {
-    i18n.changeLanguage(lang);
-  };
+  // 常用工具使用说明链接 - 使用翻译
+  const quickGuides = useMemo(() => [
+    {
+      title: t('home.guides.stamp'),
+      path: "/guides/stamp",
+      icon: <VerifiedUser fontSize="small" />
+    },
+    {
+      title: t('home.guides.merge'),
+      path: "/guides/merge",
+      icon: <Merge fontSize="small" />
+    },
+    {
+      title: t('home.guides.split'),
+      path: "/guides/split",
+      icon: <CallSplit fontSize="small" />
+    },
+    {
+      title: t('home.guides.compress'),
+      path: "/guides/compress",
+      icon: <Compress fontSize="small" />
+    }
+  ], [t]);
+
+  // 常见问题链接 - 使用翻译
+  const commonFaqs = useMemo(() => [
+    {
+      question: t('home.faq.free'),
+      path: "/faq#free"
+    },
+    {
+      question: t('home.faq.security'),
+      path: "/faq#security"
+    },
+    {
+      question: t('home.faq.mobile'),
+      path: "/faq#mobile"
+    },
+    {
+      question: t('home.faq.fileSize'),
+      path: "/faq#size-limit"
+    }
+  ], [t]);
 
   return (
-    <Container maxWidth="lg" sx={{ py: 8, position: 'relative' }}>
+    <Container maxWidth="lg" sx={{ py: { xs: 4, md: 8 }, position: 'relative' }}>
       <Helmet>
         {/* 根据当前语言动态设置 lang 属性和 meta 信息 */}
         <html lang={i18n.language} />
-        <title>{t('home.appTitle')}</title>
+        <title>{t('appName')} - {t('meta.title')}</title>
         <meta name="description" content={t('meta.description')} />
         <meta property="og:title" content={t('meta.ogTitle')} />
         <meta property="og:description" content={t('meta.ogDescription')} />
         <meta property="og:image" content={t('meta.ogImage')} />
+        <meta name="keywords" content={t('meta.keywords')} />
+        
+        {/* 添加结构化数据 */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "${t('appName')}",
+              "applicationCategory": "WebApplication",
+              "operatingSystem": "Web",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "description": "${t('meta.description')}"
+            }
+          `}
+        </script>
       </Helmet>
       
       {/* Logo 定位于左上角 */}
@@ -105,7 +211,8 @@ function HomePage() {
           color: 'primary.main',
           textDecoration: 'none',
           fontWeight: 'bold',
-          mb: 2
+          mb: 2,
+          fontSize: { xs: '1.75rem', md: '2.125rem' }
         }}
       >
         {t('home.appTitle')}
@@ -115,19 +222,19 @@ function HomePage() {
         variant="subtitle1" 
         align="center" 
         sx={{ 
-          mb: 6,
+          mb: { xs: 4, md: 6 },
           color: 'text.secondary',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          px: 2
         }}
       >
         <Box 
           component="span" 
           sx={{ 
-            px: 2,
             py: 0.5,
-            fontSize: '0.95rem',
+            fontSize: { xs: '0.875rem', md: '0.95rem' },
             opacity: 0.85,
           }}
         >
@@ -135,9 +242,9 @@ function HomePage() {
         </Box>
       </Typography>
 
-      <Grid container spacing={3} justifyContent="center">
+      <Grid container spacing={2} justifyContent="center">
         {features.map((feature) => (
-          <Grid item xs={12} sm={6} md={3} key={feature.path}>
+          <Grid item xs={6} sm={6} md={3} key={feature.path}>
             <Card 
               sx={{ 
                 height: '100%',
@@ -149,14 +256,34 @@ function HomePage() {
                 }
               }}
             >
-              <CardContent sx={{ flexGrow: 1, textAlign: 'center' }}>
-                <Box sx={{ color: 'primary.main', mb: 2 }}>
+              <CardContent sx={{ 
+                flexGrow: 1, 
+                textAlign: 'center',
+                p: { xs: 2, md: 3 }
+              }}>
+                <Box sx={{ color: 'primary.main', mb: 1 }}>
                   {feature.icon}
                 </Box>
-                <Typography gutterBottom variant="h6" component="h2">
+                <Typography 
+                  gutterBottom 
+                  variant="h6" 
+                  component="h2"
+                  sx={{ 
+                    fontSize: { xs: '1rem', md: '1.25rem' },
+                    mb: { xs: 0.5, md: 1 }
+                  }}
+                >
                   {feature.title}
                 </Typography>
-                <Typography color="text.secondary" paragraph variant="body2">
+                <Typography 
+                  color="text.secondary" 
+                  paragraph 
+                  variant="body2"
+                  sx={{ 
+                    mb: 1.5,
+                    display: { xs: 'none', sm: 'block' }
+                  }}
+                >
                   {feature.description}
                 </Typography>
                 <Button
@@ -164,7 +291,8 @@ function HomePage() {
                   to={feature.path}
                   variant="contained"
                   color="primary"
-                  size="small"
+                  size={isMobile ? "small" : "medium"}
+                  sx={{ mt: 'auto' }}
                 >
                   {t('home.startUsing')}
                 </Button>
@@ -173,6 +301,235 @@ function HomePage() {
           </Grid>
         ))}
       </Grid>
+
+      {/* 使用指南和FAQ部分 */}
+      <Grid container spacing={3} sx={{ mt: { xs: 3, md: 6 } }}>
+        {/* 使用指南部分 */}
+        <Grid item xs={12} md={6}>
+          <Paper 
+            elevation={1} 
+            sx={{ 
+              p: { xs: 2, md: 3 }, 
+              height: '100%',
+              borderRadius: 2
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+              <GuideIcon color="primary" sx={{ mr: 1 }} />
+              <Typography variant="h6" component="h2">
+                {t('home.quickGuides.title')}
+              </Typography>
+            </Box>
+            
+            <Divider sx={{ mb: 2 }} />
+            
+            <Box component="ul" sx={{ 
+              listStyle: 'none', 
+              p: 0, 
+              m: 0,
+              '& li': { 
+                mb: 1.5 
+              }
+            }}>
+              {quickGuides.map((guide, index) => (
+                <Box 
+                  component="li" 
+                  key={`guide-${index}-${forceUpdate}`}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}
+                >
+                  <Box sx={{ 
+                    mr: 1.5, 
+                    color: 'primary.main',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    {guide.icon}
+                  </Box>
+                  <Typography 
+                    component={Link} 
+                    to={guide.path}
+                    variant="body1"
+                    sx={{ 
+                      color: 'text.primary',
+                      textDecoration: 'none',
+                      '&:hover': {
+                        color: 'primary.main',
+                        textDecoration: 'underline'
+                      }
+                    }}
+                  >
+                    {guide.title}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+            
+            <Box sx={{ mt: 3, textAlign: 'center' }}>
+              <Button 
+                component={Link} 
+                to="/guides" 
+                variant="outlined" 
+                color="primary"
+                endIcon={<ArrowForward />}
+                size={isMobile ? "small" : "medium"}
+              >
+                {t('home.quickGuides.viewAll')}
+              </Button>
+            </Box>
+          </Paper>
+        </Grid>
+        
+        {/* FAQ部分 */}
+        <Grid item xs={12} md={6}>
+          <Paper 
+            elevation={1} 
+            sx={{ 
+              p: { xs: 2, md: 3 }, 
+              height: '100%',
+              borderRadius: 2
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+              <FAQIcon color="primary" sx={{ mr: 1 }} />
+              <Typography variant="h6" component="h2">
+                {t('home.faqSection.title')}
+              </Typography>
+            </Box>
+            
+            <Divider sx={{ mb: 2 }} />
+            
+            <Box component="ul" sx={{ 
+              listStyle: 'none', 
+              p: 0, 
+              m: 0,
+              '& li': { 
+                mb: 1.5 
+              }
+            }}>
+              {commonFaqs.map((faq, index) => (
+                <Box 
+                  component="li" 
+                  key={`faq-${index}-${forceUpdate}`}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'flex-start'
+                  }}
+                >
+                  <Box sx={{ 
+                    mr: 1.5, 
+                    color: 'primary.main',
+                    pt: 0.5
+                  }}>
+                    <HelpIcon fontSize="small" />
+                  </Box>
+                  <Typography 
+                    component={Link} 
+                    to={faq.path}
+                    variant="body1"
+                    sx={{ 
+                      color: 'text.primary',
+                      textDecoration: 'none',
+                      '&:hover': {
+                        color: 'primary.main',
+                        textDecoration: 'underline'
+                      }
+                    }}
+                  >
+                    {faq.question}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+            
+            <Box sx={{ mt: 3, textAlign: 'center' }}>
+              <Button 
+                component={Link} 
+                to="/faq" 
+                variant="outlined" 
+                color="primary"
+                endIcon={<ArrowForward />}
+                size={isMobile ? "small" : "medium"}
+              >
+                {t('home.faqSection.viewAll')}
+              </Button>
+            </Box>
+          </Paper>
+        </Grid>
+      </Grid>
+      
+      {/* Privacy and Security Section */}
+      <Paper 
+        elevation={1}
+        sx={{ 
+          my: { xs: 4, md: 6 }, 
+          p: { xs: 2, md: 4 }, 
+          bgcolor: 'background.paper', 
+          borderRadius: 2 
+        }}
+      >
+        <Typography 
+          variant="h5" 
+          component="h2" 
+          gutterBottom 
+          align="center" 
+          sx={{ 
+            fontWeight: 'bold',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: { xs: '1.25rem', md: '1.5rem' }
+          }}
+        >
+          <SecurityIcon sx={{ mr: 1, verticalAlign: 'middle' }} />
+          {t('home.privacy.title')}
+        </Typography>
+        
+        <Typography 
+          variant="body1" 
+          paragraph 
+          align="center"
+          sx={{ mb: { xs: 2, md: 3 } }}
+        >
+          {t('home.privacy.description')}
+        </Typography>
+        
+        <Grid container spacing={2} sx={{ mt: 1 }}>
+          <Grid item xs={12} md={4}>
+            <Box sx={{ textAlign: 'center', p: 1 }}>
+              <Typography variant="h6" gutterBottom sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}>
+                {t('home.privacy.noRegistration.title')}
+              </Typography>
+              <Typography variant="body2">
+                {t('home.privacy.noRegistration.description')}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Box sx={{ textAlign: 'center', p: 1 }}>
+              <Typography variant="h6" gutterBottom sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}>
+                {t('home.privacy.localProcessing.title')}
+              </Typography>
+              <Typography variant="body2">
+                {t('home.privacy.localProcessing.description')}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Box sx={{ textAlign: 'center', p: 1 }}>
+              <Typography variant="h6" gutterBottom sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}>
+                {t('home.privacy.noStorage.title')}
+              </Typography>
+              <Typography variant="body2">
+                {t('home.privacy.noStorage.description')}
+              </Typography>
+            </Box>
+          </Grid>
+        </Grid>
+      </Paper>
     </Container>
   );
 }

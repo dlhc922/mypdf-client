@@ -18,6 +18,9 @@ import ImageToPdfPage from './pages/image-to-pdf/ImageToPdfPage';
 import PdfComparePage from './pages/pdf-compare/PdfComparePage';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import Disclaimer from './pages/Disclaimer';
+import GuidesPage from './pages/GuidesPage';
+import FaqPage from './pages/FaqPage';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -60,6 +63,7 @@ function App() {
         )}
         <Box sx={{ flex: 1 }}>
           <BrowserRouter>
+            <ScrollToTop />
             <Layout>
               <Routes>
                 <Route path="/" element={<HomePage />} />
@@ -73,6 +77,9 @@ function App() {
                 <Route path="/pdf-compare" element={<PdfComparePage />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
                 <Route path="/disclaimer" element={<Disclaimer />} />
+                <Route path="/guides" element={<GuidesPage />} />
+                <Route path="/faq" element={<FaqPage />} />
+                <Route path="/guides/:toolId" element={<GuidesPage />} />
               </Routes>
             </Layout>
           </BrowserRouter>
