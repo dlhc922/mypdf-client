@@ -30,6 +30,22 @@ export default function Footer() {
           gap: 1
         }}
       >
+        <Stack 
+          direction="row" 
+          spacing={2} 
+          sx={{ 
+            fontFamily: 'monospace',
+            letterSpacing: '0.5px'
+          }}
+        >
+          <Typography variant="body2" color="text.secondary">
+            <Link href="/guides">使用指南</Link>
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <Link href="/faq">常见问题</Link>
+          </Typography>
+        </Stack>
+        
         <Typography 
           variant="body2" 
           color="text.secondary"
