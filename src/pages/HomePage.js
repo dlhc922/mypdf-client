@@ -198,10 +198,13 @@ function HomePage() {
         </Typography>
       </Box>
 
-      {/* 语言切换和分享按钮（与 Header 中相同） */}
+      {/* 语言切换和分享按钮 */}
       <Box sx={{ position: 'absolute', top: 16, right: 16 }}>
         <LanguageShareControls />
       </Box>
+      
+      {/* 添加一个顶部空间，确保标题不会与顶部元素重叠 */}
+      <Box sx={{ height: { xs: 60, md: 20 } }} />
       
       <Typography 
         variant="h4" 
