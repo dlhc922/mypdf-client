@@ -99,8 +99,10 @@ export function SignProvider({ children }) {
     
     const baseWidth = currentSign.size * (72 / 25.4);
     const baseHeight = baseWidth * 0.6;
-    // 旋转角度默认为 0°，计算初始容器尺寸
-    const initialBounds = getRotatedBounds(baseWidth, baseHeight, 0);
+    // 计算旋转后的容器尺寸
+    const initialBounds = getRotatedBounds(baseWidth, baseHeight, currentSign.rotation || 0);
+    
+    // 确保位置是指容器的左上角
     const newInstance = {
       id: Date.now(),
       signatureId: currentSign.id,
@@ -108,9 +110,12 @@ export function SignProvider({ children }) {
       settings: {
         size: currentSign.size,
         position: { ...currentSign.position },
-        rotation: currentSign.rotation,
+        rotation: currentSign.rotation || 0,
         containerWidth: initialBounds.width,
         containerHeight: initialBounds.height,
+        // 记录基础签名尺寸，确保预览和生成时使用相同的参数
+        baseWidth: baseWidth,
+        baseHeight: baseHeight,
       }
     };
 
@@ -120,11 +125,19 @@ export function SignProvider({ children }) {
 
   const updateSignatureInstance = (instanceId, updates) => {
     setSignatureInstances(prev =>
-      prev.map(instance =>
-        instance.id === instanceId
-          ? { ...instance, settings: { ...instance.settings, ...updates } }
-          : instance
-      )
+      prev.map(instance => {
+        if (instance.id !== instanceId) return instance;
+        
+        // 如果更新包含位置变更，确保使用一致的参照点
+        if (updates.position) {
+          console.log(`Updated position for instance ${instanceId}:`, updates.position);
+        }
+        
+        return {
+          ...instance,
+          settings: { ...instance.settings, ...updates }
+        };
+      })
     );
   };
 
@@ -145,58 +158,7 @@ export function SignProvider({ children }) {
   };
 
   /**
-   * 更新签名旋转，同时更新容器尺寸（旋转后外接矩形尺寸）和位置，
-   * 保证旋转前后的中心位置保持一致。
-   */
-  const updateSignatureRotation = (instanceId, newRotation) => {
-    setSignatureInstances(prev =>
-      prev.map(instance => {
-        if (instance.id !== instanceId) return instance;
-
-        // 用 instance.settings.size（单位：mm）计算原始签名尺寸（转换为 pt，1 inch = 25.4 mm, 1 inch = 72 pt）
-        const baseWidth = instance.settings.size * (72 / 25.4);
-        const baseHeight = baseWidth * 0.6; // 假定签名比例固定为 1 : 0.6
-
-        const oldRotation = instance.settings.rotation;
-        // 旧角度下容器边界框
-        const oldBounds = getRotatedBounds(baseWidth, baseHeight, oldRotation);
-        // 新角度下容器边界框
-        const newBounds = getRotatedBounds(baseWidth, baseHeight, newRotation);
-
-        // 假设 instance.settings.position 保存的是容器的左上角
-        // 那么原来的容器中心点为：
-        const centerX = instance.settings.position.x + oldBounds.width / 2;
-        const centerY = instance.settings.position.y + oldBounds.height / 2;
-
-        // 根据新边界尺寸计算新的左上角，使中心点保持不变
-        const newPosX = centerX - newBounds.width / 2;
-        const newPosY = centerY - newBounds.height / 2;
-
-        // 添加 log 输出旋转前后的信息
-        console.log(`Rotating instance ${instance.id}:`);
-        console.log(`  Old rotation: ${oldRotation}°, old bounds:`, oldBounds);
-        console.log(`  New rotation: ${newRotation}°, new bounds:`, newBounds);
-        console.log(`  Old position:`, instance.settings.position);
-        console.log(`  New position: { x: ${newPosX}, y: ${newPosY} }`);
-        console.log(`  baseWidth: ${baseWidth}, baseHeight: ${baseHeight}`);
-
-        return {
-          ...instance,
-          settings: {
-            ...instance.settings,
-            rotation: newRotation,
-            position: { x: newPosX, y: newPosY },
-            // 保存旋转后容器的尺寸供 SignPreview 使用
-            containerWidth: newBounds.width,
-            containerHeight: newBounds.height,
-          },
-        };
-      })
-    );
-  };
-
-  /**
-   * 生成 PDF 的函数中，添加 log 输出用于排查 PDF 中签名的尺寸。
+   * 生成 PDF 的函数中，修复签名位置参照点不一致的问题
    */
   const generateSignedPdf = async () => {
     if (!file) return;
@@ -223,21 +185,17 @@ export function SignProvider({ children }) {
           const baseWidthPt = mmToPt(instance.settings.size);
           const baseHeightPt = baseWidthPt * 0.6; // 保持签名比例
 
-          // 如果存在旋转后的容器尺寸，则使用，否则使用原始尺寸
+          // 使用实例中保存的容器尺寸
           const containerWidthPt = instance.settings.containerWidth || baseWidthPt;
           const containerHeightPt = instance.settings.containerHeight || baseHeightPt;
 
-          console.log(`PDF Generation for instance ${instance.id}:`);
-          console.log(`  Rotation: ${instance.settings.rotation}°`);
-          console.log(`  Base size: ${baseWidthPt} x ${baseHeightPt} pt`);
-          console.log(`  Container size: ${containerWidthPt} x ${containerHeightPt} pt`);
-          console.log(`  Instance position: `, instance.settings.position);
-
-          // 创建 canvas，使用旋转后的容器尺寸
+          // 创建 canvas 并绘制旋转后的签名
           const canvas = document.createElement('canvas');
-          canvas.width = containerWidthPt;
-          canvas.height = containerHeightPt;
+          const scale = 2; // 提高分辨率
+          canvas.width = containerWidthPt * scale;
+          canvas.height = containerHeightPt * scale;
           const ctx = canvas.getContext('2d');
+          ctx.scale(scale, scale);
 
           // 加载图片
           const img = new Image();
@@ -247,9 +205,10 @@ export function SignProvider({ children }) {
             img.src = config.imageUrl;
           });
 
-          // 绘制方式：把 canvas 原点移到中心点，旋转签名后以原始尺寸绘制使得签名整体居中
+          // 清晰地绘制旋转签名
           ctx.save();
-          ctx.translate(canvas.width / 2, canvas.height / 2);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.translate(containerWidthPt / 2, containerHeightPt / 2);
           ctx.rotate((instance.settings.rotation * Math.PI) / 180);
           ctx.drawImage(
             img,
@@ -264,16 +223,15 @@ export function SignProvider({ children }) {
           const rotatedImageData = canvas.toDataURL('image/png');
           const rotatedImage = await pdfDoc.embedPng(rotatedImageData);
 
-          // PDF 坐标系原点在底部，instance.settings.position 假设保存的是旋转后容器的左上角（单位: pt）
+          // 修正: 确保使用与预览组件相同的参照点
+          // 假设预览中使用的是容器左上角坐标
           const pdfX = instance.settings.position.x;
+          
+          // 修正: 如果预览中的 Y 坐标是指容器的垂直中心点，则需要调整
+          // 将左上角坐标转换为 PDF 坐标系（原点在左下角）
           const pdfY = pageHeight - instance.settings.position.y - containerHeightPt;
-          console.log('Drawing rotated PDF signature for instance', instance.id, {
-            pdfX,
-            pdfY,
-            width: containerWidthPt,
-            height: containerHeightPt,
-          });
 
+          // 在 PDF 中绘制签名
           page.drawImage(rotatedImage, {
             x: pdfX,
             y: pdfY,
@@ -283,21 +241,58 @@ export function SignProvider({ children }) {
         }
       }
 
-      // PDF 绘制完成后，生成 PDF 数据
+      // 生成 PDF 数据
       const pdfBytes = await pdfDoc.save();
-      
-      // 通过 Blob 创建下载 URL，与 StampContext.js 中相同
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const blobUrl = URL.createObjectURL(blob);
       setSignedFileUrl(blobUrl);
       setDownloadOpen(true);
-      console.log("生成签名 PDF 完成，Blob URL:", blobUrl);
     } catch (err) {
       console.error("生成签名 PDF 出错:", err);
       setError(err);
     } finally {
       setLoading(false);
     }
+  };
+
+  /**
+   * 修复更新签名旋转函数中的坐标转换
+   */
+  const updateSignatureRotation = (instanceId, newRotation) => {
+    setSignatureInstances(prev =>
+      prev.map(instance => {
+        if (instance.id !== instanceId) return instance;
+
+        // 计算原始签名尺寸（转换为 pt）
+        const baseWidth = instance.settings.size * (72 / 25.4);
+        const baseHeight = baseWidth * 0.6;
+
+        const oldRotation = instance.settings.rotation;
+        // 旧角度下容器边界框
+        const oldBounds = getRotatedBounds(baseWidth, baseHeight, oldRotation);
+        // 新角度下容器边界框
+        const newBounds = getRotatedBounds(baseWidth, baseHeight, newRotation);
+
+        // 计算当前容器中心点
+        const centerX = instance.settings.position.x + oldBounds.width / 2;
+        const centerY = instance.settings.position.y + oldBounds.height / 2;
+
+        // 根据新边界尺寸计算新的左上角，使中心点保持不变
+        const newPosX = centerX - newBounds.width / 2;
+        const newPosY = centerY - newBounds.height / 2;
+
+        return {
+          ...instance,
+          settings: {
+            ...instance.settings,
+            rotation: newRotation,
+            position: { x: newPosX, y: newPosY },
+            containerWidth: newBounds.width,
+            containerHeight: newBounds.height,
+          },
+        };
+      })
+    );
   };
 
   // 关闭下载对话框时，需要清理 Blob URL
