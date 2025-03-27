@@ -269,8 +269,8 @@
     "startUsing": "开始使用",
     "privacyHint": "所有 PDF 文件均在本地处理，不会上传到服务器，请放心使用",
     "processingType": {
-      "local": "本地处理",
-      "server": "云端处理"
+      "local": "本地",
+      "server": "云端"
     },
     "features": {
       "stamp": {

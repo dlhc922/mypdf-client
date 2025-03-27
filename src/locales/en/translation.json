@@ -269,8 +269,8 @@
     "startUsing": "Start Using",
     "privacyHint": "All PDF files are processed locally on your device, no data is uploaded to any server",
     "processingType": {
-      "local": "Local Processing",
-      "server": "Server Processing"
+      "local": "Local",
+      "server": "Server"
     },
     "features": {
       "stamp": {
