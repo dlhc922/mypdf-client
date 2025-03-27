@@ -28,7 +28,9 @@ import {
   Security as SecurityIcon,
   MenuBook as GuideIcon,
   Help as HelpIcon,
-  QuestionAnswer as FAQIcon
+  QuestionAnswer as FAQIcon,
+  Description,
+  TableChart
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import LanguageShareControls from '../components/LanguageShareControls';
@@ -60,49 +62,78 @@ function HomePage() {
       title: t('home.features.stamp.title'),
       description: t('home.features.stamp.description'),
       icon: <VerifiedUser sx={{ fontSize: 40 }} />,
-      path: '/stamp'
+      path: '/stamp',
+      processingType: 'local'
     },
     {
       title: t('home.features.sign.title'),
       description: t('home.features.sign.description'),
       icon: <Gesture sx={{ fontSize: 40 }} />,
-      path: '/sign'
+      path: '/sign',
+      processingType: 'local'
     },
     {
       title: t('home.features.merge.title'),
       description: t('home.features.merge.description'),
       icon: <Merge sx={{ fontSize: 40 }} />,
-      path: '/merge'
+      path: '/merge',
+      processingType: 'local'
     },
     {
       title: t('home.features.split.title'),
       description: t('home.features.split.description'),
       icon: <CallSplit sx={{ fontSize: 40 }} />,
-      path: '/split'
+      path: '/split',
+      processingType: 'local'
     },
     {
       title: t('home.features.compress.title'),
       description: t('home.features.compress.description'),
       icon: <Compress sx={{ fontSize: 40 }} />,
-      path: '/compress'
+      path: '/compress',
+      processingType: 'local'
     },
     {
       title: t('home.features.extract.title'),
       description: t('home.features.extract.description'),
       icon: <ImageIcon sx={{ fontSize: 40 }} />,
-      path: '/extract'
+      path: '/extract',
+      processingType: 'local'
     },
     {
       title: t('home.features.imageToPdf.title'),
       description: t('home.features.imageToPdf.description'),
       icon: <ImageIcon sx={{ fontSize: 40 }} />,
-      path: '/image-to-pdf'
+      path: '/image-to-pdf',
+      processingType: 'local'
     },
     {
       title: t('home.features.pdfCompare.title'),
       description: t('home.features.pdfCompare.description'),
       icon: <CompareArrows sx={{ fontSize: 40 }} />,
-      path: '/pdf-compare'
+      path: '/pdf-compare',
+      processingType: 'local'
+    },
+    {
+      title: t('home.features.pdfToWord.title'),
+      description: t('home.features.pdfToWord.description'),
+      icon: <Description sx={{ fontSize: 40 }} />,
+      path: '/pdf-to-word',
+      processingType: 'server'
+    },
+    {
+      title: t('home.features.pdfToExcel.title', 'PDF转Excel'),
+      description: t('home.features.pdfToExcel.description', '提取PDF中的表格数据转换为Excel电子表格，便于编辑和数据分析。'),
+      icon: <TableChart sx={{ fontSize: 40 }} />, // 使用表格图标
+      path: '/pdf-to-excel',
+      processingType: 'server' // 标记为服务器处理
+    },
+    {
+      title: t('home.features.pdfToImage.title', 'PDF转图片'),
+      description: t('home.features.pdfToImage.description', '将PDF文件转换为图片格式(PNG、JPEG)，可自定义分辨率。'),
+      icon: <ImageIcon sx={{ fontSize: 40 }} />,
+      path: '/pdf-to-image',
+      processingType: 'local' // 这是本地处理功能
     }
   ], [t]);
 
@@ -245,20 +276,76 @@ function HomePage() {
         </Box>
       </Typography>
 
-      <Grid container spacing={2} justifyContent="center">
+      <Grid container spacing={2} justifyContent="flex-start" sx={{ px: 2 }}>
         {features.map((feature) => (
-          <Grid item xs={6} sm={6} md={3} key={feature.path}>
+          <Grid 
+            item 
+            xs={6}   // 手机端保持每行2个
+            sm={4}   // 平板端每行3个
+            md={2.4} // 桌面端每行5个 (12/5=2.4)
+            key={feature.path}
+            sx={{
+              flexBasis: 'calc(20% - 16px)', // 精确控制5列布局
+              maxWidth: 'calc(20% - 16px)',
+              transition: 'all 0.3s',
+              // 响应式调整
+              [theme.breakpoints.down('md')]: {
+                flexBasis: '33.33%',
+                maxWidth: '33.33%'
+              },
+              [theme.breakpoints.down('sm')]: {
+                flexBasis: '50%',
+                maxWidth: '50%'
+              }
+            }}
+          >
             <Card 
               sx={{ 
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
                 transition: 'transform 0.2s',
+                position: 'relative',
                 '&:hover': {
                   transform: 'translateY(-4px)'
                 }
               }}
             >
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 8,
+                  right: 8,
+                  borderRadius: '12px',
+                  px: 1,
+                  py: 0.25,
+                  fontSize: '0.7rem',
+                  fontWeight: 'medium',
+                  backgroundColor: feature.processingType === 'local' 
+                    ? 'success.light' 
+                    : 'warning.light',
+                  color: feature.processingType === 'local' 
+                    ? 'success.contrastText' 
+                    : 'warning.contrastText',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 0.5,
+                  zIndex: 1
+                }}
+              >
+                {feature.processingType === 'local' ? (
+                  <>
+                    <Box component="span" sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'success.main' }} />
+                    {t('home.processingType.local', '本地处理')}
+                  </>
+                ) : (
+                  <>
+                    <Box component="span" sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'warning.main' }} />
+                    {t('home.processingType.server', '云端处理')}
+                  </>
+                )}
+              </Box>
+
               <CardContent sx={{ 
                 flexGrow: 1, 
                 textAlign: 'center',

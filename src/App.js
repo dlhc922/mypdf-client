@@ -21,6 +21,11 @@ import Disclaimer from './pages/Disclaimer';
 import GuidesPage from './pages/GuidesPage';
 import FaqPage from './pages/FaqPage';
 import ScrollToTop from './components/ScrollToTop';
+import PdfToWordPage from './pages/pdfToWord/PdfToWordPage';
+import PdfToExcelPage from './pages/pdfToExcel/PdfToExcelPage';
+import PdfToImagePage from './pages/pdfToImage/PdfToImagePage';
+
+
 
 function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -41,22 +46,22 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box 
-        sx={{ 
+      <Box
+        sx={{
           display: 'flex',
           flexDirection: 'column',
           minHeight: '100vh',
         }}
       >
         {!isOnline && (
-          <div style={{ 
-            position: 'fixed', 
-            top: 0, 
-            width: '100%', 
-            background: '#ff4444', 
-            color: 'white', 
-            padding: '10px', 
-            textAlign: 'center' 
+          <div style={{
+            position: 'fixed',
+            top: 0,
+            width: '100%',
+            background: '#ff4444',
+            color: 'white',
+            padding: '10px',
+            textAlign: 'center'
           }}>
             您当前处于离线状态，但仍可以使用所有PDF处理功能
           </div>
@@ -80,6 +85,9 @@ function App() {
                 <Route path="/guides" element={<GuidesPage />} />
                 <Route path="/faq" element={<FaqPage />} />
                 <Route path="/guides/:toolId" element={<GuidesPage />} />
+                <Route path="/pdf-to-word" element={<PdfToWordPage />} />
+                <Route path="/pdf-to-excel" element={<PdfToExcelPage />} />
+                <Route path="/pdf-to-image" element={<PdfToImagePage />} />
               </Routes>
             </Layout>
           </BrowserRouter>

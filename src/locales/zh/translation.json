@@ -152,10 +152,126 @@
     "close": "关闭",
     "downloadFile": "保存文件"
   },
+  "pdfToWord": {
+    "pageTitle": "PDF转Word转换器",
+    "title": "PDF转Word文档",
+    "metaDescription": "在线将PDF文件转换为可编辑的Word文档。免费、快速、安全。",
+    "description": "将PDF文件转换为完全可编辑的Word文档。保留格式、表格和图像，便于编辑。",
+    "steps": {
+      "select": "选择文件",
+      "preview": "预览PDF",
+      "download": "下载Word"
+    },
+    "uploadPrompt": "选择或拖放PDF文件到这里",
+    "browseFiles": "浏览文件",
+    "maxFileSize": "最大文件大小：50MB",
+    "next": "继续",
+    "convert": "立即转换",
+    "converting": "转换中...",
+    "processing": "处理中...",
+    "conversionSuccess": "转换完成！",
+    "documentReady": "您的Word文档已准备好下载",
+    "downloadFile": "下载Word文档",
+    "convertAnother": "转换另一个PDF",
+    "downloadStarted": "下载已开始",
+    "pageIndicator": "第 {{current}} 页，共 {{total}} 页",
+    "aboutConversion": {
+      "title": "关于PDF转Word转换",
+      "quality": "我们的转换器尽可能保留文本、格式和图像。",
+      "editable": "转换后的Word文档可在Microsoft Word或其他文字处理软件中完全编辑。",
+      "formatting": "复杂的布局或特殊的PDF功能可能无法完美转换。"
+    },
+    "errors": {
+      "pdfOnly": "请只选择PDF文件",
+      "loadFailed": "无法加载PDF文件。文件可能已损坏。",
+      "conversionFailed": "文件转换失败。请重试。"
+    }
+  },
+  "pdfToExcel": {
+    "pageTitle": "PDF转Excel",
+    "title": "PDF转Excel电子表格",
+    "description": "提取PDF中的表格数据转换为Excel电子表格，便于编辑和数据分析。",
+    "metaDescription": "在线将PDF文件转换为Excel电子表格。提取表格数据，便于编辑和分析。",
+    "steps": {
+      "select": "选择文件",
+      "preview": "预览PDF",
+      "download": "下载Excel"
+    },
+    "uploadPrompt": "选择或拖放PDF文件到这里",
+    "uploadDescription": "拖放文件或点击下方按钮选择文件",
+    "browseFiles": "浏览文件",
+    "maxFileSize": "最大文件大小：50MB",
+    "next": "继续",
+    "convert": "立即转换",
+    "converting": "转换中...",
+    "processing": "处理中...",
+    "conversionSuccess": "转换完成！",
+    "documentReady": "您的Excel电子表格已准备好下载",
+    "downloadFile": "下载Excel电子表格",
+    "convertAnother": "转换另一个PDF",
+    "aboutConversion": {
+      "title": "关于PDF转Excel转换",
+      "tables": "我们的转换器能够识别和提取PDF中的表格数据。",
+      "editable": "转换后的Excel文件可在Microsoft Excel或其他电子表格软件中完全编辑。",
+      "complex": "复杂的表格结构可能无法完美转换，可能需要进一步调整。"
+    },
+    "errors": {
+      "loadFailed": "无法加载PDF文件。请确保文件格式正确。",
+      "pdfOnly": "请选择PDF文件",
+      "conversionFailed": "转换失败"
+    }
+  },
+  "pdfToImage": {
+    "pageTitle": "PDF转图片",
+    "title": "PDF转图片转换器",
+    "description": "将PDF文件转换为高质量图片格式，支持PNG和JPEG。",
+    "metaDescription": "在线将PDF文件转换为图片格式。支持PNG、JPEG格式，可调整分辨率和质量。",
+    "steps": {
+      "select": "选择文件",
+      "preview": "预览与设置",
+      "download": "下载图片"
+    },
+    "uploadPrompt": "选择或拖放PDF文件到这里",
+    "uploadDescription": "拖放文件或点击下方按钮选择文件",
+    "browseFiles": "浏览文件",
+    "maxFileSize": "最大文件大小：50MB",
+    "next": "继续",
+    "convert": "立即转换",
+    "converting": "转换中...",
+    "processing": "处理中...",
+    "page": "页面",
+    "pages": "页",
+    "convertedImages": "已转换的图片",
+    "download": "下载",
+    "downloadAll": "下载全部图片",
+    "convertAnother": "转换另一个PDF",
+    "settings": {
+      "title": "转换设置",
+      "format": "图片格式",
+      "quality": "图片质量",
+      "resolution": "分辨率"
+    },
+    "aboutConversion": {
+      "title": "关于PDF转图片",
+      "quality": "生成高质量的图片，保留PDF文档的所有视觉元素。",
+      "formats": "支持PNG格式（无损，适合文本和线条）和JPEG格式（有损压缩，适合照片）。",
+      "resolution": "可调整分辨率以满足不同需要，高分辨率适合打印，低分辨率适合屏幕查看。",
+      "local": "所有转换在您的浏览器本地完成，文件不会上传到服务器，保证隐私安全。"
+    },
+    "errors": {
+      "loadFailed": "无法加载PDF文件。请确保文件格式正确。",
+      "pdfOnly": "请选择PDF文件",
+      "conversionFailed": "转换失败"
+    }
+  },
   "home": {
     "appTitle": "PDF 工具箱",
     "startUsing": "开始使用",
     "privacyHint": "所有 PDF 文件均在本地处理，不会上传到服务器，请放心使用",
+    "processingType": {
+      "local": "本地处理",
+      "server": "云端处理"
+    },
     "features": {
       "stamp": {
         "title": "PDF 盖章",
@@ -188,6 +304,18 @@
       "pdfCompare": {
         "title": "PDF 比较",
         "description": "比较两个 PDF 文件的差异，方便查看和编辑"
+      },
+      "pdfToWord": {
+        "title": "PDF转Word",
+        "description": "将PDF文件转换为可编辑的Word文档。"
+      },
+      "pdfToExcel": {
+        "title": "PDF转Excel",
+        "description": "提取PDF中的表格数据转换为Excel电子表格，便于编辑和数据分析。"
+      },
+      "pdfToImage": {
+        "title": "PDF转图片",
+        "description": "将PDF文件转换为图片格式(PNG、JPEG)，可自定义分辨率。"
       }
     },
     "quickGuides": {
@@ -227,12 +355,24 @@
       }
     }
   },
+  "fileUpload": {
+    "dropFileHere": "将文件拖放到这里",
+    "dragDropOr": "拖放文件或点击浏览",
+    "browse": "浏览文件",
+    "fileTooLarge": "文件太大。最大大小为{{maxSize}}MB。",
+    "wrongFileType": "文件类型不正确。请选择PDF文件。"
+  },
   "common": {
     "cancel": "取消",
     "confirm": "确认",
     "selectFile": "选择文件",
     "selectAll": "全选",
-    "deselectAll": "取消全选"
+    "deselectAll": "取消全选",
+    "back": "返回",
+    "next": "下一步",
+    "zoomIn": "放大",
+    "zoomOut": "缩小",
+    "resetZoom": "重置缩放"
   },
   "sign": {
     "settings": "签名设置",
@@ -407,7 +547,6 @@
     "useToolNow": "立即使用",
     "localProcessingTitle": "所有工具都在本地处理",
     "localProcessingDescription": "我们的所有PDF工具都在您的浏览器中本地处理文件，不会将您的文件上传到任何服务器。这确保了您的数据隐私和安全。无需注册，无需等待上传和下载，处理速度更快。",
-    
     "stamp": {
       "steps": {
         "step1": "上传您的PDF文件，点击'选择PDF文件'",
@@ -429,7 +568,6 @@
         "a2": "由于所有处理都在您的浏览器中完成，文件大小限制取决于您设备的内存。通常，100MB以内的文件处理效果良好。"
       }
     },
-    
     "merge": {
       "steps": {
         "step1": "点击'添加文件'选择多个PDF文件",
@@ -448,7 +586,6 @@
         "a2": "目前，我们的工具不支持合并受密码保护的PDF。请在上传前移除密码保护。"
       }
     },
-    
     "split": {
       "steps": {
         "step1": "上传您的PDF文件",
@@ -466,7 +603,6 @@
         "a1": "是的，您可以通过为每个页面创建单独的范围或使用自定义选择选项将PDF拆分为单页文件。"
       }
     },
-    
     "compress": {
       "steps": {
         "step1": "上传您的PDF文件",
@@ -486,7 +622,6 @@
       }
     }
   },
-  
   "faq": {
     "pageTitle": "常见问题",
     "pageDescription": "关于我们免费PDF工具的常见问题解答，包括安全性、功能和技术支持等方面的信息。",
@@ -494,20 +629,17 @@
     "subtitle": "查找有关我们PDF工具的常见问题的答案。如果您没有找到所需的信息，请随时联系我们。",
     "moreQuestions": "还有其他问题？",
     "contactUs": "如果您没有找到所需的答案，请随时联系我们。我们很乐意提供帮助！",
-    
     "categories": {
       "general": "一般问题",
       "features": "功能相关",
       "technical": "技术问题"
     },
-    
     "answers": {
       "free": "是的，我们的所有PDF工具都是完全免费的，没有隐藏费用或高级功能。我们相信为所有人提供可访问的工具。",
       "security": "您的数据完全安全，因为所有处理都在您的浏览器中本地进行。您的文件不会上传到任何服务器，确保最大程度的隐私和安全。",
       "mobile": "是的，我们的工具设计为同时适用于桌面和移动设备。但是，对于复杂操作或大文件，我们建议使用桌面设备以获得最佳体验。",
       "fileSize": "由于所有处理都在您的浏览器中进行，限制取决于您设备的性能。通常，100MB以内的文件处理效果良好，但更大的文件可能需要更多处理时间或内存。"
     },
-    
     "questions": {
       "pdfVersions": "支持哪些PDF版本？",
       "processingTime": "处理PDF需要多长时间？",

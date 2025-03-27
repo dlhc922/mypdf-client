@@ -152,10 +152,126 @@
     "close": "Close",
     "downloadFile": "Save File"
   },
+  "pdfToWord": {
+    "pageTitle": "PDF to Word Converter",
+    "title": "Convert PDF to Word Document",
+    "metaDescription": "Convert your PDF files to editable Word documents online. Free, fast, and secure.",
+    "description": "Transform your PDF files into fully editable Word documents. Maintain formatting, tables, and images for easy editing.",
+    "steps": {
+      "select": "Select File",
+      "preview": "Preview PDF",
+      "download": "Download Word"
+    },
+    "uploadPrompt": "Select or drag a PDF file here",
+    "browseFiles": "Browse Files",
+    "maxFileSize": "Maximum file size: 50MB",
+    "next": "Continue",
+    "convert": "Convert Now",
+    "converting": "Converting...",
+    "processing": "Processing...",
+    "conversionSuccess": "Conversion Complete!",
+    "documentReady": "Your Word document is ready to download",
+    "downloadFile": "Download Word Document",
+    "convertAnother": "Convert Another PDF",
+    "downloadStarted": "Your download has started",
+    "pageIndicator": "Page {{current}} of {{total}}",
+    "aboutConversion": {
+      "title": "About PDF to Word Conversion",
+      "quality": "Our converter preserves text, formatting, and images as much as possible.",
+      "editable": "The resulting Word document is fully editable in Microsoft Word or other word processors.",
+      "formatting": "Complex layouts or special PDF features may not convert perfectly."
+    },
+    "errors": {
+      "pdfOnly": "Please select a PDF file only",
+      "loadFailed": "Failed to load the PDF file. The file may be corrupted.",
+      "conversionFailed": "Failed to convert the file. Please try again."
+    }
+  },
+  "pdfToExcel": {
+      "pageTitle": "PDF to Excel",
+      "title": "PDF to Excel Converter",
+      "description": "Extract table data from PDF files into Excel spreadsheets for easy editing and analysis.",
+      "metaDescription": "Convert PDF files to Excel spreadsheets online. Extract table data for easy editing and analysis.",
+      "steps": {
+        "select": "Select File",
+        "preview": "Preview PDF",
+        "download": "Download Excel"
+      },
+      "uploadPrompt": "Select or drop PDF file here",
+      "uploadDescription": "Drop file or click the button below to select file",
+      "browseFiles": "Browse Files",
+      "maxFileSize": "Maximum file size: 50MB",
+      "next": "Continue",
+      "convert": "Convert Now",
+      "converting": "Converting...",
+      "processing": "Processing...",
+      "conversionSuccess": "Conversion Complete!",
+      "documentReady": "Your Excel spreadsheet is ready to download",
+      "downloadFile": "Download Excel Spreadsheet",
+      "convertAnother": "Convert Another PDF",
+      "aboutConversion": {
+        "title": "About PDF to Excel Conversion",
+        "tables": "Our converter can recognize and extract table data from PDFs.",
+        "editable": "The converted Excel file can be fully edited in Microsoft Excel or other spreadsheet software.",
+        "complex": "Complex table structures may not convert perfectly and might require further adjustments."
+      },
+      "errors": {
+        "loadFailed": "Unable to load PDF file. Please ensure the file format is correct.",
+        "pdfOnly": "Please select a PDF file",
+        "conversionFailed": "Conversion failed"
+      }
+  },
+  "pdfToImage": {
+      "pageTitle": "PDF to Image",
+      "title": "PDF to Image Converter",
+      "description": "Convert PDF files to high-quality images in PNG and JPEG formats.",
+      "metaDescription": "Convert PDF files to images online. Support PNG and JPEG formats with adjustable resolution and quality.",
+      "steps": {
+        "select": "Select File",
+        "preview": "Preview & Settings",
+        "download": "Download Images"
+      },
+      "uploadPrompt": "Select or drop PDF file here",
+      "uploadDescription": "Drop file or click the button below to select file",
+      "browseFiles": "Browse Files",
+      "maxFileSize": "Maximum file size: 50MB",
+      "next": "Continue",
+      "convert": "Convert Now",
+      "converting": "Converting...",
+      "processing": "Processing...",
+      "page": "Page",
+      "pages": "pages",
+      "convertedImages": "Converted Images",
+      "download": "Download",
+      "downloadAll": "Download All Images",
+      "convertAnother": "Convert Another PDF",
+      "settings": {
+        "title": "Conversion Settings",
+        "format": "Image Format",
+        "quality": "Image Quality",
+        "resolution": "Resolution"
+      },
+      "aboutConversion": {
+        "title": "About PDF to Image Conversion",
+        "quality": "Generate high-quality images that preserve all visual elements of your PDF documents.",
+        "formats": "Support for PNG format (lossless, ideal for text and lines) and JPEG format (compressed, ideal for photos).",
+        "resolution": "Adjustable resolution to meet different needs - higher for printing, lower for screen viewing.",
+        "local": "All conversions are performed locally in your browser. Files are not uploaded to any server, ensuring privacy and security."
+      },
+      "errors": {
+        "loadFailed": "Unable to load PDF file. Please ensure the file format is correct.",
+        "pdfOnly": "Please select a PDF file",
+        "conversionFailed": "Conversion failed"
+      }
+    },
   "home": {
     "appTitle": "PDF Toolkit",
     "startUsing": "Start Using",
     "privacyHint": "All PDF files are processed locally on your device, no data is uploaded to any server",
+    "processingType": {
+      "local": "Local Processing",
+      "server": "Server Processing"
+    },
     "features": {
       "stamp": {
         "title": "PDF Stamp",
@@ -188,7 +304,21 @@
       "pdfCompare": {
         "title": "PDF Compare",
         "description": "Compare two PDF files for differences, for easy viewing and editing"
-      }
+      },
+      "pdfToWord": {
+        "title": "PDF to Word",
+        "description": "Convert PDF files to editable Word documents."
+      },
+      
+        "pdfToExcel": {
+          "title": "PDF to Excel",
+          "description": "Extract tables from PDF files into Excel spreadsheets for easy editing and analysis."
+        },
+      
+      "pdfToImage": {
+          "title": "PDF to Image",
+          "description": "Convert PDF files to image formats (PNG, JPEG) with customizable resolution."
+        }
     },
     "quickGuides": {
       "title": "Quick Guides",
@@ -227,12 +357,24 @@
       }
     }
   },
+  "fileUpload": {
+    "dropFileHere": "Drop your file here",
+    "dragDropOr": "Drag and drop file or click to browse",
+    "browse": "Browse Files",
+    "fileTooLarge": "File is too large. Maximum size is {{maxSize}}MB.",
+    "wrongFileType": "Incorrect file type. Please select a PDF file."
+  },
   "common": {
     "cancel": "Cancel",
     "confirm": "Confirm",
     "selectFile": "Select File",
     "selectAll": "Select All",
-    "deselectAll": "Deselect All"
+    "deselectAll": "Deselect All",
+    "back": "Back",
+    "next": "Next",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "resetZoom": "Reset Zoom"
   },
   "sign": {
     "settings": "Signature Settings",
