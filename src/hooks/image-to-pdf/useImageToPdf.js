@@ -345,34 +345,36 @@ export function useImageToPdf() {
   // 添加水印到PDF
   const addWatermark = useCallback((doc, text) => {
     if (!text) return;
-    
+  
     try {
       const pageCount = doc.internal.getNumberOfPages();
-      const fontSize = 12;
-      
-      // 遍历所有页面添加水印
+      const fontSize = 40; // 调整字体大小
+  
       for (let i = 1; i <= pageCount; i++) {
         doc.setPage(i);
-        
+  
         const pageWidth = doc.internal.pageSize.getWidth();
         const pageHeight = doc.internal.pageSize.getHeight();
-        
-        // 设置半透明灰色
-        doc.setTextColor(100, 100, 100);
-        doc.setGState(new doc.GState({ opacity: 0.3 }));
+  
         doc.setFontSize(fontSize);
-        
-        // 在页面中心旋转45度添加水印
-        doc.saveGraphicsState();
-        doc.translate(pageWidth / 2, pageHeight / 2);
-        doc.rotate(45 * Math.PI / 180);
-        doc.text(text, 0, 0, { align: 'center' });
-        doc.restoreGraphicsState();
+        doc.setTextColor(200, 200, 200); // 设置较淡的灰色，模拟透明度
+  
+        // 计算文本中心位置
+        const x = pageWidth / 2; // 直接使用页面的中心点
+        const y = pageHeight / 2;
+  
+        // 旋转文本 45 度并居中对齐
+        doc.text(text, x, y, {
+          angle: 45,
+          align: "center", // 关键！确保文本以中心对齐
+          baseline: "middle", // 确保基线对齐
+        });
       }
     } catch (err) {
-      console.error('添加水印错误:', err);
+      console.error("添加水印错误:", err);
     }
   }, []);
+  
 
   // 添加页码到PDF
   const addPageNumbersToPdf = useCallback((doc) => {
