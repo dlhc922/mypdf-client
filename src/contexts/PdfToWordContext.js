@@ -93,7 +93,7 @@ export function PdfToWordProvider({ children }) {
         response: err.response?.data,
         status: err.response?.status
       });
-      setError(err.response?.data?.message || err.message || '转换失败');
+      setError(err.response?.data?.message || err.message || 'convert failed');
       throw err;
     } finally {
       setConverting(false);
