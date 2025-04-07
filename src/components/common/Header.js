@@ -15,10 +15,16 @@ import {
   List,
   ListItem,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
+  Collapse,
+  Divider,
+  Tooltip,
+  ListSubheader
 } from '@mui/material';
 import { 
-  Menu as MenuIcon
+  Menu as MenuIcon,
+  ExpandMore as ExpandMoreIcon,
+  ExpandLess as ExpandLessIcon
 } from '@mui/icons-material';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -31,20 +37,77 @@ function Header() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
+  // 添加菜单的状态管理
+  const [anchorEls, setAnchorEls] = useState({});
+  const [mobileGroupExpanded, setMobileGroupExpanded] = useState({});
+  
   // 使用 MUI 的响应式断点
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const menuItems = [
-    { path: '/stamp', label: t('tools.stamp') },
-    { path: '/sign', label: t('tools.sign') },
-    { path: '/merge', label: t('tools.merge') },
-    { path: '/split', label: t('tools.split') },
-    { path: '/compress', label: t('tools.compress') },
-    { path: '/extract', label: t('tools.extract') },
-    { path: '/image-to-pdf', label: t('tools.imageToPdf') },
-    { path: '/pdf-compare', label: t('tools.pdfCompare') }
+  // 定义菜单组
+  const menuGroups = [
+    {
+      id: 'edit',
+      label: t('menuGroups.edit', 'PDF编辑'),
+      items: [
+        { path: '/stamp', label: t('tools.stamp', '电子印章') },
+        { path: '/sign', label: t('tools.sign', '电子签名') }
+      ]
+    },
+    {
+      id: 'organize',
+      label: t('menuGroups.organize', 'PDF整理'),
+      items: [
+        { path: '/merge', label: t('tools.merge', '合并PDF') },
+        { path: '/split', label: t('tools.split', '拆分PDF') },
+        { path: '/extract', label: t('tools.extract', '提取图片') }
+      ]
+    },
+    {
+      id: 'convert',
+      label: t('menuGroups.convert', '格式转换'),
+      items: [
+        { path: '/image-to-pdf', label: t('tools.imageToPdf', '图片转PDF') },
+        { path: '/pdf-to-word', label: t('tools.pdfToWord', 'PDF转Word') },
+        { path: '/pdf-to-excel', label: t('tools.pdfToExcel', 'PDF转Excel') },
+        { path: '/pdf-to-image', label: t('tools.pdfToImage', 'PDF转图片') }
+      ]
+    },
+    {
+      id: 'analyze',
+      label: t('menuGroups.analyze', 'PDF优化'),
+      items: [
+        { path: '/pdf-compare', label: t('tools.pdfCompare', 'PDF比较') },
+        { path: '/compress', label: t('tools.compress', '压缩PDF') }
+      ]
+    }
   ];
+
+  const handleMenuOpen = (event, groupId) => {
+    // 关闭所有其他菜单，只打开当前悬停的菜单
+    const newAnchorEls = {};
+    newAnchorEls[groupId] = event.currentTarget;
+    setAnchorEls(newAnchorEls);
+  };
+
+  const handleMenuClose = (groupId) => {
+    setAnchorEls({
+      ...anchorEls,
+      [groupId]: null
+    });
+  };
+
+  const handleAllMenusClose = () => {
+    setAnchorEls({});
+  };
+
+  const toggleMobileGroup = (groupId) => {
+    setMobileGroupExpanded({
+      ...mobileGroupExpanded,
+      [groupId]: !mobileGroupExpanded[groupId]
+    });
+  };
 
   // 移动端导航菜单抽屉
   const mobileMenu = (
@@ -54,7 +117,7 @@ function Header() {
       onClose={() => setMobileMenuOpen(false)}
       PaperProps={{
         sx: {
-          width: 240,
+          width: 280,
           bgcolor: 'background.paper'
         }
       }}
@@ -76,25 +139,54 @@ function Header() {
         >
           WSBN.tech
         </Typography>
-        <List>
-          {menuItems.map(item => (
-            <ListItem
-              key={item.path}
-              component={Link}
-              to={item.path}
-              onClick={() => setMobileMenuOpen(false)}
-              sx={{
-                color: location.pathname === item.path ? 'primary.main' : 'text.primary',
-                bgcolor: location.pathname === item.path ? alpha(theme.palette.primary.main, 0.08) : 'transparent',
-                borderRadius: 1,
-                mb: 0.5,
-                '&:hover': {
-                  bgcolor: alpha(theme.palette.primary.main, 0.04)
-                }
-              }}
-            >
-              <ListItemText primary={item.label} />
-            </ListItem>
+        <List component="nav" aria-labelledby="nested-list-subheader">
+          {menuGroups.map(group => (
+            <React.Fragment key={group.id}>
+              <ListItem 
+                button 
+                onClick={() => toggleMobileGroup(group.id)}
+                sx={{
+                  borderRadius: 1,
+                  mb: 0.5,
+                  bgcolor: group.items.some(item => location.pathname === item.path)
+                    ? alpha(theme.palette.primary.main, 0.08)
+                    : 'transparent',
+                }}
+              >
+                <ListItemText 
+                  primary={group.label} 
+                  primaryTypographyProps={{ 
+                    fontWeight: group.items.some(item => location.pathname === item.path) ? 'bold' : 'normal'
+                  }}
+                />
+                {mobileGroupExpanded[group.id] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              </ListItem>
+              <Collapse in={mobileGroupExpanded[group.id]} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {group.items.map(item => (
+                    <ListItem
+                      key={item.path}
+                      component={Link}
+                      to={item.path}
+                      onClick={() => setMobileMenuOpen(false)}
+                      sx={{
+                        pl: 4,
+                        color: location.pathname === item.path ? 'primary.main' : 'text.primary',
+                        bgcolor: location.pathname === item.path ? alpha(theme.palette.primary.main, 0.08) : 'transparent',
+                        borderRadius: 1,
+                        mb: 0.5,
+                        '&:hover': {
+                          bgcolor: alpha(theme.palette.primary.main, 0.04)
+                        }
+                      }}
+                    >
+                      <ListItemText primary={item.label} />
+                    </ListItem>
+                  ))}
+                </List>
+              </Collapse>
+              <Divider sx={{ my: 1 }} />
+            </React.Fragment>
           ))}
         </List>
       </Box>
@@ -128,25 +220,80 @@ function Header() {
         {/* PC端导航菜单 */}
         {!isMobile && (
           <Box sx={{ flexGrow: 1 }}>
-            {menuItems.map(item => (
-              <Button
-                key={item.path}
-                component={Link}
-                to={item.path}
-                sx={{
-                  mx: 1,
-                  color: location.pathname === item.path ? 'primary.dark' : 'text.primary',
-                  '&:hover': {
-                    bgcolor: (theme) => alpha(theme.palette.primary.dark, 0.04)
-                  },
-                  ...(location.pathname === item.path && {
-                    bgcolor: (theme) => alpha(theme.palette.primary.dark, 0.08),
-                    fontWeight: 'bold'
-                  })
-                }}
-              >
-                {item.label}
-              </Button>
+            {menuGroups.map(group => (
+              <React.Fragment key={group.id}>
+                <Box
+                  onMouseEnter={(e) => handleMenuOpen(e, group.id)}
+                  onMouseLeave={() => handleMenuClose(group.id)}
+                  sx={{ 
+                    display: 'inline-block', 
+                    position: 'relative'
+                  }}
+                >
+                  <Button
+                    aria-haspopup="true"
+                    sx={{
+                      mx: 1,
+                      color: group.items.some(item => location.pathname === item.path) 
+                        ? 'primary.dark' 
+                        : 'text.primary',
+                      '&:hover': {
+                        bgcolor: (theme) => alpha(theme.palette.primary.dark, 0.04)
+                      },
+                      ...(group.items.some(item => location.pathname === item.path) && {
+                        bgcolor: (theme) => alpha(theme.palette.primary.dark, 0.08),
+                        fontWeight: 'bold'
+                      })
+                    }}
+                    endIcon={<ExpandMoreIcon />}
+                  >
+                    {group.label}
+                  </Button>
+                  <Menu
+                    anchorEl={anchorEls[group.id]}
+                    open={Boolean(anchorEls[group.id])}
+                    onClose={() => handleMenuClose(group.id)}
+                    MenuListProps={{
+                      'aria-labelledby': 'basic-button',
+                      onMouseLeave: () => handleMenuClose(group.id),
+                      sx: { pointerEvents: 'auto' }
+                    }}
+                    disableAutoFocusItem
+                    PaperProps={{
+                      onMouseLeave: () => handleMenuClose(group.id)
+                    }}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'center',
+                    }}
+                    sx={{
+                      pointerEvents: 'none'
+                    }}
+                  >
+                    {group.items.map(item => (
+                      <MenuItem 
+                        key={item.path}
+                        component={Link}
+                        to={item.path}
+                        onClick={() => handleMenuClose(group.id)}
+                        selected={location.pathname === item.path}
+                        sx={{
+                          ...(location.pathname === item.path && {
+                            bgcolor: alpha(theme.palette.primary.dark, 0.08),
+                            fontWeight: 'bold'
+                          })
+                        }}
+                      >
+                        {item.label}
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </Box>
+              </React.Fragment>
             ))}
           </Box>
         )}

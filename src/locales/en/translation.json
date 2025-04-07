@@ -9,7 +9,10 @@
     "compress": "PDF Compress",
     "extract": "PDF Extract Images",
     "imageToPdf": "Image to PDF",
-    "pdfCompare": "PDF Compare"
+    "pdfCompare": "PDF Compare",
+    "pdfToWord": "PDF to Word",
+    "pdfToExcel": "PDF to Excel",
+    "pdfToImage": "PDF to Image"
   },
   "meta": {
     "description": "Free online PDF stamp, merge, split, and compress tool without the need for registration.",
@@ -188,82 +191,82 @@
     }
   },
   "pdfToExcel": {
-      "pageTitle": "PDF to Excel",
-      "title": "PDF to Excel Converter",
-      "description": "Extract table data from PDF files into Excel spreadsheets for easy editing and analysis.",
-      "metaDescription": "Convert PDF files to Excel spreadsheets online. Extract table data for easy editing and analysis.",
-      "steps": {
-        "select": "Select File",
-        "preview": "Preview PDF",
-        "download": "Download Excel"
-      },
-      "uploadPrompt": "Select or drop PDF file here",
-      "uploadDescription": "Drop file or click the button below to select file",
-      "browseFiles": "Browse Files",
-      "maxFileSize": "Maximum file size: 50MB",
-      "next": "Continue",
-      "convert": "Convert Now",
-      "converting": "Converting...",
-      "processing": "Processing...",
-      "conversionSuccess": "Conversion Complete!",
-      "documentReady": "Your Excel spreadsheet is ready to download",
-      "downloadFile": "Download Excel Spreadsheet",
-      "convertAnother": "Convert Another PDF",
-      "aboutConversion": {
-        "title": "About PDF to Excel Conversion",
-        "tables": "Our converter can recognize and extract table data from PDFs.",
-        "editable": "The converted Excel file can be fully edited in Microsoft Excel or other spreadsheet software.",
-        "complex": "Complex table structures may not convert perfectly and might require further adjustments."
-      },
-      "errors": {
-        "loadFailed": "Unable to load PDF file. Please ensure the file format is correct.",
-        "pdfOnly": "Please select a PDF file",
-        "conversionFailed": "Conversion failed"
-      }
+    "pageTitle": "PDF to Excel",
+    "title": "PDF to Excel Spreadsheet",
+    "description": "Extract tables from PDF files into Excel spreadsheets for easy editing and analysis.",
+    "metaDescription": "Convert PDF files to Excel spreadsheets online. Extract table data for easy editing and analysis.",
+    "steps": {
+      "select": "Select File",
+      "preview": "Preview PDF",
+      "download": "Download Excel"
+    },
+    "uploadPrompt": "Select or drop PDF file here",
+    "uploadDescription": "Drop file or click the button below to select file",
+    "browseFiles": "Browse Files",
+    "maxFileSize": "Maximum file size: 50MB",
+    "next": "Continue",
+    "convert": "Convert Now",
+    "converting": "Converting...",
+    "processing": "Processing...",
+    "conversionSuccess": "Conversion Complete!",
+    "documentReady": "Your Excel spreadsheet is ready to download",
+    "downloadFile": "Download Excel Spreadsheet",
+    "convertAnother": "Convert Another PDF",
+    "aboutConversion": {
+      "title": "About PDF to Excel Conversion",
+      "tables": "Our converter can recognize and extract table data from PDFs.",
+      "editable": "The converted Excel file can be fully edited in Microsoft Excel or other spreadsheet software.",
+      "complex": "Complex table structures may not convert perfectly and might require further adjustments."
+    },
+    "errors": {
+      "loadFailed": "Unable to load PDF file. Please ensure the file format is correct.",
+      "pdfOnly": "Please select a PDF file",
+      "conversionFailed": "Conversion failed"
+    }
   },
   "pdfToImage": {
-      "pageTitle": "PDF to Image",
-      "title": "PDF to Image Converter",
-      "description": "Convert PDF files to high-quality images in PNG and JPEG formats.",
-      "metaDescription": "Convert PDF files to images online. Support PNG and JPEG formats with adjustable resolution and quality.",
-      "steps": {
-        "select": "Select File",
-        "preview": "Preview & Settings",
-        "download": "Download Images"
-      },
-      "uploadPrompt": "Select or drop PDF file here",
-      "uploadDescription": "Drop file or click the button below to select file",
-      "browseFiles": "Browse Files",
-      "maxFileSize": "Maximum file size: 50MB",
-      "next": "Continue",
-      "convert": "Convert Now",
-      "converting": "Converting...",
-      "processing": "Processing...",
-      "page": "Page",
-      "pages": "pages",
-      "convertedImages": "Converted Images",
-      "download": "Download",
-      "downloadAll": "Download All Images",
-      "convertAnother": "Convert Another PDF",
-      "settings": {
-        "title": "Conversion Settings",
-        "format": "Image Format",
-        "quality": "Image Quality",
-        "resolution": "Resolution"
-      },
-      "aboutConversion": {
-        "title": "About PDF to Image Conversion",
-        "quality": "Generate high-quality images that preserve all visual elements of your PDF documents.",
-        "formats": "Support for PNG format (lossless, ideal for text and lines) and JPEG format (compressed, ideal for photos).",
-        "resolution": "Adjustable resolution to meet different needs - higher for printing, lower for screen viewing.",
-        "local": "All conversions are performed locally in your browser. Files are not uploaded to any server, ensuring privacy and security."
-      },
-      "errors": {
-        "loadFailed": "Unable to load PDF file. Please ensure the file format is correct.",
-        "pdfOnly": "Please select a PDF file",
-        "conversionFailed": "Conversion failed"
-      }
+    "pageTitle": "PDF to Image",
+    "title": "PDF to Image Converter",
+    "description": "Convert PDF files to high-quality images in PNG and JPEG formats.",
+    "metaDescription": "Convert PDF files to images online. Support PNG and JPEG formats with adjustable resolution and quality.",
+    "steps": {
+      "select": "Select File",
+      "preview": "Preview & Settings",
+      "download": "Download Images"
     },
+    "uploadPrompt": "Select or drop PDF file here",
+    "uploadDescription": "Drop file or click the button below to select file",
+    "browseFiles": "Browse Files",
+    "maxFileSize": "Maximum file size: 50MB",
+    "next": "Continue",
+    "convert": "Convert Now",
+    "converting": "Converting...",
+    "processing": "Processing...",
+    "page": "Page",
+    "pages": "pages",
+    "convertedImages": "Converted Images",
+    "download": "Download",
+    "downloadAll": "Download All Images",
+    "convertAnother": "Convert Another PDF",
+    "settings": {
+      "title": "Conversion Settings",
+      "format": "Image Format",
+      "quality": "Image Quality",
+      "resolution": "Resolution"
+    },
+    "aboutConversion": {
+      "title": "About PDF to Image Conversion",
+      "quality": "Generate high-quality images that preserve all visual elements of your PDF documents.",
+      "formats": "Support for PNG format (lossless, ideal for text and lines) and JPEG format (compressed, ideal for photos).",
+      "resolution": "Adjustable resolution to meet different needs - higher for printing, lower for screen viewing.",
+      "local": "All conversions are performed locally in your browser. Files are not uploaded to any server, ensuring privacy and security."
+    },
+    "errors": {
+      "loadFailed": "Unable to load PDF file. Please ensure the file format is correct.",
+      "pdfOnly": "Please select a PDF file",
+      "conversionFailed": "Conversion failed"
+    }
+  },
   "home": {
     "appTitle": "PDF Toolkit",
     "startUsing": "Start Using",
@@ -309,16 +312,14 @@
         "title": "PDF to Word",
         "description": "Convert PDF files to editable Word documents."
       },
-      
-        "pdfToExcel": {
-          "title": "PDF to Excel",
-          "description": "Extract tables from PDF files into Excel spreadsheets for easy editing and analysis."
-        },
-      
+      "pdfToExcel": {
+        "title": "PDF to Excel",
+        "description": "Extract tables from PDF files into Excel spreadsheets for easy editing and analysis."
+      },
       "pdfToImage": {
-          "title": "PDF to Image",
-          "description": "Convert PDF files to image formats (PNG, JPEG) with customizable resolution."
-        }
+        "title": "PDF to Image",
+        "description": "Convert PDF files to image formats (PNG, JPEG) with customizable resolution."
+      }
     },
     "quickGuides": {
       "title": "Quick Guides",
@@ -329,10 +330,14 @@
       "viewAll": "View All FAQs"
     },
     "guides": {
+      "backToList": "Back to All Guides",
       "stamp": "How to Add Stamps to PDF",
       "merge": "How to Merge PDF Files",
       "split": "How to Split PDF Files",
-      "compress": "How to Compress PDF Files"
+      "compress": "How to Compress PDF Files",
+      "sign": "How to Add a Signature to PDF",
+      "extract": "How to Extract Images from PDF",
+      "imageToPdf": "How to Convert Images to PDF"
     },
     "faq": {
       "free": "Is WSBN.tech PDF Toolkit completely free?",
@@ -348,12 +353,30 @@
         "description": "Use all our tools without creating an account or providing any personal information."
       },
       "localProcessing": {
-        "title": "Local Processing",
-        "description": "All file processing happens directly in your browser. Your files never leave your device."
+        "title": "Local",
+        "description": "All files are processed directly in your browser. Your files never leave your device."
       },
       "noStorage": {
         "title": "No File Storage",
         "description": "We don't store your files. Once you close the browser tab, all data is automatically cleared."
+      }
+    },
+    "processingInfo": {
+      "title": "About File Processing Methods",
+      "localTitle": "Local",
+      "serverTitle": "Server",
+      "localShort": "Files are processed only in your browser, ensuring data privacy and security",
+      "serverShort": "Files are encrypted and sent to our servers for processing, offering advanced features, and deleted immediately after processing",
+      "localDescription": "Tools marked with 'Local' run entirely in your browser. Your files are not uploaded to any server, ensuring maximum privacy and security. Ideal for sensitive documents or quick processing of smaller files.",
+      "serverDescription": "Tools marked with 'Server' require uploading files to our servers for processing. These tools offer more sophisticated features (like PDF to Word conversion), but processing time may be longer. Files are deleted immediately after processing and are never permanently stored.",
+      "advantages": {
+        "privacy": "Privacy Security",
+        "instant": "Instant Processing",
+        "offline": "Works Offline",
+        "secure": "Encrypted Transfer",
+        "powerful": "Powerful Features",
+        "accurate": "High Accuracy",
+        "largeFiles": "Supports Large Files"
       }
     }
   },
@@ -417,7 +440,26 @@
     "clickToAdd": "Click to add signature",
     "noSignatureAvailable": "No signature available",
     "addSignatureToPdf": "Add Signature to PDF",
-    "pdfSuccessMessage": "PDF signature added successfully! "
+    "pdfSuccessMessage": "PDF signature added successfully! ",
+    "title": "How to Add a Signature to PDF",
+    "steps": {
+      "step1": "Upload your PDF file",
+      "step2": "Create a new signature (handwritten, text, or upload an image)",
+      "step3": "Adjust the signature size and position",
+      "step4": "Click on the PDF page to add the signature",
+      "step5": "Download your signed PDF"
+    },
+    "tips": {
+      "tip1": "Use handwriting mode for a more personalized signature",
+      "tip2": "You can save multiple signatures for future use",
+      "tip3": "Signature images with transparent backgrounds yield the best results"
+    },
+    "faqs": {
+      "q1": "Is my signature secure?",
+      "a1": "All signature processing happens locally in your browser, without uploading to any server, ensuring your signature security.",
+      "q2": "Can I add multiple signatures to one document?",
+      "a2": "Yes, you can add multiple signatures to different locations in your PDF document."
+    }
   },
   "extract": {
     "preview": "PDF Extract Images",
@@ -491,7 +533,29 @@
     
     "previewPdf": "Preview PDF",
     "closePdfPreview": "Close Preview",
-    "downloadPdf": "Download PDF"
+    "downloadPdf": "Download PDF",
+    "title": "How to Convert Images to PDF",
+    "steps": {
+      "step1": "Click the upload area or drag and drop images",
+      "step2": "Add multiple images and adjust the order",
+      "step3": "Select desired PDF quality (low, medium, or high)",
+      "step4": "Adjust page settings (paper size, orientation, etc.)",
+      "step5": "Click 'Generate PDF'",
+      "step6": "Download the generated PDF file"
+    },
+    "tips": {
+      "tip1": "Medium quality offers a good balance between file size and image clarity",
+      "tip2": "You can drag images to change their order in the PDF",
+      "tip3": "The watermark feature can help protect your image copyright"
+    },
+    "faqs": {
+      "q1": "What image formats are supported?",
+      "a1": "Our tool supports all common image formats, including JPG, PNG, GIF, BMP, etc.",
+      "q2": "How many images can I convert at once?",
+      "a2": "While there's no strict limit, we recommend processing no more than 50 images at once for best performance.",
+      "q3": "Are my images uploaded to a server?",
+      "a3": "No. All processing happens in your browser, and your images are not uploaded to any server, ensuring your privacy."
+    }
   },
   "pdfCompare": {
     "pageTitle": "PDF Comparison Tool",
@@ -542,7 +606,25 @@
       "imageChanged": "Image Changed"
     },
     "originalPdf": "Original PDF",
-    "modifiedPdf": "Modified PDF"
+    "modifiedPdf": "Modified PDF",
+    "title": "How to Compare Two PDF Files",
+    "steps": {
+      "step1": "Upload the original PDF file",
+      "step2": "Upload the modified PDF file",
+      "step3": "Click the 'Compare PDF Files' button",
+      "step4": "View the comparison results, with differences highlighted",
+      "step5": "You can download the comparison result PDF"
+    },
+    "tips": {
+      "tip1": "Ensure both PDF files have similar structures for best comparison results",
+      "tip2": "Use fullscreen mode for clearer difference viewing"
+    },
+    "faqs": {
+      "q1": "What types of differences can the comparison tool identify?",
+      "a1": "Our comparison tool can identify text changes, added or deleted content, as well as image and formatting changes.",
+      "q2": "How long does it take to compare large documents?",
+      "a2": "Comparison time depends on document size and complexity. Large documents may take several minutes."
+    }
   },
   "guides": {
     "pageTitle": "User Guides",
@@ -554,84 +636,236 @@
     "step": "Step",
     "howTo": "How to",
     "useToolNow": "Use",
-    "localProcessingTitle": "All Tools Process Files Locally",
-    "localProcessingDescription": "All our PDF tools process your files locally in your browser, without uploading them to any server. This ensures your data privacy and security. No registration required, no waiting for uploads and downloads, and faster processing.",
+    "localProcessingTitle": "All Tools Run Locally",
+    "localProcessingDescription": "All our PDF tools run locally in your browser, without uploading your files to any server. This ensures your data privacy and security. No registration required, no waiting for uploads and downloads, and faster processing.",
     
     "stamp": {
+      "title": "How to Add a Stamp to PDF",
       "steps": {
-        "step1": "Upload your PDF file by clicking 'Select PDF File'",
-        "step2": "Upload a stamp image or create a transparent stamp",
-        "step3": "Adjust stamp size, position, and angle",
-        "step4": "Select pages to apply the stamp",
-        "step5": "Click 'Add Stamp' to process your PDF",
-        "step6": "Download your stamped PDF"
+        "step1": "Upload your PDF file",
+        "step2": "Choose from preset stamps or create a custom one",
+        "step3": "Position the stamp on your document",
+        "step4": "Apply and download your stamped PDF"
       },
       "tips": {
-        "tip1": "Use PNG images with transparency for cleaner stamps",
-        "tip2": "For non-transparent images, use our 'Make Transparent Stamp' tool",
-        "tip3": "Recommended stamp size is 30-50mm for most documents"
+        "tip1": "You can adjust stamp opacity for a watermark effect",
+        "tip2": "Custom stamps can include text, images, or both",
+        "tip3": "Save custom stamps for future use"
       },
       "faqs": {
-        "q1": "What file formats are supported for stamps?",
-        "a1": "Our tool supports PNG, JPEG, and other common image formats. PNG with transparency works best for stamps with clean backgrounds.",
-        "q2": "Is there a file size limit?",
-        "a2": "Since all processing is done in your browser, the file size limit depends on your device's memory. Generally, files up to 100MB should work well."
+        "q1": "Can I add multiple stamps to one document?",
+        "a1": "Yes, you can add as many stamps as needed to different pages or positions."
       }
     },
     
     "merge": {
+      "title": "How to Merge PDF Files",
       "steps": {
-        "step1": "Click 'Add File' to select multiple PDF files",
-        "step2": "Drag and drop to reorder files as needed",
-        "step3": "Click 'Merge' to combine the files",
-        "step4": "Download your merged PDF"
+        "step1": "Upload multiple PDF files",
+        "step2": "Arrange them in the desired order",
+        "step3": "Click 'Merge PDFs' button",
+        "step4": "Download your combined PDF"
       },
       "tips": {
-        "tip1": "Ensure all PDFs have similar page sizes for best appearance",
-        "tip2": "You can merge up to 20 files at once for optimal performance"
+        "tip1": "Drag and drop to reorder files before merging",
+        "tip2": "You can remove pages you don't want in the final document",
+        "tip3": "Add more files at any time before merging"
       },
       "faqs": {
-        "q1": "Will the merged PDF maintain bookmarks and links?",
-        "a1": "Yes, our merge tool preserves most PDF features including bookmarks, links, and form fields from the original documents.",
-        "q2": "Can I merge password-protected PDFs?",
-        "a2": "Currently, our tool doesn't support merging password-protected PDFs. Please remove the password protection before uploading."
+        "q1": "How many PDFs can I merge at once?",
+        "a1": "You can merge up to 20 PDF files in a single operation."
       }
     },
     
     "split": {
+      "title": "How to Split PDF Files",
       "steps": {
         "step1": "Upload your PDF file",
-        "step2": "Choose between Range Selection or Custom Selection",
-        "step3": "Define page ranges (e.g., 1-3, 5, 7-9)",
-        "step4": "Click 'Start Splitting'",
-        "step5": "Download each split PDF file"
+        "step2": "Choose split method (by page ranges, number of pages, or file size)",
+        "step3": "Set your preferences",
+        "step4": "Click 'Split PDF' button",
+        "step5": "Download your split PDF files"
       },
       "tips": {
-        "tip1": "Use the preview to confirm page selections before splitting",
-        "tip2": "For complex splitting, you can add multiple range selections"
+        "tip1": "Use page ranges (e.g., 1-3, 4-6) for custom splitting",
+        "tip2": "Preview shows which pages will be in each output file",
+        "tip3": "Extract specific pages using the 'Extract Pages' option"
       },
       "faqs": {
-        "q1": "Can I split a PDF into individual pages?",
-        "a1": "Yes, you can split a PDF into individual pages by creating a separate range for each page or using the custom selection option."
+        "q1": "How do I split a large PDF into equal parts?",
+        "a1": "Use the 'Split by number of pages' option and specify how many pages you want in each part."
       }
     },
     
     "compress": {
+      "title": "How to Compress PDF Files",
       "steps": {
         "step1": "Upload your PDF file",
-        "step2": "Select compression quality level",
-        "step3": "Click 'Start Compression'",
-        "step4": "Download your compressed PDF file"
+        "step2": "Choose compression level (low, medium, or high)",
+        "step3": "Click 'Compress PDF' button",
+        "step4": "Download your compressed PDF"
       },
       "tips": {
-        "tip1": "For documents with mostly text, you can choose higher compression",
-        "tip2": "For documents with high-quality images, choose medium compression to maintain image quality"
+        "tip1": "Higher compression levels may affect image quality",
+        "tip2": "Medium compression usually offers the best balance",
+        "tip3": "For documents with many images, compression results are most noticeable"
       },
       "faqs": {
-        "q1": "Will compression affect the quality of my PDF?",
-        "a1": "Compression will slightly reduce image quality based on the level chosen, but text is usually unaffected. You can choose a compression level that suits your needs.",
-        "q2": "Is there a maximum file size limit?",
-        "a2": "Since processing happens in the browser, large files may require more time and memory. We recommend files under 100MB."
+        "q1": "How much can a PDF be compressed?",
+        "a1": "Compression rates vary depending on the content of your PDF. Documents with many images can often be reduced to 20-40% of their original size."
+      }
+    },
+    "compare": {
+      "title": "How to Compare Two PDF Files",
+      "steps": {
+        "step1": "Upload the original PDF file",
+        "step2": "Upload the modified PDF file",
+        "step3": "Click the 'Compare PDF Files' button",
+        "step4": "View the comparison results, with differences highlighted",
+        "step5": "You can download the comparison result PDF"
+      },
+      "tips": {
+        "tip1": "Ensure both PDF files have similar structures for best comparison results",
+        "tip2": "Use fullscreen mode for clearer difference viewing"
+      },
+      "faqs": {
+        "q1": "What types of differences can the comparison tool identify?",
+        "a1": "Our comparison tool can identify text changes, added or deleted content, as well as image and formatting changes.",
+        "q2": "How long does it take to compare large documents?",
+        "a2": "Comparison time depends on document size and complexity. Large documents may take several minutes."
+      }
+    },
+    "pdfToWord": {
+      "title": "How to Convert PDF to Word Document",
+      "steps": {
+        "step1": "Upload your PDF file",
+        "step2": "Preview the PDF content to confirm",
+        "step3": "Click the 'Convert to Word' button",
+        "step4": "Wait for the conversion to complete",
+        "step5": "Download the generated Word document"
+      },
+      "tips": {
+        "tip1": "Simpler PDF content results in higher conversion quality",
+        "tip2": "PDFs with complex tables and charts may require some manual adjustments after conversion",
+        "tip3": "Ensure the PDF text is selectable, not a scanned image"
+      },
+      "faqs": {
+        "q1": "Does the converted Word document retain the original PDF formatting?",
+        "a1": "Our conversion tool strives to preserve original formatting, including fonts, colors, and layout, but complex elements may require some manual adjustments.",
+        "q2": "Is there a file size limit?",
+        "a2": "Generally, we recommend uploading PDFs under 20MB for optimal conversion performance and speed.",
+        "q3": "Is my file secure?",
+        "a3": "To provide high-quality conversion, PDF files are securely uploaded to our servers for processing but are not stored or used for any other purpose. If your file contains sensitive information, we recommend using local processing tools."
+      }
+    },
+    "pdfToExcel": {
+      "title": "How to Convert Tables from PDF to Excel",
+      "steps": {
+        "step1": "Upload your PDF file containing tables",
+        "step2": "Preview the PDF content to confirm it has table data",
+        "step3": "Click the 'Convert to Excel' button",
+        "step4": "Wait for the conversion to complete (larger files may take longer)",
+        "step5": "Download the generated Excel file"
+      },
+      "tips": {
+        "tip1": "Clearly structured tables convert best",
+        "tip2": "Complex merged cells may need adjustment after conversion",
+        "tip3": "Ensure tables in your PDF are text, not images"
+      },
+      "faqs": {
+        "q1": "Is the data in Excel editable after conversion?",
+        "a1": "Yes, the converted Excel file is fully editable, and you can manipulate the data just like any regular Excel file.",
+        "q2": "Can I extract multiple tables from a PDF?",
+        "a2": "Yes, our tool can identify multiple tables in a PDF and convert them into different worksheets in Excel.",
+        "q3": "What if tables in my PDF are scanned images?",
+        "a3": "Our tool primarily handles text-based tables. For scanned table images, conversion accuracy may be reduced."
+      }
+    },
+    "pdfToImage": {
+      "title": "How to Convert PDF to Images",
+      "steps": {
+        "step1": "Upload your PDF file",
+        "step2": "Preview the PDF content",
+        "step3": "Select conversion settings (image format, quality, and resolution)",
+        "step4": "Click the 'Convert to Images' button",
+        "step5": "Wait for the conversion to complete",
+        "step6": "Download all images or select individual ones to download"
+      },
+      "tips": {
+        "tip1": "PNG format is best for PDFs with text and lines, maintaining clarity",
+        "tip2": "JPEG format is suitable for PDFs with photo content, resulting in smaller files",
+        "tip3": "Increasing resolution gives clearer images but larger file sizes"
+      },
+      "faqs": {
+        "q1": "How many pages of PDF can I convert at once?",
+        "a1": "There's no strict limit on the number of pages, but PDFs with many pages may require more processing time and browser memory. We recommend processing documents under 50 pages at a time.",
+        "q2": "What's the quality of the converted images?",
+        "a2": "Image quality depends on your chosen settings. Higher resolution and quality settings produce clearer images but with larger file sizes.",
+        "q3": "Is this process done locally?",
+        "a3": "Yes, all conversion is done in your browser, with no files uploaded to any server, ensuring file security and privacy."
+      }
+    },
+    "sign": {
+      "title": "How to Add a Signature to PDF",
+      "steps": {
+        "step1": "Upload your PDF file",
+        "step2": "Create a new signature (handwritten, text, or upload an image)",
+        "step3": "Adjust the signature size and position",
+        "step4": "Click on the PDF page to add the signature",
+        "step5": "Download your signed PDF"
+      },
+      "tips": {
+        "tip1": "Use handwriting mode for a more personalized signature",
+        "tip2": "You can save multiple signatures for future use",
+        "tip3": "Signature images with transparent backgrounds yield the best results"
+      },
+      "faqs": {
+        "q1": "Is my signature secure?",
+        "a1": "All signature processing happens locally in your browser, without uploading to any server, ensuring your signature security.",
+        "q2": "Can I add multiple signatures to one document?",
+        "a2": "Yes, you can add multiple signatures to different locations in your PDF document."
+      }
+    },
+    "extract": {
+      "title": "How to Extract Images from PDF",
+      "steps": {
+        "step1": "Upload your PDF file",
+        "step2": "Select the 'Extract Images' option",
+        "step3": "Review the preview of extracted images",
+        "step4": "Select the images you wish to download",
+        "step5": "Download the selected images"
+      },
+      "tips": {
+        "tip1": "Use a PDF with high image quality for best results",
+        "tip2": "Ensure the PDF contains embedded images",
+        "tip3": "Some images may be embedded in ways that are hard to extract"
+      },
+      "faqs": {
+        "q1": "Will all images be extracted?",
+        "a1": "Most common image formats are supported, though some embedded objects may not be extracted.",
+        "q2": "Are extracted images saved in original quality?",
+        "a2": "Yes, the images are extracted in their original resolution and quality."
+      }
+    },
+    "imageToPdf": {
+      "title": "How to Convert Images to PDF",
+      "steps": {
+        "step1": "Upload your image files",
+        "step2": "Arrange the image order as desired",
+        "step3": "Select PDF page settings and layout",
+        "step4": "Click the 'Generate PDF' button",
+        "step5": "Download your generated PDF"
+      },
+      "tips": {
+        "tip1": "High-resolution images yield better PDF quality",
+        "tip2": "You can rearrange images before conversion",
+        "tip3": "Preview the layout before finalizing the PDF"
+      },
+      "faqs": {
+        "q1": "Can I combine multiple images into one PDF?",
+        "a1": "Yes, the tool combines all uploaded images into a single PDF file.",
+        "q2": "Is there a limit on the number of images?",
+        "a2": "There is no strict limit, but a large number of high-resolution images may increase processing time."
       }
     }
   },
@@ -673,6 +907,12 @@
     "contact": "Contact",
     "privacyPolicy": "Privacy Policy",
     "disclaimer": "Disclaimer"
-  }
+  },
+  "menuGroups": {
+    "edit": "PDF Editing",
+    "organize": "PDF Organization",
+    "convert": "Format Conversion",
+    "analyze": "PDF Optimization"
+  } 
 
 } 

@@ -11,7 +11,8 @@ import {
   Paper,
   Divider,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
+  Chip
 } from '@mui/material';
 import { 
   Link 
@@ -30,7 +31,10 @@ import {
   Help as HelpIcon,
   QuestionAnswer as FAQIcon,
   Description,
-  TableChart
+  TableChart,
+  Info,
+  LocalLibrary,
+  CloudQueue
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import LanguageShareControls from '../components/LanguageShareControls';
@@ -256,7 +260,7 @@ function HomePage() {
         variant="subtitle1" 
         align="center" 
         sx={{ 
-          mb: { xs: 4, md: 6 },
+          mb: { xs: 2, md: 3 },
           color: 'text.secondary',
           display: 'flex',
           alignItems: 'center',
@@ -272,9 +276,73 @@ function HomePage() {
             opacity: 0.85,
           }}
         >
-          {t('home.privacyHint')}
+        
         </Box>
       </Typography>
+
+      {/* 处理方式简要说明 - 与功能卡片样式一致 */}
+      <Box sx={{ 
+        mb: { xs: 3, md: 4 }, 
+        display: 'flex', 
+        flexDirection: { xs: 'column', md: 'row' },
+        justifyContent: 'center',
+        width: '100%',
+        maxWidth: '800px',
+        mx: 'auto',
+        gap: 2
+      }}>
+        <Box sx={{ 
+          display: 'flex',
+          alignItems: 'center', 
+          justifyContent: 'center',
+          gap: 1.5,
+          width: '100%',
+        }}>
+          <Box sx={{ 
+            display: 'flex',
+            alignItems: 'center',
+            borderRadius: '12px',
+            px: 1.5,
+            py: 0.5,
+            fontSize: '0.8rem',
+            fontWeight: 'medium',
+            bgcolor: 'success.light',
+            color: 'success.contrastText'
+          }}>
+            <Box component="span" sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'success.main', mr: 0.5 }} />
+            {t('home.processingType.local', '本地处理')}
+          </Box>
+          <Typography variant="body2" color="text.secondary">
+            {t('home.processingInfo.localShort', '文件仅在您的浏览器中处理，确保数据隐私与安全')}
+          </Typography>
+        </Box>
+        
+        <Box sx={{ 
+          display: 'flex',
+          alignItems: 'center', 
+          justifyContent: 'center',
+          gap: 1.5,
+          width: '100%',
+        }}>
+          <Box sx={{ 
+            display: 'flex',
+            alignItems: 'center',
+            borderRadius: '12px',
+            px: 1.5,
+            py: 0.5,
+            fontSize: '0.8rem',
+            fontWeight: 'medium',
+            bgcolor: 'warning.light',
+            color: 'warning.contrastText'
+          }}>
+            <Box component="span" sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'warning.main', mr: 0.5 }} />
+            {t('home.processingType.server', '云端处理')}
+          </Box>
+          <Typography variant="body2" color="text.secondary">
+            {t('home.processingInfo.serverShort', '文件加密传输至服务器处理，提供高级功能，处理后立即删除')}
+          </Typography>
+        </Box>
+      </Box>
 
       <Grid container spacing={2} justifyContent="flex-start" sx={{ px: 2 }}>
         {features.map((feature) => (
@@ -391,7 +459,7 @@ function HomePage() {
           </Grid>
         ))}
       </Grid>
-
+      
       {/* 使用指南和FAQ部分 */}
       <Grid container spacing={3} sx={{ mt: { xs: 3, md: 6 } }}>
         {/* 使用指南部分 */}
