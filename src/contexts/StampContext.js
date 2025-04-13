@@ -23,14 +23,29 @@ const loadImage = (src) =>
 // 辅助函数 2：将图片绘制到 Canvas 中并缩放到指定宽高
 const resizeImage = (img, width, height) => {
   const canvas = document.createElement('canvas');
-  canvas.width = width;
-  canvas.height = height;
+  // 增加canvas尺寸以提高精度
+  canvas.width = width * 2;
+  canvas.height = height * 2;
   const ctx = canvas.getContext('2d');
-  // 启用高质量平滑算法
+  
+  // 启用高质量图像处理
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';
+  
+  // 使用更高质量的缩放算法
+  ctx.scale(2, 2);
   ctx.drawImage(img, 0, 0, width, height);
-  return canvas;
+  
+  // 创建最终canvas
+  const finalCanvas = document.createElement('canvas');
+  finalCanvas.width = width;
+  finalCanvas.height = height;
+  const finalCtx = finalCanvas.getContext('2d');
+  finalCtx.imageSmoothingEnabled = true;
+  finalCtx.imageSmoothingQuality = 'high';
+  finalCtx.drawImage(canvas, 0, 0, width, height);
+  
+  return finalCanvas;
 };
 
 // 辅助函数 3：旋转并从旋转后图像中裁剪中心区域（输出 PNG DataURL）
@@ -124,207 +139,143 @@ export const StampProvider = ({ children }) => {
 
   // 完全在客户端使用 pdf-lib 盖章，不再发送到后端
   const handleSubmit = async () => {
-    if (!file || !stampConfig.imageUrl) {
-      setMessage({ type: 'error', content: '请选择PDF文件和印章图片' });
-      return;
-    }
     try {
-      setLoading(true);
-      console.log("开始处理 PDF 文件...");
-
-      // 读取 PDF 文件（文件对象转换成 ArrayBuffer）
-      const pdfArrayBuffer = await file.arrayBuffer();
-      const pdfDoc = await PDFDocument.load(pdfArrayBuffer);
-      const pages = pdfDoc.getPages();
-      console.log("PDF 文档加载完成，页面总数:", pages.length);
-
-      // 获取 stampConfig 配置
-      const config = stampConfig;
-      console.log("当前印章配置:", config);
-
-      // 计算印章在图片中的尺寸 (像素)
-      const stampWidthPx = Math.round(config.size * MM_TO_INCH * DPI);
-      console.log("计算印章宽度(像素):", stampWidthPx);
-
-      // 加载印章图片
-      const stampImg = await loadImage(config.imageUrl);
-      // 统一调整为正方形 (stampWidthPx x stampWidthPx)
-      const resizedCanvas = resizeImage(stampImg, stampWidthPx, stampWidthPx);
-      console.log("印章图片加载并调整为正方形");
-
-      // 【A】处理骑缝章
-      if (config.isStraddle) {
-        console.log("开始处理骑缝章...");
-        const stampWidthPt = config.size * MM_TO_PT;
-        const stampHeightPt = stampWidthPt;
-        const pageCount = pages.length;
-        const partWidthPt = stampWidthPt / pageCount;
-        const partWidthPx = Math.floor(stampWidthPx / pageCount);
-
-        // 判断整个 PDF 文件中是否存在纵向页面
-        const hasPortrait = pages.some((page) => {
-          const { width, height } = page.getSize();
-          return width < height;
-        });
-
-        // 修改这里：考虑印章高度进行坐标转换
-        // 用户输入的 Y 坐标是印章中心位置，需要考虑印章高度的一半
-        const convertedStampY = (297 - config.straddleY) * MM_TO_PT - stampHeightPt;
-        console.log(`骑缝章：stampWidthPt=${stampWidthPt}, 每页宽度(点)=${partWidthPt}, convertedStampY=${convertedStampY}, stampHeightPt=${stampHeightPt}`);
-
-        for (let i = 0; i < pageCount; i++) {
-          const page = pages[i];
-          const { width, height } = page.getSize();
-          const isLandscape = width > height;
-
-          // 裁剪对应部分印章图片
-          const cropLeft = i * partWidthPx;
-          let croppedDataUrl;
-
-          if (hasPortrait && isLandscape) {
-            // 对于横向页面，先裁剪再旋转90度
-            const croppedCanvas = document.createElement('canvas');
-            croppedCanvas.width = partWidthPx;
-            croppedCanvas.height = stampWidthPx;
-            const ctx = croppedCanvas.getContext('2d');
-            ctx.drawImage(resizedCanvas, cropLeft, 0, partWidthPx, stampWidthPx, 0, 0, partWidthPx, stampWidthPx);
-            
-            // 创建新的画布进行旋转
-            const rotatedCanvas = document.createElement('canvas');
-            rotatedCanvas.width = stampWidthPx;
-            rotatedCanvas.height = partWidthPx;
-            const rotatedCtx = rotatedCanvas.getContext('2d');
-            
-            // 移动到中心点，旋转，然后绘制
-            rotatedCtx.translate(stampWidthPx/2, partWidthPx/2);
-            rotatedCtx.rotate(90 * Math.PI / 180);
-            rotatedCtx.drawImage(croppedCanvas, -partWidthPx/2, -stampWidthPx/2);
-            
-            croppedDataUrl = rotatedCanvas.toDataURL('image/png');
-          } else {
-            // 纵向页面直接裁剪
-            croppedDataUrl = cropImage(resizedCanvas, cropLeft, 0, partWidthPx, stampWidthPx);
-          }
-
-
-          const croppedImageEmbed = await pdfDoc.embedPng(croppedDataUrl);
-
-          if (hasPortrait && isLandscape) {
-            // 对于混合方向的 PDF：如果当前页面是横向，则旋转页面 -90°
-            page.setRotation(degrees(-90));
-
-            page.drawImage(croppedImageEmbed, {
-              x: convertedStampY,       // 原来的 Y 坐标变成了 X 坐标
-              y: 0,                     // 从底部开始
-              height: partWidthPt,
-              width: stampHeightPt,
-              opacity: 0.8,
-            });
-            console.log(`骑缝章-页面${i + 1}【旋转后】: 印章绘制完成`);
-          } else {
-            // 纵向页面保持原有逻辑，但修改 Y 坐标计算
-            page.drawImage(croppedImageEmbed, {
-              x: width - partWidthPt,
-              y: convertedStampY,  // 直接使用转换后的 Y 坐标
-              width: partWidthPt,
-              height: stampHeightPt,
-              opacity: 0.8,
-            });
-            console.log(`骑缝章-页面${i + 1}【未旋转】: 印章绘制完成`);
-          }
-        }
+      if (!file) {
+        setMessage({ type: 'error', content: '请选择PDF文件' });
+        return;
+      }
+      
+      if (!stampConfig.imageUrl) {
+        setMessage({ type: 'error', content: '请选择印章图片' });
+        return;
       }
 
-      // 【B】处理普通印章（针对选定页面）
-      if (config.selectedPages && config.selectedPages.length > 0) {
-        console.log("开始处理普通印章...");
+      // 检查是否选择了页面
+      if (!stampConfig.selectedPages || stampConfig.selectedPages.length === 0) {
+        setMessage({ type: 'error', content: '请选择需要盖章的页面' });
+        return;
+      }
 
-        // 先判断整个 PDF 文档中是否存在纵向页面
-        const hasPortrait = pages.some((page) => {
-          const { width, height } = page.getSize();
-          return width < height;
-        });
+      setLoading(true);
+      setMessage(null);
 
-        for (const pageNum of config.selectedPages) {
+      // 加载PDF文件
+      const pdfBytes = await file.arrayBuffer();
+      const pdfDoc = await PDFDocument.load(pdfBytes, {
+        updateMetadata: false,
+        ignoreEncryption: true,
+      });
+
+      // 加载印章图片
+      let stampPngImage;
+      if (typeof stampConfig.imageUrl === 'string') {
+        try {
+          // 如果是字符串URL，先获取图像，再转为PNG数据
+          const img = await loadImage(stampConfig.imageUrl);
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+          const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1.0));
+          const arrayBuffer = await blob.arrayBuffer();
+          stampPngImage = await pdfDoc.embedPng(arrayBuffer);
+        } catch (imgError) {
+          console.error('处理印章图片时出错:', imgError);
+          setMessage({ type: 'error', content: '处理印章图片时出错，请重试' });
+          setLoading(false);
+          return;
+        }
+      } else if (stampConfig.imageUrl instanceof File || stampConfig.imageUrl instanceof Blob) {
+        try {
+          // 如果是File对象，直接使用arrayBuffer
+          const stampImageBytes = await stampConfig.imageUrl.arrayBuffer();
+          stampPngImage = await pdfDoc.embedPng(stampImageBytes, {
+            quality: 100, // 使用最高质量
+          });
+        } catch (fileError) {
+          console.error('读取印章文件时出错:', fileError);
+          setMessage({ type: 'error', content: '读取印章文件时出错，请重试' });
+          setLoading(false);
+          return;
+        }
+      } else {
+        setMessage({ type: 'error', content: '印章图片格式不正确，请重新选择' });
+        setLoading(false);
+        return;
+      }
+
+      // 获取印章尺寸
+      const stampDims = stampPngImage.scale(1);
+      const stampWidth = stampDims.width;
+      const stampHeight = stampDims.height;
+
+      // 获取页面尺寸
+      const pages = pdfDoc.getPages();
+      
+      // 处理普通印章（针对选定页面）
+      // 确保opacity是有效的数字，如果无效则使用默认值0.8
+      const opacity = typeof stampConfig.opacity === 'number' && !isNaN(stampConfig.opacity) 
+        ? stampConfig.opacity / 100 
+        : 0.8;
+        
+      for (const pageNum of stampConfig.selectedPages) {
+        // 检查页码是否有效
+        if (pageNum < 1 || pageNum > pages.length) {
+          console.warn(`跳过无效页码: ${pageNum}`);
+          continue;
+        }
+        
+        try {
           // 注意：pageNum 为 1 开始
           const page = pages[pageNum - 1];
-          // 如果 config.pageSettings 未提供特定设置，则使用空对象，后续取默认值
-          const settings = config.pageSettings?.[pageNum] || {};
+          // 如果 stampConfig.pageSettings 未提供特定设置，则使用空对象，后续取默认值
+          const settings = stampConfig.pageSettings?.[pageNum] || {};
           const { width, height } = page.getSize();
           // 默认位置（单位 mm）：当既没有页面特定设置也未在 config 上设置时使用
           const defaultPosition = { x: 120, y: 190 };
           // 优先使用页面单独设置，其次全局设置，再次默认值
-          const position = settings.position || config.position || defaultPosition;
+          const position = settings.position || stampConfig.position || defaultPosition;
           // 旋转角度，同理，默认 0°
-          const rotation = ((settings.rotation || 0) % 360 + 360) % 360;
+          const rotation = ((settings.rotation ?? 0) % 360 + 360) % 360;
           // 转换后的印章尺寸（单位 pt）
-          const stampSizePt = config.size * MM_TO_PT;
-
-          console.log(`普通印章-页面${pageNum}: 页面尺寸=${width}x${height}`);
-          console.log(
-            `普通印章-页面${pageNum}: 使用参数 position=${JSON.stringify(
-              position
-            )}, rotation=${rotation}, stampSizePt=${stampSizePt}`
-          );
-
-          // 对印章图片进行旋转并裁剪，返回 PNG DataURL（参考之前的辅助函数 rotateAndCropImage）
-          const rotatedDataUrl = rotateAndCropImage(resizedCanvas, rotation, stampWidthPx);
-          const rotatedImageEmbed = await pdfDoc.embedPng(rotatedDataUrl);
-
-          // 检查页面旋转角度，判断当前页面是否为横向
-          const pageRotation = page.getRotation().angle || 0;
-          let isLandscape = false;
-          if (pageRotation === 90 || pageRotation === 270) {
-            isLandscape = true;
-          } else if (pageRotation === 0 || pageRotation === 180) {
-            // 如果宽度大于高度，也认为页面为横向
-            if (width > height) {
-              isLandscape = true;
-            }
-          }
-
-          let stampX, stampY;
-          if (isLandscape && hasPortrait) {
-            // 混合模式下：当前页为横向且存在纵向页面时，转换坐标
-            // 新 x = position.y
-            // 新 y = 210 - position.x - config.size
-            stampX = position.y * MM_TO_PT;
-            stampY = (210 - position.x - config.size) * MM_TO_PT;
-            console.log(
-              `普通印章-页面${pageNum}: 混合模式横向处理，转换后 stampX=${stampX}, stampY=${stampY}`
-            );
-          } else {
-            // 统一模式（全横向或全纵向页）：印章位置直接按实际录入值计算，
-            // 保存转换为 pt：stampX = position.x * MM_TO_PT, stampY 根据纸张高度做 Y 坐标翻转
-            stampX = position.x * MM_TO_PT;
-            stampY = height - (position.y * MM_TO_PT + stampSizePt);
-            console.log(
-              `普通印章-页面${pageNum}: 统一模式处理，stampX=${stampX}, stampY=${stampY}`
-            );
-          }
-
-          // 绘制印章到该页面中
-          page.drawImage(rotatedImageEmbed, {
+          const stampSizePt = (stampConfig.size || 40) * MM_TO_PT;
+          
+          // 计算印章位置
+          const stampX = position.x * MM_TO_PT;
+          const stampY = height - (position.y * MM_TO_PT + stampSizePt);
+          
+          // 绘制印章
+          page.drawImage(stampPngImage, {
             x: stampX,
             y: stampY,
             width: stampSizePt,
             height: stampSizePt,
-            opacity: 0.8,
+            opacity: opacity,
+            rotateDegrees: rotation,
           });
-          console.log(`普通印章-页面${pageNum}: 印章绘制完成`);
+        } catch (pageError) {
+          console.error(`处理第${pageNum}页时出错:`, pageError);
+          // 继续处理其他页面
         }
       }
+      
+      // 保存PDF，使用高质量设置
+      const outputPdfBytes = await pdfDoc.save({
+        useObjectStreams: false,
+        addDefaultPage: false,
+        preservePDFFormXObjects: true,
+        updateFieldAppearances: true,
+      });
 
-      // 保存修改后的 PDF 并生成 Blob URL
-      const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      // 创建下载链接
+      const blob = new Blob([outputPdfBytes], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       setStampedFileUrl(url);
-      console.log("PDF 文件保存完成，生成 Blob URL:", url);
       setMessage({ type: 'success', content: 'PDF 盖章处理完成！' });
-    } catch (error) {
-      console.error('Error:', error);
-      setMessage({ type: 'error', content: error.message });
+    } catch (err) {
+      console.error('处理PDF时出错:', err);
+      setMessage({ type: 'error', content: '处理PDF时出错，请重试' });
     } finally {
       setLoading(false);
     }
