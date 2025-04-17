@@ -27,15 +27,15 @@ const resizeImage = (img, width, height) => {
   canvas.width = width * 2;
   canvas.height = height * 2;
   const ctx = canvas.getContext('2d');
-  
+
   // 启用高质量图像处理
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';
-  
+
   // 使用更高质量的缩放算法
   ctx.scale(2, 2);
   ctx.drawImage(img, 0, 0, width, height);
-  
+
   // 创建最终canvas
   const finalCanvas = document.createElement('canvas');
   finalCanvas.width = width;
@@ -44,7 +44,7 @@ const resizeImage = (img, width, height) => {
   finalCtx.imageSmoothingEnabled = true;
   finalCtx.imageSmoothingQuality = 'high';
   finalCtx.drawImage(canvas, 0, 0, width, height);
-  
+
   return finalCanvas;
 };
 
@@ -125,7 +125,7 @@ export const StampProvider = ({ children }) => {
   // 从环境变量读取 API_URL （仅用于调试或后续其他用途）
   const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
-  
+
 
   // 新增状态 
   const [pageOrientations, setPageOrientations] = useState({});
@@ -144,7 +144,7 @@ export const StampProvider = ({ children }) => {
         setMessage({ type: 'error', content: '请选择PDF文件' });
         return;
       }
-      
+
       if (!stampConfig.imageUrl) {
         setMessage({ type: 'error', content: '请选择印章图片' });
         return;
@@ -212,20 +212,81 @@ export const StampProvider = ({ children }) => {
 
       // 获取页面尺寸
       const pages = pdfDoc.getPages();
-      
+
+     // 确保opacity是有效的数字，如果无效则使用默认值0.8
+     const opacity = typeof stampConfig.opacity === 'number' && !isNaN(stampConfig.opacity)
+     ? stampConfig.opacity / 100
+     : 0.8;
+     
+      // 处理骑缝章（如果启用）
+      if (stampConfig.isStraddle) {
+        console.log('处理骑缝章...');
+        const stampSizePt = (stampConfig.size || 40) * MM_TO_PT;
+        const pageCount = pages.length;
+        const partWidthPt = stampSizePt / pageCount;
+
+        // 用户指定的骑缝章Y坐标（毫米）
+        const straddleY = stampConfig.straddleY || 148.5;
+
+        // 判断整个PDF中是否存在纵向页面
+        const hasPortrait = Object.values(pageOrientations).some(o => o === 'portrait');
+
+        for (let i = 0; i < pageCount; i++) {
+          try {
+            const page = pages[i];
+            const { width, height } = page.getSize();
+            const isLandscape = width > height;
+
+            // 裁剪印章的一部分
+            const stampWidthPx = Math.round((stampConfig.size || 40) * MM_TO_INCH * DPI);
+            const partWidthPx = Math.floor(stampWidthPx / pageCount);
+
+            // 加载和处理印章图像
+            const img = await loadImage(stampConfig.imageUrl);
+            const resizedCanvas = resizeImage(img, stampWidthPx, stampWidthPx);
+
+            // 裁剪相应部分
+            const cropLeft = i * partWidthPx;
+            const croppedDataUrl = cropImage(resizedCanvas, cropLeft, 0, partWidthPx, stampWidthPx);
+            const croppedImageEmbed = await pdfDoc.embedPng(croppedDataUrl);
+
+            if (hasPortrait && isLandscape) {
+              // 对于横向页面
+              page.drawImage(croppedImageEmbed, {
+                x: straddleY * MM_TO_PT,
+                y: 0,
+                width: stampSizePt,
+                height: partWidthPt,
+                opacity: opacity,
+                rotate: degrees(270)
+              });
+            } else {
+              // 对于纵向页面
+              page.drawImage(croppedImageEmbed, {
+                x: width - partWidthPt,
+                y: straddleY * MM_TO_PT,
+                width: partWidthPt,
+                height: stampSizePt,
+                opacity: opacity
+              });
+            }
+          } catch (error) {
+            console.error(`处理骑缝章第${i + 1}页时出错:`, error);
+            // 继续处理下一页
+          }
+        }
+      }
+
       // 处理普通印章（针对选定页面）
-      // 确保opacity是有效的数字，如果无效则使用默认值0.8
-      const opacity = typeof stampConfig.opacity === 'number' && !isNaN(stampConfig.opacity) 
-        ? stampConfig.opacity / 100 
-        : 0.8;
-        
+ 
+
       for (const pageNum of stampConfig.selectedPages) {
         // 检查页码是否有效
         if (pageNum < 1 || pageNum > pages.length) {
           console.warn(`跳过无效页码: ${pageNum}`);
           continue;
         }
-        
+
         try {
           // 注意：pageNum 为 1 开始
           const page = pages[pageNum - 1];
@@ -240,11 +301,11 @@ export const StampProvider = ({ children }) => {
           const rotation = ((settings.rotation ?? 0) % 360 + 360) % 360;
           // 转换后的印章尺寸（单位 pt）
           const stampSizePt = (stampConfig.size || 40) * MM_TO_PT;
-          
+
           // 计算印章位置
           const stampX = position.x * MM_TO_PT;
           const stampY = height - (position.y * MM_TO_PT + stampSizePt);
-          
+
           // 绘制印章
           page.drawImage(stampPngImage, {
             x: stampX,
@@ -259,7 +320,7 @@ export const StampProvider = ({ children }) => {
           // 继续处理其他页面
         }
       }
-      
+
       // 保存PDF，使用高质量设置
       const outputPdfBytes = await pdfDoc.save({
         useObjectStreams: false,
@@ -287,7 +348,7 @@ export const StampProvider = ({ children }) => {
     setMessage(null);
     setLoading(false);
     handleResetZoom();  // 使用 handleResetZoom 替代 setZoom
-    handlePageChange(null); 
+    handlePageChange(null);
 
     console.log("handleCleanup执行");
     // 清理印章相关状态
