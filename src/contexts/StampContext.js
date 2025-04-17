@@ -151,7 +151,7 @@ export const StampProvider = ({ children }) => {
       }
 
       // 检查是否选择了页面
-      if (!stampConfig.selectedPages || stampConfig.selectedPages.length === 0) {
+      if (!stampConfig.isStraddle && (!stampConfig.selectedPages || stampConfig.selectedPages.length === 0)) {
         setMessage({ type: 'error', content: '请选择需要盖章的页面' });
         return;
       }
@@ -217,7 +217,7 @@ export const StampProvider = ({ children }) => {
      const opacity = typeof stampConfig.opacity === 'number' && !isNaN(stampConfig.opacity)
      ? stampConfig.opacity / 100
      : 0.8;
-     
+
       // 处理骑缝章（如果启用）
       if (stampConfig.isStraddle) {
         console.log('处理骑缝章...');
