@@ -44,7 +44,8 @@ import {
   Description,
   TableChart,
   ExpandMore as ExpandMoreIcon,
-  ArrowBack
+  ArrowBack,
+  Code
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 
@@ -74,7 +75,7 @@ function GuidesPage() {
     {
       id: 'convert',
       title: t('menuGroups.convert', '格式转换'),
-      guides: ['image-to-pdf', 'pdf-to-word', 'pdf-to-excel', 'pdf-to-image']
+      guides: ['image-to-pdf', 'pdf-to-word', 'pdf-to-excel', 'pdf-to-image', 'document-to-markdown']
     },
     {
       id: 'analyze',
@@ -397,6 +398,41 @@ function GuidesPage() {
         {
           question: t('guides.pdfToImage.faqs.q3', "这个过程是在本地完成的吗？"),
           answer: t('guides.pdfToImage.faqs.a3', "是的，所有转换过程都在您的浏览器中完成，不会上传文件到服务器，确保文件安全和隐私。")
+        }
+      ]
+    },
+    {
+      id: 'document-to-markdown',
+      title: t('guides.documentToMarkdown.title', "如何将文档转换为Markdown"),
+      icon: <Code />,
+      category: 'convert',
+      steps: [
+        t('guides.documentToMarkdown.steps.step1', "上传您的文档（PDF、Word、Excel等）"),
+        t('guides.documentToMarkdown.steps.step2', "预览文档内容"),
+        t('guides.documentToMarkdown.steps.step3', "根据需要设置转换选项（OCR识别、保留表格）"),
+        t('guides.documentToMarkdown.steps.step4', "点击'转换文档'按钮"),
+        t('guides.documentToMarkdown.steps.step5', "等待转换完成"),
+        t('guides.documentToMarkdown.steps.step6', "查看Markdown预览和源码"),
+        t('guides.documentToMarkdown.steps.step7', "复制Markdown或下载文件")
+      ],
+      tips: [
+        t('guides.documentToMarkdown.tips.tip1', "文档格式越简单，转换质量越高"),
+        t('guides.documentToMarkdown.tips.tip2', "对于扫描文档，启用OCR可以提高识别率"),
+        t('guides.documentToMarkdown.tips.tip3', "表格复杂的文档建议启用'保留表格'选项"),
+        t('guides.documentToMarkdown.tips.tip4', "转换后可以通过预览检查格式，并根据需要手动调整Markdown")
+      ],
+      faqs: [
+        {
+          question: t('guides.documentToMarkdown.faqs.q1', "支持哪些格式转换为Markdown？"),
+          answer: t('guides.documentToMarkdown.faqs.a1', "我们的工具支持PDF、Word、Excel、PowerPoint、图片、HTML等多种格式转换为Markdown。")
+        },
+        {
+          question: t('guides.documentToMarkdown.faqs.q2', "转换后会保留原文档的格式吗？"),
+          answer: t('guides.documentToMarkdown.faqs.a2', "我们尽力保留文本结构、标题、列表和表格等基本格式，但由于Markdown本身的限制，一些复杂格式可能无法完全保留。")
+        },
+        {
+          question: t('guides.documentToMarkdown.faqs.q3', "文档会上传到服务器吗？"),
+          answer: t('guides.documentToMarkdown.faqs.a3', "为了提供高质量的转换，特别是OCR功能，文件会安全地上传到服务器进行处理。所有文件在处理后会立即删除，不会永久存储。")
         }
       ]
     }

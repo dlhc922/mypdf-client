@@ -24,6 +24,8 @@
     "keywords": "PDF工具, PDF合并, PDF拆分, PDF压缩, PDF盖章, PDF签名, 免费PDF工具, 在线PDF编辑器"
   },
   "stamp": {
+    "pageTitle": "免费PDF盖章工具 - 本地处理无需上传 安全私密",
+    "pageDescription": "100%免费在线PDF盖章工具。在浏览器中本地添加自定义印章、公章或水印，无需上传文件，完全保护隐私。可调整大小、位置和透明度，简单易用。",
     "title": "选择盖章页面",
     "quickSelectPlaceholder": "例如: 1,3-5,8",
     "quickSelectHelper": "提示：可以输入页码范围（如1-5）或单页（如1,3,8），用逗号分隔",
@@ -260,7 +262,7 @@
       "quality": "生成高质量的图片，保留PDF文档的所有视觉元素。",
       "formats": "支持PNG格式（无损，适合文本和线条）和JPEG格式（有损压缩，适合照片）。",
       "resolution": "可调整分辨率以满足不同需要，高分辨率适合打印，低分辨率适合屏幕查看。",
-      "local": "所有转换在您的浏览器本地完成，文件不会上传到服务器，保证隐私安全。"
+      "local": "所有转换在您的浏览器中本地完成，文件不会上传到服务器，保证隐私安全。"
     },
     "errors": {
       "loadFailed": "无法加载PDF文件。请确保文件格式正确。",
@@ -403,6 +405,8 @@
     "processing": "处理中..."
   },
   "sign": {
+    "pageTitle": "免费PDF签名工具 - 本地处理无需上传 安全私密",
+    "pageDescription": "100%免费在线PDF签名工具。在浏览器中本地添加手写或打字签名，无需上传文件，完全保护隐私。轻松创建和定位签名，简单易用。",
     "settings": "签名设置",
     "addNewSignature": "添加新签名",
     "signature": "签名",
@@ -418,8 +422,6 @@
     "addSignatureTip": "设置好签名后，点击预览区的PDF页面进行添加",
     "noFileSelected": "未选择文件",
     "signaturePreview": "签名预览 {{number}}",
-    "pageTitle": "PDF 电子签名工具",
-    "pageDescription": "支持多个签名和自定义位置的 PDF 电子签名工具",
     "size": "签名尺寸",
     "position": "位置",
     "rotation": "旋转",

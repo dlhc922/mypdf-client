@@ -24,6 +24,8 @@
     "keywords": "PDF tools, merge PDF, split PDF, compress PDF, PDF stamp, PDF signature, free PDF tools, online PDF editor"
   },
   "stamp": {
+    "pageTitle": "Free PDF Stamp Tool - Add Digital Stamps Locally Without Upload",
+    "pageDescription": "100% Free online PDF stamping tool. Add custom stamps, seals or watermarks locally in your browser. No upload required, fully private and secure. Adjust size, position and transparency easily.",
     "title": "Select Stamp Pages",
     "quickSelectPlaceholder": "e.g.: 1,3-5,8",
     "quickSelectHelper": "Hint: Enter page ranges (e.g., 1-5) or individual pages (e.g., 1,3,8) separated by commas",
@@ -428,6 +430,8 @@
     "processing": "Processing..."
   },
   "sign": {
+    "pageTitle": "Free PDF Signature Tool - Sign Documents Locally Without Upload",
+    "pageDescription": "100% Free online PDF signing tool. Add handwritten or typed signatures locally in your browser. No upload required, fully private and secure. Create and position signatures with ease.",
     "settings": "Signature Settings",
     "addNewSignature": "Add New Signature",
     "signature": "Signature",
@@ -442,8 +446,6 @@
     "resetZoom": "Reset Zoom",
     "addSignatureTip": "After setting the signature, click on the PDF page in the preview area to add it",
     "noFileSelected": "No file selected",
-    "pageTitle": "PDF Electronic Signature Tool",
-    "pageDescription": "Add electronic signatures to PDF files with support for multiple signatures and custom positioning",
     "size": "Signature Size",
     "position": "Position",
     "rotation": "Rotation",

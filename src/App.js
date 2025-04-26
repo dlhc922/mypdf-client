@@ -25,6 +25,7 @@ import PdfToWordPage from './pages/pdfToWord/PdfToWordPage';
 import PdfToExcelPage from './pages/pdfToExcel/PdfToExcelPage';
 import PdfToImagePage from './pages/pdfToImage/PdfToImagePage';
 import MarkdownPage from './pages/markdown/MarkdownPage';
+import { HelmetProvider } from 'react-helmet-async';
 
 
 
@@ -45,58 +46,60 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: '100vh',
-        }}
-      >
-        {!isOnline && (
-          <div style={{
-            position: 'fixed',
-            top: 0,
-            width: '100%',
-            background: '#ff4444',
-            color: 'white',
-            padding: '10px',
-            textAlign: 'center'
-          }}>
-            您当前处于离线状态，但仍可以使用所有PDF处理功能
-          </div>
-        )}
-        <Box sx={{ flex: 1 }}>
-          <BrowserRouter>
-            <ScrollToTop />
-            <Layout>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/merge" element={<MergePage />} />
-                <Route path="/stamp" element={<StampPage />} />
-                <Route path="/split" element={<SplitPage />} />
-                <Route path="/compress" element={<CompressPage />} />
-                <Route path="/sign" element={<SignPage />} />
-                <Route path="/extract" element={<ExtractPage />} />
-                <Route path="/image-to-pdf" element={<ImageToPdfPage />} />
-                <Route path="/pdf-compare" element={<PdfComparePage />} />
-                <Route path="/privacy" element={<PrivacyPolicy />} />
-                <Route path="/disclaimer" element={<Disclaimer />} />
-                <Route path="/guides" element={<GuidesPage />} />
-                <Route path="/faq" element={<FaqPage />} />
-                <Route path="/guides/:toolId" element={<GuidesPage />} />
-                <Route path="/pdf-to-word" element={<PdfToWordPage />} />
-                <Route path="/pdf-to-excel" element={<PdfToExcelPage />} />
-                <Route path="/pdf-to-image" element={<PdfToImagePage />} />
-                <Route path="/document-to-markdown" element={<MarkdownPage />} />
-              </Routes>
-            </Layout>
-          </BrowserRouter>
+    <HelmetProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: '100vh',
+          }}
+        >
+          {!isOnline && (
+            <div style={{
+              position: 'fixed',
+              top: 0,
+              width: '100%',
+              background: '#ff4444',
+              color: 'white',
+              padding: '10px',
+              textAlign: 'center'
+            }}>
+              您当前处于离线状态，但仍可以使用所有PDF处理功能
+            </div>
+          )}
+          <Box sx={{ flex: 1 }}>
+            <BrowserRouter>
+              <ScrollToTop />
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/merge" element={<MergePage />} />
+                  <Route path="/stamp" element={<StampPage />} />
+                  <Route path="/split" element={<SplitPage />} />
+                  <Route path="/compress" element={<CompressPage />} />
+                  <Route path="/sign" element={<SignPage />} />
+                  <Route path="/extract" element={<ExtractPage />} />
+                  <Route path="/image-to-pdf" element={<ImageToPdfPage />} />
+                  <Route path="/pdf-compare" element={<PdfComparePage />} />
+                  <Route path="/privacy" element={<PrivacyPolicy />} />
+                  <Route path="/disclaimer" element={<Disclaimer />} />
+                  <Route path="/guides" element={<GuidesPage />} />
+                  <Route path="/faq" element={<FaqPage />} />
+                  <Route path="/guides/:toolId" element={<GuidesPage />} />
+                  <Route path="/pdf-to-word" element={<PdfToWordPage />} />
+                  <Route path="/pdf-to-excel" element={<PdfToExcelPage />} />
+                  <Route path="/pdf-to-image" element={<PdfToImagePage />} />
+                  <Route path="/document-to-markdown" element={<MarkdownPage />} />
+                </Routes>
+              </Layout>
+            </BrowserRouter>
+          </Box>
+          <Footer />
         </Box>
-        <Footer />
-      </Box>
-    </ThemeProvider>
+      </ThemeProvider>
+    </HelmetProvider>
   );
 }
 
