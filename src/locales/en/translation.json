@@ -527,8 +527,11 @@
   },
   "imageToPdf": {
     "title": "Image to PDF",
+    "seoTitle": "Image to PDF Converter - JPG/PNG to PDF | Free Online Tool",
+    "seoDescription": "Free online Image to PDF converter, supporting JPG, PNG, GIF and other image formats. Adjust order, quality, and page settings. Browser-based processing preserves privacy, no upload required.",
+    "seoKeywords": "image to PDF,JPG to PDF,PNG to PDF,combine images to PDF,image order to PDF,multiple images to PDF,free image converter,online PDF tool",
     "dropImages": "Drop images here or click to upload",
-    "supportedFormats": "Supports JPG, PNG, GIF and other image formats",
+    "supportedFormats": "Supports JPG, PNG, GIF formats",
     "selectedImages": "{{count}} images selected",
     "removeAll": "Remove all images",
     "dragToReorder": "Drag to reorder images",

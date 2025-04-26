@@ -461,6 +461,9 @@
   },
   "imageToPdf": {
     "title": "图片转PDF",
+    "seoTitle": "图片转PDF转换器 - JPG/PNG转PDF | 免费在线工具",
+    "seoDescription": "免费在线图片转PDF工具，支持JPG、PNG、GIF等多种图片格式。可调整排序、质量和页面设置，浏览器本地处理保护隐私，无需上传文件。",
+    "seoKeywords": "图片转PDF,JPG转PDF,PNG转PDF,图片合并为PDF,图片排序转PDF,多图转PDF,免费图片转换器,在线PDF工具",
     "dropImages": "拖放图片到这里或点击上传",
     "supportedFormats": "支持JPG、PNG、GIF等格式",
     "selectedImages": "已选择 {{count}} 张图片",

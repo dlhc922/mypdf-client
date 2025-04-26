@@ -43,11 +43,12 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet';
 import { useImageToPdf } from '../../hooks/image-to-pdf/useImageToPdf';
 import DeviceCompatibilityAlert from '../../components/common/DeviceCompatibilityAlert';
 
 export default function ImageToPdfPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const fileInputRef = useRef(null);
@@ -121,6 +122,41 @@ export default function ImageToPdfPage() {
 
   return (
     <Container maxWidth="lg" sx={{ mt: { xs: 2, md: 4 }, mb: { xs: 2, md: 4 } }}>
+      <Helmet>
+        <html lang={i18n.language} />
+        <title>{t('imageToPdf.seoTitle', '图片转PDF转换器 - JPG/PNG转PDF | 免费在线工具')}</title>
+        <meta name="description" content={t('imageToPdf.seoDescription', '免费在线图片转PDF工具，支持JPG、PNG、GIF等多种图片格式。可调整排序、质量和页面设置，浏览器本地处理保护隐私，无需上传文件。')} />
+        <meta name="keywords" content={t('imageToPdf.seoKeywords', '图片转PDF,JPG转PDF,PNG转PDF,图片合并为PDF,图片排序转PDF,多图转PDF,免费图片转换器,在线PDF工具')} />
+        <meta property="og:title" content={t('imageToPdf.seoTitle', '图片转PDF转换器 - JPG/PNG转PDF | 免费在线工具')} />
+        <meta property="og:description" content={t('imageToPdf.seoDescription', '免费在线图片转PDF工具，支持JPG、PNG、GIF等多种图片格式。可调整排序、质量和页面设置，浏览器本地处理保护隐私，无需上传文件。')} />
+        <meta property="og:type" content="website" />
+        <meta name="robots" content="index,follow" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={t('imageToPdf.seoTitle', '图片转PDF转换器 - JPG/PNG转PDF | 免费在线工具')} />
+        <meta name="twitter:description" content={t('imageToPdf.seoDescription', '免费在线图片转PDF工具，支持JPG、PNG、GIF等多种图片格式。可调整排序、质量和页面设置，浏览器本地处理保护隐私，无需上传文件。')} />
+        <link rel="canonical" href={window.location.href.split('?')[0]} />
+        
+        {/* JSON-LD structured data for better SEO */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebApplication',
+            'name': t('imageToPdf.seoTitle', '图片转PDF转换器 - JPG/PNG转PDF'),
+            'description': t('imageToPdf.seoDescription', '免费在线图片转PDF工具，支持JPG、PNG、GIF等多种图片格式。可调整排序、质量和页面设置，浏览器本地处理保护隐私，无需上传文件。'),
+            'applicationCategory': 'UtilitiesApplication',
+            'operatingSystem': 'Any',
+            'offers': {
+              '@type': 'Offer',
+              'price': '0',
+              'priceCurrency': 'CNY'
+            },
+            'supportedFileFormats': [
+              'JPG', 'JPEG', 'PNG', 'GIF', 'BMP', 'TIFF', 'WEBP'
+            ]
+          })}
+        </script>
+      </Helmet>
+      
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Paper 
