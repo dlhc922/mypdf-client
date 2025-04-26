@@ -190,34 +190,49 @@ export default function MarkdownPage() {
       {/* SEO metadata */}
       <Helmet>
         <html lang={i18n.language} />
-        <title>{t('documentToMarkdown.seo.title')}</title>
-        <meta name="description" content={t('documentToMarkdown.seo.description')} />
-        <meta name="keywords" content={t('documentToMarkdown.seo.keywords')} />
-        <meta property="og:title" content={t('documentToMarkdown.seo.title')} />
-        <meta property="og:description" content={t('documentToMarkdown.seo.description')} />
+        <title>{t('documentToMarkdown.seoTitle', 'PDF/Word/Excel/PPT/图片转Markdown转换器 - 多格式支持 | 免费在线工具')}</title>
+        <meta name="description" content={t('documentToMarkdown.seoDescription', '免费在线文档转Markdown转换工具，支持PDF、Word、Excel、PowerPoint、图片等多种格式转换为Markdown。本地处理，无需上传文件，保护隐私安全。支持OCR和表格保留功能。')} />
+        <meta name="keywords" content={t('documentToMarkdown.seoKeywords', 'PDF转Markdown,Word转Markdown,Excel转Markdown,PPT转Markdown,图片转Markdown,文档转换,Markdown编辑器,OCR识别,表格转换')} />
+        <meta property="og:title" content={t('documentToMarkdown.seoTitle', 'PDF/Word/Excel/PPT/图片转Markdown转换器 - 多格式支持 | 免费在线工具')} />
+        <meta property="og:description" content={t('documentToMarkdown.seoDescription', '免费在线文档转Markdown转换工具，支持PDF、Word、Excel、PowerPoint、图片等多种格式转换为Markdown。本地处理，无需上传文件，保护隐私安全。支持OCR和表格保留功能。')} />
         <meta property="og:type" content="website" />
         <meta name="robots" content="index,follow" />
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content={t('documentToMarkdown.seo.title')} />
-        <meta name="twitter:description" content={t('documentToMarkdown.seo.description')} />
+        <meta name="twitter:title" content={t('documentToMarkdown.seoTitle', 'PDF/Word/Excel/PPT/图片转Markdown转换器 - 多格式支持 | 免费在线工具')} />
+        <meta name="twitter:description" content={t('documentToMarkdown.seoDescription', '免费在线文档转Markdown转换工具，支持PDF、Word、Excel、PowerPoint、图片等多种格式转换为Markdown。本地处理，无需上传文件，保护隐私安全。支持OCR和表格保留功能。')} />
         <link rel="canonical" href={window.location.href} />
         {/* JSON-LD structured data for better SEO */}
         <script type="application/ld+json">
           {JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'WebApplication',
-            'name': t('documentToMarkdown.seo.title'),
-            'description': t('documentToMarkdown.seo.description'),
+            'name': t('documentToMarkdown.seoTitle', 'PDF/Word/Excel/PPT/图片转Markdown转换器 - 多格式支持'),
+            'description': t('documentToMarkdown.seoDescription', '免费在线文档转Markdown转换工具，支持PDF、Word、Excel、PowerPoint、图片等多种格式转换为Markdown。本地处理，无需上传文件，保护隐私安全。支持OCR和表格保留功能。'),
             'applicationCategory': 'DocumentConversion',
             'operatingSystem': 'Any',
             'offers': {
               '@type': 'Offer',
               'price': '0',
-              'priceCurrency': 'USD'
-            }
+              'priceCurrency': 'CNY'
+            },
+            'supportedFileFormats': [
+              'PDF', 'DOCX', 'DOC', 'XLSX', 'XLS', 'PPTX', 'PPT', 
+              'JPG', 'JPEG', 'PNG', 'GIF', 'TXT', 'HTML'
+            ]
           })}
         </script>
       </Helmet>
+      
+      {/* Page Title */}
+      <Box sx={{ mb: 4, textAlign: 'center' }}>
+        <Typography variant="h4" component="h1" fontWeight="bold" gutterBottom color="primary.main">
+          {t('documentToMarkdown.pageTitle', 'PDF/Word/Excel/PPT/图片转Markdown转换器')}
+        </Typography>
+        <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 2, maxWidth: '800px', mx: 'auto' }}>
+          {t('documentToMarkdown.pageSubtitle', '支持将PDF、Word、Excel、PowerPoint、图片等多种格式快速转换为Markdown格式。本地处理，保护隐私安全。')}
+        </Typography>
+        <Divider sx={{ mt: 2, mb: 3 }} />
+      </Box>
       
       <DeviceCompatibilityAlert />
       <Grid container spacing={3}>

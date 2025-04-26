@@ -77,7 +77,9 @@
      "cropHint": "Tip: Crop the stamp to its edges without leaving white margins for best results"
   },
   "split": {
-    "previewTitle": "PDF Preview",
+    "pageTitle": "Free PDF Split Tool - Divide PDFs Locally Without Upload",
+    "pageDescription": "100% Free online PDF splitting tool. Divide PDF files into smaller documents locally in your browser. No upload required, fully private and secure. Extract specific pages or create multiple files.",
+    "previewTitle": "PDF Split",
     "closeFile": "Close File",
     "selectFile": "Select PDF File",
     "settingTitle": "Split Settings",
@@ -109,8 +111,10 @@
     "pleaseSelectFile": "Please select a file first",
     "fileProcessingFailed": "File processing failed",
     "successfullyCreatedFiles": "Successfully created {{count}} PDF file(s)"
-    },
+  },
   "compress": {
+    "pageTitle": "Free PDF Compression Tool - Reduce PDF Size Locally Without Upload",
+    "pageDescription": "100% Free online PDF compression tool. Reduce PDF file size locally in your browser. No upload required, fully private and secure. Maintain quality while decreasing file size.",
     "title": "File Preview",
     "selectFile": "Select PDF File",
     "settings": "Compression Settings",
@@ -131,6 +135,8 @@
     }
   },
   "merge": {
+    "pageTitle": "Free PDF Merge Tool - Combine PDFs Locally Without Upload",
+    "pageDescription": "100% Free online PDF merging tool. Combine multiple PDF files locally in your browser. No upload required, fully private and secure. Easily rearrange pages and adjust order.",
     "fileOrder": "File {{order}}",
     "selectFiles": "Select PDF Files to Merge",
     "selectedFiles": "Selected {{count}} files (Drag to reorder)",
@@ -194,10 +200,10 @@
     }
   },
   "pdfToExcel": {
-    "pageTitle": "PDF to Excel",
+    "pageTitle": "Free PDF to Excel Converter - Process Locally Without Upload",
     "title": "PDF to Excel Spreadsheet",
     "description": "Extract tables from PDF files into Excel spreadsheets for easy editing and analysis.",
-    "metaDescription": "Convert PDF files to Excel spreadsheets online. Extract table data for easy editing and analysis.",
+    "metaDescription": "Convert PDF files to Excel spreadsheets for free. Process locally in your browser without uploading files. Extract table data for easy editing and analysis.",
     "steps": {
       "select": "Select File",
       "preview": "Preview PDF",

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import {
   Container,
   Grid,
@@ -161,8 +161,39 @@ function PdfComparePage() {
   return (
     <Container maxWidth="lg" sx={{ mt: { xs: 2, md: 4 }, mb: { xs: 2, md: 4 } }}>
       <Helmet>
-        <title>{t('pdfCompare.pageTitle') || 'PDF比对工具'}</title>
-        <meta name="description" content={t('pdfCompare.pageDescription') || '比较两个PDF文件的差异并高亮显示不同之处'} />
+        <title>{t('pdfCompare.seoTitle', 'PDF文件比对工具 - 快速识别文档差异 | 在线免费对比PDF文件')}</title>
+        <meta name="description" content={t('pdfCompare.seoDescription', '免费在线PDF比对工具，快速准确地比较两个PDF文件的差异并高亮显示不同之处。本地处理，无需上传，保护隐私安全。支持文本、图像和格式差异对比。')} />
+        <meta name="keywords" content={t('pdfCompare.seoKeywords', 'PDF比对,PDF对比,PDF比较,PDF文件比较,文档对比,差异检测,PDF变更查找,文件对比工具')} />
+        <meta property="og:title" content={t('pdfCompare.seoTitle', 'PDF文件比对工具 - 快速识别文档差异 | 在线免费对比PDF文件')} />
+        <meta property="og:description" content={t('pdfCompare.seoDescription', '免费在线PDF比对工具，快速准确地比较两个PDF文件的差异并高亮显示不同之处。本地处理，无需上传，保护隐私安全。支持文本、图像和格式差异对比。')} />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href={window.location.href.split('?')[0]} />
+        
+        {/* JSON-LD structured data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebApplication',
+            'name': t('pdfCompare.seoTitle', 'PDF文件比对工具 - 快速识别文档差异'),
+            'url': window.location.href.split('?')[0],
+            'applicationCategory': 'UtilitiesApplication',
+            'offers': {
+              '@type': 'Offer',
+              'price': '0',
+              'priceCurrency': 'CNY'
+            },
+            'description': t('pdfCompare.seoDescription', '免费在线PDF比对工具，快速准确地比较两个PDF文件的差异并高亮显示不同之处。本地处理，无需上传，保护隐私安全。支持文本、图像和格式差异对比。'),
+            'operatingSystem': 'Web',
+            'browserRequirements': 'Requires JavaScript. Requires HTML5.',
+            'featureList': [
+              '识别两个PDF文件之间的文本差异',
+              '高亮显示添加、删除和修改的内容',
+              '本地处理，确保文件安全',
+              '支持图像对比和格式变化检测',
+              '可下载比较结果'
+            ]
+          })}
+        </script>
       </Helmet>
 
       <Typography 
@@ -170,9 +201,9 @@ function PdfComparePage() {
         component="h1" 
         gutterBottom
         align="center"
-        sx={{ fontWeight: 'bold', mb: 3 }}
+        sx={{ fontWeight: 'bold', mb: 2, color: 'primary.main' }}
       >
-        {t('pdfCompare.title') || "PDF比对工具"}
+        {t('pdfCompare.title') || "PDF文件比对工具"}
       </Typography>
 
       <Typography 
@@ -180,9 +211,9 @@ function PdfComparePage() {
         align="center" 
         color="text.secondary" 
         gutterBottom
-        sx={{ mb: 4 }}
+        sx={{ mb: 4, maxWidth: 800, mx: 'auto' }}
       >
-        {t('pdfCompare.subtitle') || "比较两个PDF文件的差异并高亮显示不同之处"}
+        {t('pdfCompare.subtitle') || "快速准确地比较两个PDF文件，识别并高亮显示所有文本、图像和格式差异，让文档对比变得简单高效"}
       </Typography>
 
       <DeviceCompatibilityAlert mobileCompatible={true} toolName="PDF比对"></DeviceCompatibilityAlert>

@@ -1,6 +1,6 @@
 // client/src/pages/pdfToExcel/PdfToExcelPage.js
 import React, { useState, useEffect, useRef } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { 
   Box, 
   Container, 
@@ -262,6 +262,43 @@ function PdfToExcelContent() {
       <Helmet>
         <title>{t('pdfToExcel.pageTitle', 'PDF转Excel')} | {t('appName', 'PDF工具箱')}</title>
         <meta name="description" content={t('pdfToExcel.metaDescription', '在线将PDF文件转换为Excel电子表格。提取表格数据，便于编辑和分析。')} />
+        <meta name="keywords" content="PDF转Excel,PDF表格提取,PDF转表格,PDF转电子表格,PDF表格识别,PDF工具,Excel转换器,表格数据提取" />
+        <meta property="og:title" content={`${t('pdfToExcel.pageTitle', 'PDF转Excel')} | ${t('appName', 'PDF工具箱')}`} />
+        <meta property="og:description" content={t('pdfToExcel.metaDescription', '在线将PDF文件转换为Excel电子表格。提取表格数据，便于编辑和分析。')} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={window.location.href} />
+        <link rel="canonical" href={window.location.href.split('?')[0]} />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={`${t('pdfToExcel.pageTitle', 'PDF转Excel')} | ${t('appName', 'PDF工具箱')}`} />
+        <meta name="twitter:description" content={t('pdfToExcel.metaDescription', '在线将PDF文件转换为Excel电子表格。提取表格数据，便于编辑和分析。')} />
+        
+        {/* JSON-LD Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebApplication',
+            'name': `${t('pdfToExcel.pageTitle', 'PDF转Excel')}`,
+            'applicationCategory': 'UtilitiesApplication',
+            'operatingSystem': 'Web',
+            'offers': {
+              '@type': 'Offer',
+              'price': '0',
+              'priceCurrency': 'CNY'
+            },
+            'description': t('pdfToExcel.metaDescription', '在线将PDF文件转换为Excel电子表格。提取表格数据，便于编辑和分析。'),
+            'featureList': [
+              '提取PDF中的表格数据',
+              '支持复杂表格结构',
+              '转换后可在Microsoft Excel中编辑',
+              '保持原始表格格式',
+              '简单易用的界面'
+            ],
+            'browserRequirements': 'requires JavaScript support',
+            'softwareVersion': '1.0'
+          })}
+        </script>
       </Helmet>
 
       <Box sx={{ mb: 4 }}>
