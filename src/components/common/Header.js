@@ -71,7 +71,8 @@ function Header() {
         { path: '/image-to-pdf', label: t('tools.imageToPdf', '图片转PDF') },
         { path: '/pdf-to-word', label: t('tools.pdfToWord', 'PDF转Word') },
         { path: '/pdf-to-excel', label: t('tools.pdfToExcel', 'PDF转Excel') },
-        { path: '/pdf-to-image', label: t('tools.pdfToImage', 'PDF转图片') }
+        { path: '/pdf-to-image', label: t('tools.pdfToImage', 'PDF转图片') },
+        { path: '/document-to-markdown', label: t('tools.documentToMarkdown', '文档转Markdown') }
       ]
     },
     {

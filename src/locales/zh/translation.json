@@ -12,7 +12,8 @@
     "pdfCompare": "PDF 比较",
     "pdfToWord": "PDF转Word",
     "pdfToExcel": "PDF转Excel",
-    "pdfToImage": "PDF转图片"
+    "pdfToImage": "PDF转图片",
+    "documentToMarkdown": "文档转Markdown转换器"
   },
   "meta": {
     "description": "在线免费 PDF 盖章、合并、拆分和压缩工具，永久免费使用，无需注册。",
@@ -337,6 +338,10 @@
       "pdfToImage": {
         "title": "PDF转图片",
         "description": "将PDF文件转换为图片格式(PNG、JPEG)，可自定义分辨率。"
+      },
+      "documentToMarkdown": {
+        "title": "文档转Markdown转换器",
+        "description": "支持 PDF, Word, Excel, PowerPoint, Images, Text, HTML等格式到Markdown的转换。"
       }
     },
     "quickGuides": {
@@ -394,7 +399,8 @@
     "next": "下一步",
     "zoomIn": "放大",
     "zoomOut": "缩小",
-    "resetZoom": "重置缩放"
+    "resetZoom": "重置缩放",
+    "processing": "处理中..."
   },
   "sign": {
     "settings": "签名设置",
@@ -853,8 +859,91 @@
   },
   "menuGroups": {
     "edit": "PDF编辑",
-    "organize": "PDF整理",
+    "organize": "PDF组织",
     "convert": "格式转换",
     "analyze": "PDF优化"
+  },
+  
+  "documentToMarkdown": {
+    "pageTitle": "文档转Markdown转换器",
+    "title": "将您的文档转换为Markdown",
+    "metaDescription": "快速可靠地将各种文档格式转换为Markdown。",
+    "description": "上传文档（如PDF、Word、Excel等），并转换为完全可编辑的Markdown格式。",
+    "seo": {
+      "title": "文档转Markdown转换器 - 免费在线工具",
+      "description": "将PDF、Word、Excel、PowerPoint和其他文档格式转换为清晰的Markdown格式。免费、快速，无需注册。",
+      "keywords": "markdown, 转换器, pdf转markdown, word转markdown, 文档转换, markdown编辑器, 文本转换, ocr, 在线工具"
+    },
+    "steps": {
+      "select": "选择文件",
+      "preview": "预览文档",
+      "convert": "转换文档",
+      "download": "下载Markdown",
+      "conversion": "转换文档",
+      "placeholder": "请选择文件",
+      "copied": "已复制",
+      "copy": "复制",
+      "fileName": "文件名",
+      "fileSize": "文件大小",
+      "fileType": "文件类型",
+      "fileSelected": "已选择文件：{{name}}（{{type}}）",
+      "documentLoaded": "文档已加载，{{pages}}页",
+      "conversionSuccess": "转换完成！",
+      "conversionFailed": "转换失败，请重试。"
+    },
+    "supportedFormats": "支持的文件格式：PDF, Word, Excel, PowerPoint, Images, Text, HTML",
+    "uploadPrompt": "拖拽文件或点击选择文档",
+    "browseFiles": "浏览文件",
+    "maxFileSize": "最大文件大小：50MB",
+    "next": "下一步",
+    "convert": "立即转换",
+    "converting": "转换中...",
+    "processing": "处理中...",
+    "conversionSuccess": "转换完成！",
+    "documentReady": "您的Markdown文档已准备好下载",
+    "downloadFile": "下载Markdown文件",
+    "convertAnother": "转换其他文档",
+    "downloadStarted": "下载已开始",
+    "pageIndicator": "第 {{current}} 页，共 {{total}} 页",
+    "aboutConversion": {
+      "title": "关于文档转Markdown转换",
+      "quality": "我们致力于保留文本、格式和图像。",
+      "editable": "转换后的Markdown文档可在您喜爱的编辑器中自由编辑。",
+      "formatting": "复杂布局或特殊功能可能无法完美转换。",
+      "description": "上传文档（如PDF、Word、Excel等），并转换为完全可编辑的Markdown格式。",
+      "formats": "支持的文件格式：PDF, Word, Excel, PowerPoint, Images, Text, HTML"
+    },
+    "errors": {
+      "pdfOnly": "请选择支持的文档文件",
+      "loadFailed": "加载文档失败，文件可能已损坏。",
+      "conversionFailed": "文档转换失败，请重试。",
+      "unsupportedFileType": "不支持的文件类型"
+    },
+    "fileTypes": {
+      "pdf": "PDF",
+      "word": "Word",
+      "excel": "Excel",
+      "powerpoint": "PowerPoint",
+      "image": "图片",
+      "text": "文本",
+      "html": "HTML"
+    }
+  },
+  "filePreview": {
+    "noFile": "未选择文件",
+    "loading": "正在加载文件预览...",
+    "next": "下一页",
+    "previous": "上一页",
+    "unsupportedFormat": "此文件格式不支持预览",
+    "audioNotSupported": "您的浏览器不支持音频播放。",
+    "videoNotSupported": "您的浏览器不支持视频播放。",
+    "errors": {
+      "pdfLoadError": "无法加载PDF文件",
+      "wordRenderError": "无法渲染Word文档",
+      "excelParseError": "无法解析Excel文件",
+      "fileLoadError": "无法加载文件",
+      "loadError": "无法加载文件",
+      "wordFetchError": "无法获取Word文档"
+    }
   }
 }

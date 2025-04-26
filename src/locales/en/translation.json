@@ -12,7 +12,8 @@
     "pdfCompare": "PDF Compare",
     "pdfToWord": "PDF to Word",
     "pdfToExcel": "PDF to Excel",
-    "pdfToImage": "PDF to Image"
+    "pdfToImage": "PDF to Image",
+    "pdfToMarkdown": "PDF to Markdown"
   },
   "meta": {
     "description": "Free online PDF stamp, merge, split, and compress tool without the need for registration.",
@@ -225,46 +226,58 @@
     }
   },
   "pdfToImage": {
-    "pageTitle": "PDF to Image",
-    "title": "PDF to Image Converter",
-    "description": "Convert PDF files to high-quality images in PNG and JPEG formats.",
-    "metaDescription": "Convert PDF files to images online. Support PNG and JPEG formats with adjustable resolution and quality.",
+    "pageTitle": "PDF to Image Converter",
+    "title": "Convert PDF to Image",
+    "metaDescription": "Convert PDF files to high-quality images online. Free, fast, and secure.",
+    "description": "Transform your PDF files into high-quality images. Choose from various formats including JPG, PNG, and more.",
     "steps": {
       "select": "Select File",
-      "preview": "Preview & Settings",
+      "preview": "Preview PDF",
       "download": "Download Images"
     },
-    "uploadPrompt": "Select or drop PDF file here",
-    "uploadDescription": "Drop file or click the button below to select file",
+    "uploadPrompt": "Select or drag a PDF file here",
     "browseFiles": "Browse Files",
     "maxFileSize": "Maximum file size: 50MB",
     "next": "Continue",
     "convert": "Convert Now",
     "converting": "Converting...",
     "processing": "Processing...",
-    "page": "Page",
-    "pages": "pages",
-    "convertedImages": "Converted Images",
-    "download": "Download",
-    "downloadAll": "Download All Images",
-    "convertAnother": "Convert Another PDF",
-    "settings": {
-      "title": "Conversion Settings",
-      "format": "Image Format",
-      "quality": "Image Quality",
-      "resolution": "Resolution"
+    "conversionSuccess": "Conversion Complete!",
+    "imageFormat": "Image Format",
+    "formats": {
+      "jpg": "JPG",
+      "png": "PNG"
     },
+    "resolution": "Resolution (DPI)",
+    "resolutions": {
+      "low": "Low (72 DPI)",
+      "medium": "Medium (150 DPI)",
+      "high": "High (300 DPI)"
+    },
+    "downloadAs": {
+      "singleImages": "Single Images",
+      "zip": "ZIP Archive"
+    },
+    "downloadText": "Download",
+    "downloadAllText": "Download All",
+    "imagesReady": "Your images are ready to download",
+    "downloadSelected": "Download Selected",
+    "downloadAll": "Download All",
+    "downloadZip": "Download as ZIP",
+    "goBack": "Back to PDF",
+    "convertAnother": "Convert Another PDF",
+    "imagePreview": "Image Preview",
+    "pageIndicator": "Page {{current}} of {{total}}",
+    "imageIndicator": "Image {{current}} of {{total}}",
     "aboutConversion": {
       "title": "About PDF to Image Conversion",
-      "quality": "Generate high-quality images that preserve all visual elements of your PDF documents.",
-      "formats": "Support for PNG format (lossless, ideal for text and lines) and JPEG format (compressed, ideal for photos).",
-      "resolution": "Adjustable resolution to meet different needs - higher for printing, lower for screen viewing.",
-      "local": "All conversions are performed locally in your browser. Files are not uploaded to any server, ensuring privacy and security."
+      "quality": "Our converter preserves the quality and details of your PDF in the resulting images.",
+      "formats": "Choose between JPG format for smaller file sizes or PNG for better quality with transparency."
     },
     "errors": {
-      "loadFailed": "Unable to load PDF file. Please ensure the file format is correct.",
-      "pdfOnly": "Please select a PDF file",
-      "conversionFailed": "Conversion failed"
+      "pdfOnly": "Please select a PDF file only",
+      "loadFailed": "Failed to load the PDF file. The file may be corrupted.",
+      "conversionFailed": "Failed to convert the file. Please try again."
     }
   },
   "home": {
@@ -275,42 +288,50 @@
       "local": "Local",
       "server": "Server"
     },
+    "hero": {
+      "title": "Free PDF Tools Online",
+      "subtitle": "PDF stamp, merge, split, and compress all in your browser. No registration, forever free."
+    },
+    "cta": {
+      "getStarted": "Get Started",
+      "learnMore": "Learn More"
+    },
     "features": {
       "stamp": {
         "title": "PDF Stamp",
-        "description": "Add Electronic Stamps and Page Stamps to PDF"
+        "description": "Add customizable stamps to PDF files with transparency, rotation, and batch processing."
       },
       "sign": {
         "title": "PDF Signature",
-        "description": "Add Signatures to PDF"
+        "description": "Add handwritten signatures to your PDF documents without registration."
       },
       "merge": {
         "title": "PDF Merge",
-        "description": "Merge multiple PDF files into one"
+        "description": "Combine multiple PDF files into a single document with customizable order."
       },
       "split": {
         "title": "PDF Split",
-        "description": "Split a PDF file into individual pages"
+        "description": "Split large PDF files into smaller documents by page ranges or individual pages."
       },
       "compress": {
         "title": "PDF Compress",
-        "description": "Compress a PDF file in the browser to reduce file size"
+        "description": "Reduce PDF file size while maintaining reasonable quality for sharing and storage."
       },
       "extract": {
         "title": "PDF Extract Images",
-        "description": "Extract images from a PDF file"
+        "description": "Extract embedded images from PDF documents in their original quality."
       },
       "imageToPdf": {
         "title": "Image to PDF",
-        "description": "Convert images to PDF files for easy saving and sharing"
+        "description": "Convert images (PNG, JPG) to PDF files individually or in batch."
       },
       "pdfCompare": {
         "title": "PDF Compare",
-        "description": "Compare two PDF files for differences, for easy viewing and editing"
+        "description": "Compare two PDF files and highlight differences for easy review."
       },
       "pdfToWord": {
         "title": "PDF to Word",
-        "description": "Convert PDF files to editable Word documents."
+        "description": "Convert PDF files to editable Word documents while preserving formatting."
       },
       "pdfToExcel": {
         "title": "PDF to Excel",
@@ -318,7 +339,11 @@
       },
       "pdfToImage": {
         "title": "PDF to Image",
-        "description": "Convert PDF files to image formats (PNG, JPEG) with customizable resolution."
+        "description": "Convert PDF files to high-quality images in various formats with customizable resolution."
+      },
+      "documentToMarkdown": {
+        "title": "PDF to Markdown",
+        "description": "Support PDF, Word, Excel, PowerPoint, Images, Text, HTML to Markdown conversion."
       }
     },
     "quickGuides": {
@@ -397,7 +422,10 @@
     "next": "Next",
     "zoomIn": "Zoom In",
     "zoomOut": "Zoom Out",
-    "resetZoom": "Reset Zoom"
+    "resetZoom": "Reset Zoom",
+    "previous": "Previous",
+    "pageIndicator": "Page {{current}} of {{total}}",
+    "processing": "Processing..."
   },
   "sign": {
     "settings": "Signature Settings",
@@ -534,7 +562,6 @@
     "previewPdf": "Preview PDF",
     "closePdfPreview": "Close Preview",
     "downloadPdf": "Download PDF",
-    "title": "How to Convert Images to PDF",
     "steps": {
       "step1": "Click the upload area or drag and drop images",
       "step2": "Add multiple images and adjust the order",
@@ -913,6 +940,88 @@
     "organize": "PDF Organization",
     "convert": "Format Conversion",
     "analyze": "PDF Optimization"
-  } 
-
+  },
+  
+  "filePreview": {
+    "noFile": "No file selected",
+    "loading": "Loading file preview...",
+    "next": "Next",
+    "previous": "Previous",
+    "unsupportedFormat": "Preview not available for this file format",
+    "audioNotSupported": "Your browser does not support the audio element.",
+    "videoNotSupported": "Your browser does not support the video element.",
+    "errors": {
+      "pdfLoadError": "Failed to load PDF file",
+      "wordRenderError": "Failed to render Word document",
+      "excelParseError": "Failed to parse Excel file",
+      "fileLoadError": "Failed to load file",
+      "loadError": "Failed to load file",
+      "wordFetchError": "Failed to fetch Word document"
+    }
+  },
+  "documentToMarkdown": {
+    "pageTitle": "Document to Markdown Converter",
+    "title": "Convert Your Document to Markdown",
+    "metaDescription": "Convert various document formats to Markdown quickly and reliably.",
+    "description": "Upload a document (e.g. PDF, Word, Excel, etc.) and convert it into fully editable Markdown format.",
+    "seo": {
+      "title": "Document to Markdown Converter - Free Online Tool",
+      "description": "Convert PDF, Word, Excel, PowerPoint, and other document formats to clean Markdown format. Free, fast, and no registration required.",
+      "keywords": "markdown, converter, pdf to markdown, word to markdown, document converter, markdown editor, text conversion, ocr, online tool"
+    },
+    "steps": {
+      "select": "Select a file",
+      "preview": "Preview Document",
+      "convert": "Convert Document",
+      "download": "Download Markdown",
+      "conversion": "Convert Document",
+      "placeholder": "Select a file",
+      "copied": "Copied",
+      "copy": "Copy",
+      "fileName": "File Name",
+      "fileSize": "File Size",
+      "fileType": "File Type",
+      "fileSelected": "File Selected: {{name}} ({{type}})",
+      "documentLoaded": "Document loaded, {{pages}} pages",
+      "conversionSuccess": "Conversion complete!",
+      "conversionFailed": "Conversion failed. Please try again."
+    },
+    "supportedFormats": "Supported formats: PDF, Word, Excel, PowerPoint, Images, Text, HTML",
+    "uploadPrompt": "Drag and drop your document here or click to select",
+    "browseFiles": "Browse Files",
+    "maxFileSize": "Max file size: 50MB",
+    "next": "Next",
+    "convert": "Convert Now",
+    "converting": "Converting...",
+    "processing": "Processing...",
+    "conversionSuccess": "Conversion complete!",
+    "documentReady": "Your Markdown document is ready for download",
+    "downloadFile": "Download Markdown File",
+    "convertAnother": "Convert Another Document",
+    "downloadStarted": "Download started",
+    "pageIndicator": "Page {{current}} of {{total}}",
+    "aboutConversion": {
+      "title": "About Document to Markdown Conversion",
+      "quality": "We strive to preserve text, formatting, and images in the conversion process.",
+      "editable": "The converted Markdown document is fully editable in your favorite editor.",
+      "formatting": "Complex layouts or special features may not convert perfectly.",
+      "description": "Upload a document (e.g. PDF, Word, Excel, etc.) and convert it into fully editable Markdown format.",
+      "formats": "Supported formats: PDF, Word, Excel, PowerPoint, Images, Text, HTML"
+    },
+    "errors": {
+      "pdfOnly": "Please select a PDF file",
+      "loadFailed": "Failed to load the document. It may be corrupted.",
+      "conversionFailed": "Document conversion failed. Please try again.",
+      "unsupportedFileType": "Unsupported file type"
+    },
+    "fileTypes": {
+      "pdf": "PDF",
+      "word": "Word",
+      "excel": "Excel",
+      "powerpoint": "PowerPoint",
+      "image": "Image",
+      "text": "Text",
+      "html": "HTML"
+    }
+  }
 } 

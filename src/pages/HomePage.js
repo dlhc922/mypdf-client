@@ -34,7 +34,8 @@ import {
   TableChart,
   Info,
   LocalLibrary,
-  CloudQueue
+  CloudQueue,
+  Code
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import LanguageShareControls from '../components/LanguageShareControls';
@@ -138,6 +139,13 @@ function HomePage() {
       icon: <ImageIcon sx={{ fontSize: 40 }} />,
       path: '/pdf-to-image',
       processingType: 'local' // 这是本地处理功能
+    },
+    {
+      title: t('home.features.documentToMarkdown.title', 'PDF转Markdown'),
+      description: t('home.features.documentToMarkdown.description', '将PDF、Word等文档转换为Markdown格式，适用于编写文档、博客和技术文章。'),
+      icon: <Code sx={{ fontSize: 40 }} />,
+      path: '/document-to-markdown',
+      processingType: 'server'
     }
   ], [t]);
 
