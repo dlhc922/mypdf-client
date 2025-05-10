@@ -46,14 +46,16 @@ function PDFPreview() {
   const [isDragging, setIsDragging] = useState(false);
   const [currentRotation, setCurrentRotation] = useState(0);
   const [pageSize, setPageSize] = useState({ width: 0, height: 0 });
+  const [pageRects, setPageRects] = useState({});
+
 
   const handleDocumentLoadSuccess = useCallback(({ numPages }) => {
     setNumPages(numPages);
     setLoading(false);
   }, []);
 
-   // 添加关闭处理函数
-   const handleClose = useCallback(() => {
+  // 添加关闭处理函数
+  const handleClose = useCallback(() => {
     // 先清理文件输入框的值
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
@@ -68,7 +70,10 @@ function PDFPreview() {
     setPageSize({ width: 0, height: 0 });
     setOriginalOrientations({});
     setPageRotations({});
-    
+
+    setPageRects({});
+
+
     // 最后调用 handleCleanup 来清理上下文状态
     handleCleanup();
   }, [handleCleanup]);
@@ -140,7 +145,9 @@ function PDFPreview() {
 
     const pageElement = document.querySelector(`[data-page="${pageNumber}"]`);
     if (!pageElement) return null;
-    const pageRect = pageElement.getBoundingClientRect();
+    
+    const pageRect = pageRects[pageNumber] || { width: 0, height: 0 };
+    if (!pageRect.width) return null;
 
     // 判断当前页面是否为横向（宽大于高）
     const isLandscape = pageRect.width > pageRect.height;
@@ -154,22 +161,22 @@ function PDFPreview() {
     // 如果存在纵向页面且当前页面为横向，则认为为混合模式
     const mixOrientation = hasPortrait && isLandscape;
 
+    const isRotated = stampConfig?.isStraddle && originalOrientations[pageNumber] === 'landscape';
+
     let mmToPixelRatio, finalPosition;
-    if (mixOrientation) {
-      // 混合模式下，对于横向页面采用转换：
-      // 候选转换：新 x = 原 position.y
-      //                新 y = 210 - 原 position.x - stampConfig.size
+    if (isRotated) {
+
       finalPosition = {
         x: pageSettings.position.y,
-        y: 210 - pageSettings.position.x - stampConfig.size,
+        y: 297 - pageSettings.position.x - stampConfig.size,
       };
       // 横向页面参考较小的尺寸，用页面高度除以210
-      mmToPixelRatio = pageRect.height / 210;
+      mmToPixelRatio = pageRect.width / 210;
       console.log(`Page ${pageNumber} [MIXED]:`);
       console.log("Page rect:", pageRect);
       console.log("Original position (mm):", pageSettings.position);
       console.log("Converted position (mm):", finalPosition);
-      console.log("Using page height as reference: mmToPixelRatio =", mmToPixelRatio);
+      console.log("Using page width as reference: mmToPixelRatio =", mmToPixelRatio);
     } else {
       // 全横向或全纵向页，不做转换，按实际录入数值来计算位置
       if (isLandscape) {
@@ -189,11 +196,8 @@ function PDFPreview() {
     const stampSizeInPixels = stampConfig.size * mmToPixelRatio;
     const rotation = pageSettings.rotation || 0;
 
-    console.log(`Rendering stamp on page ${pageNumber}:`);
-    console.log("mmToPixelRatio:", mmToPixelRatio);
-    console.log("Final computed position (mm):", finalPosition);
-    console.log("Stamp size (pixels):", stampSizeInPixels);
-    console.log("Rotation (deg):", rotation);
+    // 对于混合方向模式下的横向页面，需要额外考虑旋转
+    const finalRotation = mixOrientation ? (rotation - 90) : rotation;
 
     return (
       <Draggable
@@ -205,16 +209,18 @@ function PDFPreview() {
           const draggedX = Number((data.x / mmToPixelRatio).toFixed(1));
           const draggedY = Number((data.y / mmToPixelRatio).toFixed(1));
           let finalX, finalY;
-          if (mixOrientation) {
+
+          if (isRotated) {
             // 对于混合模式下已转换的横向页面，逆转换为原始纵向坐标：
             // 原 x = 210 - stampConfig.size - (拖拽后的 y)
             // 原 y = 拖拽后的 x
-            finalX = 210 - stampConfig.size - draggedY;
+            finalX = Number((297 - draggedY - stampConfig.size).toFixed(1));
             finalY = draggedX;
           } else {
-            finalX = Math.max(0, Math.min(draggedX, 210 - stampConfig.size));
+            finalX = Math.max(0, Math.min(draggedX, 297 - stampConfig.size));
             finalY = Math.max(0, Math.min(draggedY, 297 - stampConfig.size));
           }
+
           console.log(`Stamp drag stopped on page ${pageNumber}:`);
           console.log("Dragged pixel position:", { x: data.x, y: data.y });
           console.log("Converted dragged position (mm):", { draggedX, draggedY });
@@ -238,7 +244,7 @@ function PDFPreview() {
             position: "absolute",
             width: `${stampSizeInPixels}px`,
             height: `${stampSizeInPixels}px`,
-            transform: `rotate(${rotation}deg)`,
+            transform: `rotate(${finalRotation}deg)`,
             cursor: isSelected ? "move" : "pointer",
             border: isSelected ? "2px solid #1976d2" : "none",
             borderRadius: "50%",
@@ -258,7 +264,6 @@ function PDFPreview() {
               height: "100%",
               opacity: 0.8,
               pointerEvents: "none",
-              transform: `rotate(${rotation}deg)`,
             }}
           />
         </Box>
@@ -296,58 +301,107 @@ function PDFPreview() {
     const position = calculateStraddlePosition(pageNumber, numPages, stampConfig.size);
     const straddleY = stampConfig.straddleY || 50;
 
-    return (
-      <Box
-        sx={{
-          position: 'absolute',
-          width: `${stampSizeInPixels}px`,
-          height: `${stampSizeInPixels}px`,
-          right: 0,
-          top: straddleY * mmToPixelRatio,
-          transform: `translateX(50%) ${position.transform}`,
-          pointerEvents: 'none'
-        }}
-      >
-        <img
-          src={stampConfig.imageUrl}
-          alt={t('stamp.stampPreviewText')}
-          style={{
-            width: '100%',
-            height: '100%',
-            opacity: 0.8,
-            clipPath: position.clipPath
+    if (shouldRotate) {
+      // 横向页面的骑缝章定位逻辑
+      return (
+        <Box
+          sx={{
+            position: 'absolute',
+            width: `${stampSizeInPixels}px`,
+            height: `${stampSizeInPixels}px`,
+            // 调整位置到右侧边缘
+            top: 0,
+            left: straddleY * mmToPixelRatio,
+            transform: `translateY(50%) rotate(-90deg) ${position.transform}`,
+            transformOrigin: 'left center',
+            pointerEvents: 'none'
           }}
-        />
-      </Box>
-    );
+        >
+          <img
+            src={stampConfig.imageUrl}
+            alt={t('stamp.stampPreviewText')}
+            style={{
+              width: '100%',
+              height: '100%',
+              opacity: 0.8,
+              clipPath: position.clipPath
+            }}
+          />
+        </Box>
+      );
+    } else {
+      // 纵向页面的骑缝章定位逻辑（不变）
+      return (
+        <Box
+          sx={{
+            position: 'absolute',
+            width: `${stampSizeInPixels}px`,
+            height: `${stampSizeInPixels}px`,
+            right: 0,
+            top: straddleY * mmToPixelRatio,
+            transform: `translateX(50%) ${position.transform}`,
+            pointerEvents: 'none'
+          }}
+        >
+          <img
+            src={stampConfig.imageUrl}
+            alt={t('stamp.stampPreviewText')}
+            style={{
+              width: '100%',
+              height: '100%',
+              opacity: 0.8,
+              clipPath: position.clipPath
+            }}
+          />
+        </Box>
+      );
+    }
   };
 
-  // 监听骑缝章状态变化
-useEffect(() => {
-  if (!stampConfig?.isStraddle) {
-    // 当关闭骑缝章时，清除所有旋转
-    setPageRotations({});
-  } else {
-    // 当启用骑缝章时，重新检查并设置旋转
-    const allPages = Array.from(document.querySelectorAll("[data-page]"));
-    const hasPortrait = allPages.some((el) => {
-      const r = el.getBoundingClientRect();
-      return r.width < r.height;
-    });
-    if (hasPortrait) {
-      allPages.forEach((page, index) => {
-        const rect = page.getBoundingClientRect();
-        const isLandscape = rect.width > rect.height;
-        if (isLandscape) {
-          setPageRotations(prev => ({
-            ...prev,
-            [index + 1]: -90
-          }));
+  //监听react变化
+  useEffect(() => {
+    if (!numPages) return;
+    const updatePageRects = () => {
+      const updatedRects = {};
+      for (let i = 1; i <= numPages; i++) {
+        const pageElement = document.querySelector(`[data-page="${i}"]`);
+        if (pageElement) {
+          updatedRects[i] = pageElement.getBoundingClientRect();
         }
+      }
+      setPageRects(updatedRects);
+    };
+    const timer = setTimeout(updatePageRects, 100);
+    return () => clearTimeout(timer);
+  }, [numPages, pageRotations, zoom, stampConfig?.isStraddle]);
+
+
+  // 监听骑缝章状态变化
+  useEffect(() => {
+    if (!stampConfig?.isStraddle) {
+      // 当关闭骑缝章时，清除所有旋转
+      setPageRotations({});
+    } else {
+      // 当启用骑缝章时，重新检查并设置旋转
+      const allPages = Array.from(document.querySelectorAll("[data-page]"));
+      const hasPortrait = allPages.some((el) => {
+        const r = el.getBoundingClientRect();
+        return r.width < r.height;
       });
+      if (hasPortrait) {
+        allPages.forEach((page, index) => {
+          const rect = page.getBoundingClientRect();
+          const isLandscape = rect.width > rect.height;
+          if (isLandscape) {
+            setPageRotations(prev => ({
+              ...prev,
+              [index + 1]: -90
+            }));
+          }
+        });
+      }
     }
-  }
-}, [stampConfig?.isStraddle]);
+  }, [stampConfig?.isStraddle]);
 
   // 添加滚动和缩放监听
   useEffect(() => {
@@ -427,7 +481,7 @@ useEffect(() => {
               <Typography variant="body2" noWrap sx={{ maxWidth: 200 }}>
                 {file.name}
               </Typography>
-              
+
             </>
           )}
         </Stack>
@@ -532,7 +586,7 @@ useEffect(() => {
             </Grid>
           </Document>
         ) : (
-          
+
           <Typography color="text.secondary">
             {t('stamp.noFileSelected')}
           </Typography>

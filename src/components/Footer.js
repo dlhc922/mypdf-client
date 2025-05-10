@@ -99,6 +99,12 @@ export default function Footer() {
             <Link href="/disclaimer">{t('footer.disclaimer', '免责声明')}</Link>
           </Typography>
         </Stack>
+        
+        <Typography variant="body2" color="text.secondary" sx={{ fontFamily: 'monospace', letterSpacing: '0.5px' }}>
+          <Link href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
+            辽ICP备2025052615号
+          </Link>
+        </Typography>
       </Box>
     </Box>
   );

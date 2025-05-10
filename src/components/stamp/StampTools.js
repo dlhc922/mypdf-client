@@ -383,6 +383,8 @@ function StampTools() {
                       if (isStraddle) {
                         handleStampConfigChange('straddleY', 140);
                         handleStampConfigChange('position', { x: 120, y: 190 });
+                        handleStampConfigChange('straddleY', 141);
+                        handleStampConfigChange('straddleY', 140);
                       }
                     }}
                     size="small"

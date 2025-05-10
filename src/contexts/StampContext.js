@@ -213,10 +213,12 @@ export const StampProvider = ({ children }) => {
       // 获取页面尺寸
       const pages = pdfDoc.getPages();
 
-     // 确保opacity是有效的数字，如果无效则使用默认值0.8
-     const opacity = typeof stampConfig.opacity === 'number' && !isNaN(stampConfig.opacity)
-     ? stampConfig.opacity / 100
-     : 0.8;
+      // 确保opacity是有效的数字，如果无效则使用默认值0.8
+      const opacity = typeof stampConfig.opacity === 'number' && !isNaN(stampConfig.opacity)
+        ? stampConfig.opacity / 100
+        : 0.8;
+
+      const rotatedPages = {}; // 用于存储旋转后的页面，false or true
 
       // 处理骑缝章（如果启用）
       if (stampConfig.isStraddle) {
@@ -227,6 +229,7 @@ export const StampProvider = ({ children }) => {
 
         // 用户指定的骑缝章Y坐标（毫米）
         const straddleY = stampConfig.straddleY || 148.5;
+        console.log(`straddleY: ${straddleY}`);
 
         // 判断整个PDF中是否存在纵向页面
         const hasPortrait = Object.values(pageOrientations).some(o => o === 'portrait');
@@ -250,16 +253,23 @@ export const StampProvider = ({ children }) => {
             const croppedDataUrl = cropImage(resizedCanvas, cropLeft, 0, partWidthPx, stampWidthPx);
             const croppedImageEmbed = await pdfDoc.embedPng(croppedDataUrl);
 
-            if (hasPortrait && isLandscape) {
-              // 对于横向页面
+            rotatedPages[i] = isLandscape; // 存储旋转状态
+
+            if (isLandscape) {
+              // 对于横向页面，我们不进行旋转，而是调整坐标计算
+              // 注意：不再调用 page.setRotation(degrees(270));
+              page.setRotation(degrees(-90));
+
+              // 对于横向页面的骑缝章，我们将其放在右侧边缘
               page.drawImage(croppedImageEmbed, {
-                x: straddleY * MM_TO_PT,
-                y: 0,
-                width: stampSizePt,
-                height: partWidthPt,
+                x: (width - straddleY* MM_TO_PT - stampSizePt), // 横向页面的右侧
+                y: partWidthPt,
+                width: partWidthPt,
+                height: stampSizePt,
                 opacity: opacity,
-                rotate: degrees(270)
+                rotate: degrees(-90) // 调整印章方向
               });
+              console.log(`为横向第${i + 1}页添加骑缝章: X=${width - partWidthPt}, Y=${straddleY * MM_TO_PT}`);
             } else {
               // 对于纵向页面
               page.drawImage(croppedImageEmbed, {
@@ -269,6 +279,7 @@ export const StampProvider = ({ children }) => {
                 height: stampSizePt,
                 opacity: opacity
               });
+              console.log(`为纵向第${i + 1}页添加骑缝章: X=${width - partWidthPt}, Y=${straddleY * MM_TO_PT}`);
             }
           } catch (error) {
             console.error(`处理骑缝章第${i + 1}页时出错:`, error);
@@ -278,7 +289,7 @@ export const StampProvider = ({ children }) => {
       }
 
       // 处理普通印章（针对选定页面）
- 
+
 
       for (const pageNum of stampConfig.selectedPages) {
         // 检查页码是否有效
@@ -305,6 +316,15 @@ export const StampProvider = ({ children }) => {
           // 计算印章位置
           const stampX = position.x * MM_TO_PT;
           const stampY = height - (position.y * MM_TO_PT + stampSizePt);
+
+
+          const rotated = !!rotatedPages[pageNum - 1]; // undefined 也会被转成 false
+          if (rotated) {
+            // 旋转后的坐标
+          } else {
+            // 正常坐标
+          }
+
 
           // 绘制印章
           page.drawImage(stampPngImage, {

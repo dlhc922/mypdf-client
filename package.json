@@ -34,15 +34,25 @@
     "react-rnd": "^10.4.13",
     "react-router-dom": "^7.0.1",
     "react-scripts": "5.0.1",
+    "react-snap": "^1.23.0",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && react-snap",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "preinstall": "npm config set registry https://registry.npmjs.org/"
+  },
+  "reactSnap": {
+    "source": "build",
+    "minifyHtml": false,
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ],
+    "verbose": true
   },
   "eslintConfig": {
     "extends": [
@@ -52,9 +62,8 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "defaults",
+      "IE 11"
     ],
     "development": [
       "last 1 chrome version",

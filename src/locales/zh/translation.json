@@ -203,7 +203,35 @@
     "title": "PDF转Excel",
     "description": "提取PDF中的表格数据转换为Excel电子表格，便于编辑和数据分析。",
     "pageTitle": "PDF转Excel转换器 - 云端处理",
-    "metaDescription": "在线将PDF文件转换为Excel电子表格。提取表格数据，便于编辑和分析。文件会安全上传至服务器进行处理，以提供更准确的转换结果。"
+    "metaDescription": "在线将PDF文件转换为Excel电子表格。提取表格数据，便于编辑和分析。文件会安全上传至服务器进行处理，以提供更准确的转换结果。",
+    "steps": {
+      "select": "选择文件",
+      "preview": "预览PDF",
+      "download": "下载Excel"
+    },
+    "uploadPrompt": "选择或拖放PDF文件到这里",
+    "uploadDescription": "拖放文件或点击下方按钮选择文件",
+    "browseFiles": "浏览文件",
+    "maxFileSize": "最大文件大小：50MB",
+    "next": "继续",
+    "convert": "立即转换",
+    "converting": "转换中...",
+    "processing": "处理中...",
+    "conversionSuccess": "转换完成！",
+    "documentReady": "您的Excel电子表格已准备好下载",
+    "downloadFile": "下载Excel电子表格",
+    "convertAnother": "转换另一个PDF",
+    "aboutConversion": {
+      "title": "关于PDF转Excel转换",
+      "tables": "我们的转换器能够识别和提取PDF中的表格数据。",
+      "editable": "转换后的Excel文件可在Microsoft Excel或其他电子表格软件中完全编辑。",
+      "complex": "复杂的表格结构可能无法完美转换，可能需要进一步调整。"
+    },
+    "errors": {
+      "pdfOnly": "请只选择PDF文件",
+      "loadFailed": "无法加载PDF文件。文件可能已损坏。",
+      "conversionFailed": "文件转换失败。请重试。"
+    }
   },
   "pdfToImage": {
     "pageTitle": "PDF转图片",
@@ -488,7 +516,6 @@
     "step3": "调整PDF质量设置（可选）",
     "step4": "点击生成PDF按钮",
     "privacyNote": "注意：所有处理都在您的浏览器中完成，图片不会上传到服务器。",
-    
     "pageSettings": "页面设置",
     "pageSize": "纸张大小",
     "orientation": "页面方向",
@@ -496,14 +523,12 @@
     "landscape": "横向",
     "imagesPerPage": "每页图片数",
     "custom": "自定义",
-    
     "advancedOptions": "高级选项",
     "addPageNumbers": "添加页码",
     "customFilename": "自定义文件名",
     "leaveBlankForDefault": "留空使用默认名称",
     "watermarkText": "水印文本",
     "optionalWatermark": "可选水印文本",
-    
     "previewPdf": "预览PDF",
     "closePdfPreview": "关闭预览",
     "downloadPdf": "下载PDF"
@@ -855,7 +880,6 @@
     "convert": "格式转换",
     "analyze": "PDF优化"
   },
-  
   "documentToMarkdown": {
     "pageTitle": "文档转Markdown转换器",
     "title": "将您的文档转换为Markdown",
