@@ -304,52 +304,52 @@
     },
     "features": {
       "stamp": {
-        "title": "PDF 盖章",
-        "description": "在 PDF 文件上添加电子印章、骑缝章"
+        "title": "PDF盖章",
+        "description": "在PDF文件上添加电子印章、骑缝章，支持自定义位置和大小"
       },
       "sign": {
-        "title": "PDF 签名",
-        "description": "在 PDF 文件上添加签名"
+        "title": "PDF签名",
+        "description": "在PDF文件上添加手写签名或电子签名，支持多页签名"
       },
       "merge": {
-        "title": "PDF 合并",
-        "description": "将多个 PDF 文件合并为一个文件"
+        "title": "PDF合并",
+        "description": "将多个PDF文件合并为一个文件，支持拖拽排序"
       },
       "split": {
-        "title": "PDF 拆分",
-        "description": "将 PDF 文件拆分为单页文件，方便单独保存和使用"
+        "title": "PDF拆分",
+        "description": "将PDF文件拆分为单页文件，支持自定义页码范围"
       },
       "compress": {
-        "title": "PDF 压缩",
-        "description": "在浏览器中压缩 PDF 文件，减小文件体积"
+        "title": "PDF压缩",
+        "description": "在浏览器中压缩PDF文件，减小文件体积，保持清晰度"
       },
       "extract": {
-        "title": "PDF 提取图片",
-        "description": "提取 PDF 文件中的图片，方便单独保存和使用"
+        "title": "PDF提取图片",
+        "description": "从PDF文件中提取所有图片，支持批量下载"
       },
       "imageToPdf": {
         "title": "图片转PDF",
-        "description": "将图片转换为PDF文件，方便保存和分享"
+        "description": "将多张图片转换为PDF文件，支持自定义页面大小和方向"
       },
       "pdfCompare": {
-        "title": "PDF 比较",
-        "description": "比较两个 PDF 文件的差异，方便查看和编辑"
+        "title": "PDF比较",
+        "description": "比较两个PDF文件的差异，高亮显示不同之处"
       },
       "pdfToWord": {
         "title": "PDF转Word",
-        "description": "将PDF文件转换为可编辑的Word文档。"
+        "description": "将PDF文件转换为可编辑的Word文档，保留格式和布局"
       },
       "pdfToExcel": {
         "title": "PDF转Excel",
-        "description": "提取PDF中的表格数据转换为Excel电子表格，便于编辑和数据分析。"
+        "description": "提取PDF中的表格数据转换为Excel电子表格，便于编辑和分析"
       },
       "pdfToImage": {
         "title": "PDF转图片",
-        "description": "将PDF文件转换为图片格式(PNG、JPEG)，可自定义分辨率。"
+        "description": "将PDF文件转换为图片格式，支持PNG、JPEG，可自定义分辨率"
       },
       "documentToMarkdown": {
-        "title": "文档转Markdown转换器",
-        "description": "支持 PDF, Word, Excel, PowerPoint, Images, Text, HTML等格式到Markdown的转换。"
+        "title": "文档转Markdown",
+        "description": "将PDF、Word等文档转换为Markdown格式，适用于编写文档和博客"
       }
     },
     "quickGuides": {
@@ -878,7 +878,11 @@
     "edit": "PDF编辑",
     "organize": "PDF组织",
     "convert": "格式转换",
-    "analyze": "PDF优化"
+    "analyze": "PDF分析",
+    "editDescription": "编辑PDF文档内容、添加印章和签名",
+    "organizeDescription": "合并、拆分、压缩PDF文件",
+    "convertDescription": "PDF与其他格式互转",
+    "analyzeDescription": "比较、提取、优化PDF"
   },
   "documentToMarkdown": {
     "pageTitle": "文档转Markdown转换器",

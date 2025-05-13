@@ -307,51 +307,51 @@
     "features": {
       "stamp": {
         "title": "PDF Stamp",
-        "description": "Add customizable stamps to PDF files with transparency, rotation, and batch processing."
+        "description": "Add electronic stamps and straddle stamps to PDF files, with customizable position and size"
       },
       "sign": {
         "title": "PDF Signature",
-        "description": "Add handwritten signatures to your PDF documents without registration."
+        "description": "Add handwritten or electronic signatures to PDF files, supporting multi-page signing"
       },
       "merge": {
         "title": "PDF Merge",
-        "description": "Combine multiple PDF files into a single document with customizable order."
+        "description": "Combine multiple PDF files into one, with drag-and-drop reordering"
       },
       "split": {
         "title": "PDF Split",
-        "description": "Split large PDF files into smaller documents by page ranges or individual pages."
+        "description": "Split PDF files into single pages, with customizable page ranges"
       },
       "compress": {
         "title": "PDF Compress",
-        "description": "Reduce PDF file size while maintaining reasonable quality for sharing and storage."
+        "description": "Compress PDF files in browser, reduce file size while maintaining clarity"
       },
       "extract": {
         "title": "PDF Extract Images",
-        "description": "Extract embedded images from PDF documents in their original quality."
+        "description": "Extract all images from PDF files, with batch download support"
       },
       "imageToPdf": {
         "title": "Image to PDF",
-        "description": "Convert images (PNG, JPG) to PDF files individually or in batch."
+        "description": "Convert multiple images to PDF files, with customizable page size and orientation"
       },
       "pdfCompare": {
         "title": "PDF Compare",
-        "description": "Compare two PDF files and highlight differences for easy review."
+        "description": "Compare two PDF files and highlight differences"
       },
       "pdfToWord": {
         "title": "PDF to Word",
-        "description": "Convert PDF files to editable Word documents while preserving formatting."
+        "description": "Convert PDF files to editable Word documents, preserving format and layout"
       },
       "pdfToExcel": {
         "title": "PDF to Excel",
-        "description": "Extract tables from PDF files into Excel spreadsheets for easy editing and analysis."
+        "description": "Extract table data from PDF files to Excel spreadsheets for editing and analysis"
       },
       "pdfToImage": {
         "title": "PDF to Image",
-        "description": "Convert PDF files to high-quality images in various formats with customizable resolution."
+        "description": "Convert PDF files to image formats, supporting PNG and JPEG with customizable resolution"
       },
       "documentToMarkdown": {
-        "title": "PDF to Markdown",
-        "description": "Support PDF, Word, Excel, PowerPoint, Images, Text, HTML to Markdown conversion."
+        "title": "Document to Markdown",
+        "description": "Convert PDF, Word and other documents to Markdown format for documentation and blogging"
       }
     },
     "quickGuides": {
@@ -950,7 +950,11 @@
     "edit": "PDF Editing",
     "organize": "PDF Organization",
     "convert": "Format Conversion",
-    "analyze": "PDF Optimization"
+    "analyze": "PDF Analysis",
+    "editDescription": "Edit PDF content, add stamps and signatures",
+    "organizeDescription": "Merge, split, and compress PDF files",
+    "convertDescription": "Convert between PDF and other formats",
+    "analyzeDescription": "Compare, extract, and optimize PDFs"
   },
   
   "filePreview": {

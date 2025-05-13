@@ -35,7 +35,11 @@ import {
   Info,
   LocalLibrary,
   CloudQueue,
-  Code
+  Code,
+  Edit,
+  Folder,
+  Transform,
+  Analytics
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import LanguageShareControls from '../components/LanguageShareControls';
@@ -62,90 +66,139 @@ function HomePage() {
     };
   }, [i18n]);
 
+  // 功能分类定义
+  const featureCategories = [
+    {
+      id: 'edit',
+      title: t('menuGroups.edit', 'PDF编辑'),
+      icon: <Edit sx={{ fontSize: 24 }} />,
+      color: 'primary',
+      description: t('menuGroups.editDescription', '编辑PDF文档内容、添加印章和签名')
+    },
+    {
+      id: 'organize',
+      title: t('menuGroups.organize', 'PDF组织'),
+      icon: <Folder sx={{ fontSize: 24 }} />,
+      color: 'success',
+      description: t('menuGroups.organizeDescription', '合并、拆分、压缩PDF文件')
+    },
+    {
+      id: 'convert',
+      title: t('menuGroups.convert', '格式转换'),
+      icon: <Transform sx={{ fontSize: 24 }} />,
+      color: 'warning',
+      description: t('menuGroups.convertDescription', 'PDF与其他格式互转')
+    },
+    {
+      id: 'analyze',
+      title: t('menuGroups.analyze', 'PDF分析'),
+      icon: <Analytics sx={{ fontSize: 24 }} />,
+      color: 'info',
+      description: t('menuGroups.analyzeDescription', '比较、提取、优化PDF')
+    }
+  ];
+
+  // 功能列表
   const features = useMemo(() => [
+    // PDF编辑类
     {
       title: t('home.features.stamp.title'),
       description: t('home.features.stamp.description'),
       icon: <VerifiedUser sx={{ fontSize: 40 }} />,
       path: '/stamp',
-      processingType: 'local'
+      processingType: 'local',
+      category: 'edit'
     },
     {
       title: t('home.features.sign.title'),
       description: t('home.features.sign.description'),
       icon: <Gesture sx={{ fontSize: 40 }} />,
       path: '/sign',
-      processingType: 'local'
+      processingType: 'local',
+      category: 'edit'
     },
+    // PDF组织类
     {
       title: t('home.features.merge.title'),
       description: t('home.features.merge.description'),
       icon: <Merge sx={{ fontSize: 40 }} />,
       path: '/merge',
-      processingType: 'local'
+      processingType: 'local',
+      category: 'organize'
     },
     {
       title: t('home.features.split.title'),
       description: t('home.features.split.description'),
       icon: <CallSplit sx={{ fontSize: 40 }} />,
       path: '/split',
-      processingType: 'local'
+      processingType: 'local',
+      category: 'organize'
     },
     {
       title: t('home.features.compress.title'),
       description: t('home.features.compress.description'),
       icon: <Compress sx={{ fontSize: 40 }} />,
       path: '/compress',
-      processingType: 'local'
+      processingType: 'local',
+      category: 'organize'
+    },
+    // 格式转换类
+    {
+      title: t('home.features.pdfToWord.title'),
+      description: t('home.features.pdfToWord.description'),
+      icon: <Description sx={{ fontSize: 40 }} />,
+      path: '/pdf-to-word',
+      processingType: 'server',
+      category: 'convert'
     },
     {
-      title: t('home.features.extract.title'),
-      description: t('home.features.extract.description'),
-      icon: <ImageIcon sx={{ fontSize: 40 }} />,
-      path: '/extract',
-      processingType: 'local'
+      title: t('home.features.pdfToExcel.title'),
+      description: t('home.features.pdfToExcel.description'),
+      icon: <TableChart sx={{ fontSize: 40 }} />,
+      path: '/pdf-to-excel',
+      processingType: 'server',
+      category: 'convert'
     },
     {
       title: t('home.features.imageToPdf.title'),
       description: t('home.features.imageToPdf.description'),
       icon: <ImageIcon sx={{ fontSize: 40 }} />,
       path: '/image-to-pdf',
-      processingType: 'local'
+      processingType: 'local',
+      category: 'convert'
+    },
+    {
+      title: t('home.features.pdfToImage.title'),
+      description: t('home.features.pdfToImage.description'),
+      icon: <ImageIcon sx={{ fontSize: 40 }} />,
+      path: '/pdf-to-image',
+      processingType: 'local',
+      category: 'convert'
+    },
+    {
+      title: t('home.features.documentToMarkdown.title'),
+      description: t('home.features.documentToMarkdown.description'),
+      icon: <Code sx={{ fontSize: 40 }} />,
+      path: '/document-to-markdown',
+      processingType: 'server',
+      category: 'convert'
+    },
+    // PDF分析类
+    {
+      title: t('home.features.extract.title'),
+      description: t('home.features.extract.description'),
+      icon: <ImageIcon sx={{ fontSize: 40 }} />,
+      path: '/extract',
+      processingType: 'local',
+      category: 'analyze'
     },
     {
       title: t('home.features.pdfCompare.title'),
       description: t('home.features.pdfCompare.description'),
       icon: <CompareArrows sx={{ fontSize: 40 }} />,
       path: '/pdf-compare',
-      processingType: 'local'
-    },
-    {
-      title: t('home.features.pdfToWord.title'),
-      description: t('home.features.pdfToWord.description'),
-      icon: <Description sx={{ fontSize: 40 }} />,
-      path: '/pdf-to-word',
-      processingType: 'server'
-    },
-    {
-      title: t('home.features.pdfToExcel.title', 'PDF转Excel'),
-      description: t('home.features.pdfToExcel.description', '提取PDF中的表格数据转换为Excel电子表格，便于编辑和数据分析。'),
-      icon: <TableChart sx={{ fontSize: 40 }} />, // 使用表格图标
-      path: '/pdf-to-excel',
-      processingType: 'server' // 标记为服务器处理
-    },
-    {
-      title: t('home.features.pdfToImage.title', 'PDF转图片'),
-      description: t('home.features.pdfToImage.description', '将PDF文件转换为图片格式(PNG、JPEG)，可自定义分辨率。'),
-      icon: <ImageIcon sx={{ fontSize: 40 }} />,
-      path: '/pdf-to-image',
-      processingType: 'local' // 这是本地处理功能
-    },
-    {
-      title: t('home.features.documentToMarkdown.title', 'PDF转Markdown'),
-      description: t('home.features.documentToMarkdown.description', '将PDF、Word等文档转换为Markdown格式，适用于编写文档、博客和技术文章。'),
-      icon: <Code sx={{ fontSize: 40 }} />,
-      path: '/document-to-markdown',
-      processingType: 'server'
+      processingType: 'local',
+      category: 'analyze'
     }
   ], [t]);
 
@@ -352,122 +405,159 @@ function HomePage() {
         </Box>
       </Box>
 
-      <Grid container spacing={2} justifyContent="flex-start" sx={{ px: 2 }}>
-        {features.map((feature) => (
-          <Grid 
-            item 
-            xs={6}   // 手机端保持每行2个
-            sm={4}   // 平板端每行3个
-            md={2.4} // 桌面端每行5个 (12/5=2.4)
-            key={feature.path}
-            sx={{
-              flexBasis: 'calc(20% - 16px)', // 精确控制5列布局
-              maxWidth: 'calc(20% - 16px)',
-              transition: 'all 0.3s',
-              // 响应式调整
-              [theme.breakpoints.down('md')]: {
-                flexBasis: '33.33%',
-                maxWidth: '33.33%'
-              },
-              [theme.breakpoints.down('sm')]: {
-                flexBasis: '50%',
-                maxWidth: '50%'
-              }
-            }}
-          >
-            <Card 
-              sx={{ 
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                transition: 'transform 0.2s',
-                position: 'relative',
-                '&:hover': {
-                  transform: 'translateY(-4px)'
-                }
-              }}
-            >
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: 8,
-                  right: 8,
-                  borderRadius: '12px',
-                  px: 1,
-                  py: 0.25,
-                  fontSize: '0.7rem',
-                  fontWeight: 'medium',
-                  backgroundColor: feature.processingType === 'local' 
-                    ? 'success.light' 
-                    : 'warning.light',
-                  color: feature.processingType === 'local' 
-                    ? 'success.contrastText' 
-                    : 'warning.contrastText',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 0.5,
-                  zIndex: 1
+      {/* 功能分类展示 */}
+      {featureCategories.map((category) => (
+        <Box key={category.id} sx={{ mb: 6 }}>
+          {/* 分类标题和描述 */}
+          <Box sx={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            mb: 2,
+            px: 2
+          }}>
+            <Box sx={{ 
+              color: `${category.color}.main`,
+              mr: 1.5,
+              display: 'flex',
+              alignItems: 'center'
+            }}>
+              {category.icon}
+            </Box>
+            <Box>
+              <Typography 
+                variant="h5" 
+                component="h2"
+                sx={{ 
+                  fontWeight: 'bold',
+                  fontSize: { xs: '1.25rem', md: '1.5rem' }
                 }}
               >
-                {feature.processingType === 'local' ? (
-                  <>
-                    <Box component="span" sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'success.main' }} />
-                    {t('home.processingType.local', '本地处理')}
-                  </>
-                ) : (
-                  <>
-                    <Box component="span" sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'warning.main' }} />
-                    {t('home.processingType.server', '云端处理')}
-                  </>
-                )}
-              </Box>
+                {category.title}
+              </Typography>
+              <Typography 
+                variant="body2" 
+                color="text.secondary"
+                sx={{ mt: 0.5 }}
+              >
+                {category.description}
+              </Typography>
+            </Box>
+          </Box>
 
-              <CardContent sx={{ 
-                flexGrow: 1, 
-                textAlign: 'center',
-                p: { xs: 2, md: 3 }
-              }}>
-                <Box sx={{ color: 'primary.main', mb: 1 }}>
-                  {feature.icon}
-                </Box>
-                <Typography 
-                  gutterBottom 
-                  variant="h6" 
-                  component="h2"
-                  sx={{ 
-                    fontSize: { xs: '1rem', md: '1.25rem' },
-                    mb: { xs: 0.5, md: 1 }
-                  }}
+          {/* 功能卡片网格 */}
+          <Grid container spacing={2} sx={{ px: 2 }}>
+            {features
+              .filter(feature => feature.category === category.id)
+              .map((feature) => (
+                <Grid 
+                  item 
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  lg={3}
+                  key={feature.path}
                 >
-                  {feature.title}
-                </Typography>
-                <Typography 
-                  color="text.secondary" 
-                  paragraph 
-                  variant="body2"
-                  sx={{ 
-                    mb: 1.5,
-                    display: { xs: 'none', sm: 'block' }
-                  }}
-                >
-                  {feature.description}
-                </Typography>
-                <Button
-                  component={Link}
-                  to={feature.path}
-                  variant="contained"
-                  color="primary"
-                  size={isMobile ? "small" : "medium"}
-                  sx={{ mt: 'auto' }}
-                >
-                  {t('home.startUsing')}
-                </Button>
-              </CardContent>
-            </Card>
+                  <Card 
+                    sx={{ 
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      transition: 'all 0.3s ease',
+                      position: 'relative',
+                      '&:hover': {
+                        transform: 'translateY(-4px)',
+                        boxShadow: 6
+                      }
+                    }}
+                  >
+                    {/* 处理类型标签 */}
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        top: 8,
+                        right: 8,
+                        borderRadius: '12px',
+                        px: 1,
+                        py: 0.25,
+                        fontSize: '0.7rem',
+                        fontWeight: 'medium',
+                        backgroundColor: feature.processingType === 'local' 
+                          ? 'success.light' 
+                          : 'warning.light',
+                        color: feature.processingType === 'local' 
+                          ? 'success.contrastText' 
+                          : 'warning.contrastText',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 0.5,
+                        zIndex: 1
+                      }}
+                    >
+                      <Box 
+                        component="span" 
+                        sx={{ 
+                          width: 8, 
+                          height: 8, 
+                          borderRadius: '50%', 
+                          bgcolor: feature.processingType === 'local' 
+                            ? 'success.main' 
+                            : 'warning.main' 
+                        }} 
+                      />
+                      {t(`home.processingType.${feature.processingType}`)}
+                    </Box>
+
+                    <CardContent sx={{ 
+                      flexGrow: 1, 
+                      textAlign: 'center',
+                      p: { xs: 2, md: 3 }
+                    }}>
+                      <Box sx={{ 
+                        color: `${category.color}.main`, 
+                        mb: 1 
+                      }}>
+                        {feature.icon}
+                      </Box>
+                      <Typography 
+                        gutterBottom 
+                        variant="h6" 
+                        component="h2"
+                        sx={{ 
+                          fontSize: { xs: '1rem', md: '1.25rem' },
+                          mb: { xs: 0.5, md: 1 }
+                        }}
+                      >
+                        {feature.title}
+                      </Typography>
+                      <Typography 
+                        color="text.secondary" 
+                        paragraph 
+                        variant="body2"
+                        sx={{ 
+                          mb: 1.5,
+                          display: { xs: 'none', sm: 'block' }
+                        }}
+                      >
+                        {feature.description}
+                      </Typography>
+                      <Button
+                        component={Link}
+                        to={feature.path}
+                        variant="contained"
+                        color={category.color}
+                        size={isMobile ? "small" : "medium"}
+                        sx={{ mt: 'auto' }}
+                      >
+                        {t('home.startUsing')}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
           </Grid>
-        ))}
-      </Grid>
-      
+        </Box>
+      ))}
+
       {/* 使用指南和FAQ部分 */}
       <Grid container spacing={3} sx={{ mt: { xs: 3, md: 6 } }}>
         {/* 使用指南部分 */}
