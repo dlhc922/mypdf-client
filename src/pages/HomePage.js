@@ -18,31 +18,19 @@ import {
   Link 
 } from 'react-router-dom';
 import { 
-  VerifiedUser, 
-  Gesture, 
-  Merge, 
-  CallSplit, 
-  Compress, 
-  Image as ImageIcon, 
   ArrowForward,
-  CompareArrows,
   Security as SecurityIcon,
   MenuBook as GuideIcon,
   Help as HelpIcon,
   QuestionAnswer as FAQIcon,
-  Description,
-  TableChart,
-  Info,
-  LocalLibrary,
-  CloudQueue,
-  Code,
-  Edit,
-  Folder,
-  Transform,
-  Analytics
+  VerifiedUser,
+  Merge,
+  CallSplit,
+  Compress
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import LanguageShareControls from '../components/LanguageShareControls';
+import { featureCategories as importedFeatureCategories, features as importedFeatures } from '../config/featuresConfig';
 
 function HomePage() {
   const { t, i18n } = useTranslation();
@@ -66,141 +54,18 @@ function HomePage() {
     };
   }, [i18n]);
 
-  // 功能分类定义
-  const featureCategories = [
-    {
-      id: 'edit',
-      title: t('menuGroups.edit', 'PDF编辑'),
-      icon: <Edit sx={{ fontSize: 24 }} />,
-      color: 'primary',
-      description: t('menuGroups.editDescription', '编辑PDF文档内容、添加印章和签名')
-    },
-    {
-      id: 'organize',
-      title: t('menuGroups.organize', 'PDF组织'),
-      icon: <Folder sx={{ fontSize: 24 }} />,
-      color: 'success',
-      description: t('menuGroups.organizeDescription', '合并、拆分、压缩PDF文件')
-    },
-    {
-      id: 'convert',
-      title: t('menuGroups.convert', '格式转换'),
-      icon: <Transform sx={{ fontSize: 24 }} />,
-      color: 'warning',
-      description: t('menuGroups.convertDescription', 'PDF与其他格式互转')
-    },
-    {
-      id: 'analyze',
-      title: t('menuGroups.analyze', 'PDF分析'),
-      icon: <Analytics sx={{ fontSize: 24 }} />,
-      color: 'info',
-      description: t('menuGroups.analyzeDescription', '比较、提取、优化PDF')
-    }
-  ];
+  // Use imported feature categories and features, applying translation
+  const featureCategories = useMemo(() => importedFeatureCategories.map(category => ({
+    ...category,
+    title: t(category.titleKey, category.defaultTitle),
+    description: t(category.descriptionKey, category.defaultDescription),
+  })), [t, forceUpdate]);
 
-  // 功能列表
-  const features = useMemo(() => [
-    // PDF编辑类
-    {
-      title: t('home.features.stamp.title'),
-      description: t('home.features.stamp.description'),
-      icon: <VerifiedUser sx={{ fontSize: 40 }} />,
-      path: '/stamp',
-      processingType: 'local',
-      category: 'edit'
-    },
-    {
-      title: t('home.features.sign.title'),
-      description: t('home.features.sign.description'),
-      icon: <Gesture sx={{ fontSize: 40 }} />,
-      path: '/sign',
-      processingType: 'local',
-      category: 'edit'
-    },
-    // PDF组织类
-    {
-      title: t('home.features.merge.title'),
-      description: t('home.features.merge.description'),
-      icon: <Merge sx={{ fontSize: 40 }} />,
-      path: '/merge',
-      processingType: 'local',
-      category: 'organize'
-    },
-    {
-      title: t('home.features.split.title'),
-      description: t('home.features.split.description'),
-      icon: <CallSplit sx={{ fontSize: 40 }} />,
-      path: '/split',
-      processingType: 'local',
-      category: 'organize'
-    },
-    {
-      title: t('home.features.compress.title'),
-      description: t('home.features.compress.description'),
-      icon: <Compress sx={{ fontSize: 40 }} />,
-      path: '/compress',
-      processingType: 'local',
-      category: 'organize'
-    },
-    // 格式转换类
-    {
-      title: t('home.features.pdfToWord.title'),
-      description: t('home.features.pdfToWord.description'),
-      icon: <Description sx={{ fontSize: 40 }} />,
-      path: '/pdf-to-word',
-      processingType: 'server',
-      category: 'convert'
-    },
-    {
-      title: t('home.features.pdfToExcel.title'),
-      description: t('home.features.pdfToExcel.description'),
-      icon: <TableChart sx={{ fontSize: 40 }} />,
-      path: '/pdf-to-excel',
-      processingType: 'server',
-      category: 'convert'
-    },
-    {
-      title: t('home.features.imageToPdf.title'),
-      description: t('home.features.imageToPdf.description'),
-      icon: <ImageIcon sx={{ fontSize: 40 }} />,
-      path: '/image-to-pdf',
-      processingType: 'local',
-      category: 'convert'
-    },
-    {
-      title: t('home.features.pdfToImage.title'),
-      description: t('home.features.pdfToImage.description'),
-      icon: <ImageIcon sx={{ fontSize: 40 }} />,
-      path: '/pdf-to-image',
-      processingType: 'local',
-      category: 'convert'
-    },
-    {
-      title: t('home.features.documentToMarkdown.title'),
-      description: t('home.features.documentToMarkdown.description'),
-      icon: <Code sx={{ fontSize: 40 }} />,
-      path: '/document-to-markdown',
-      processingType: 'server',
-      category: 'convert'
-    },
-    // PDF分析类
-    {
-      title: t('home.features.extract.title'),
-      description: t('home.features.extract.description'),
-      icon: <ImageIcon sx={{ fontSize: 40 }} />,
-      path: '/extract',
-      processingType: 'local',
-      category: 'analyze'
-    },
-    {
-      title: t('home.features.pdfCompare.title'),
-      description: t('home.features.pdfCompare.description'),
-      icon: <CompareArrows sx={{ fontSize: 40 }} />,
-      path: '/pdf-compare',
-      processingType: 'local',
-      category: 'analyze'
-    }
-  ], [t]);
+  const features = useMemo(() => importedFeatures.map(feature => ({
+    ...feature,
+    title: t(feature.titleKey),
+    description: t(feature.descriptionKey),
+  })), [t, forceUpdate]);
 
   // 常用工具使用说明链接 - 使用翻译
   const quickGuides = useMemo(() => [
@@ -513,7 +378,7 @@ function HomePage() {
                       p: { xs: 2, md: 3 }
                     }}>
                       <Box sx={{ 
-                        color: `${category.color}.main`, 
+                        color: `${featureCategories.find(c => c.id === feature.category)?.color}.main`, 
                         mb: 1 
                       }}>
                         {feature.icon}
@@ -544,7 +409,7 @@ function HomePage() {
                         component={Link}
                         to={feature.path}
                         variant="contained"
-                        color={category.color}
+                        color={featureCategories.find(c => c.id === feature.category)?.color}
                         size={isMobile ? "small" : "medium"}
                         sx={{ mt: 'auto' }}
                       >

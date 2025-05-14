@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { 
   AppBar, 
   Toolbar, 
@@ -30,6 +30,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { alpha } from '@mui/material/styles';
 import LanguageShareControls from '../LanguageShareControls';
+import { featureCategories as importedFeatureCategories, features as importedFeatures } from '../../config/featuresConfig';
 
 function Header() {
   const { t, i18n } = useTranslation();
@@ -45,45 +46,30 @@ function Header() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  // 定义菜单组
-  const menuGroups = [
-    {
-      id: 'edit',
-      label: t('menuGroups.edit', 'PDF编辑'),
-      items: [
-        { path: '/stamp', label: t('tools.stamp', '电子印章') },
-        { path: '/sign', label: t('tools.sign', '电子签名') }
-      ]
-    },
-    {
-      id: 'organize',
-      label: t('menuGroups.organize', 'PDF整理'),
-      items: [
-        { path: '/merge', label: t('tools.merge', '合并PDF') },
-        { path: '/split', label: t('tools.split', '拆分PDF') },
-        { path: '/extract', label: t('tools.extract', '提取图片') }
-      ]
-    },
-    {
-      id: 'convert',
-      label: t('menuGroups.convert', '格式转换'),
-      items: [
-        { path: '/image-to-pdf', label: t('tools.imageToPdf', '图片转PDF') },
-        { path: '/pdf-to-word', label: t('tools.pdfToWord', 'PDF转Word') },
-        { path: '/pdf-to-excel', label: t('tools.pdfToExcel', 'PDF转Excel') },
-        { path: '/pdf-to-image', label: t('tools.pdfToImage', 'PDF转图片') },
-        { path: '/document-to-markdown', label: t('tools.documentToMarkdown', '文档转Markdown') }
-      ]
-    },
-    {
-      id: 'analyze',
-      label: t('menuGroups.analyze', 'PDF优化'),
-      items: [
-        { path: '/pdf-compare', label: t('tools.pdfCompare', 'PDF比较') },
-        { path: '/compress', label: t('tools.compress', '压缩PDF') }
-      ]
-    }
-  ];
+  // Dynamically build menuGroups from shared config
+  const menuGroups = useMemo(() => {
+    return importedFeatureCategories.map(category => {
+      const categoryFeatures = importedFeatures.filter(
+        feature => feature.category === category.id && feature.showInHeader
+      );
+
+      // Only include categories that have features to show in the header
+      if (categoryFeatures.length === 0) {
+        return null;
+      }
+
+      return {
+        id: category.id,
+        label: t(category.titleKey, category.defaultTitle),
+        // Icons for menu groups can be added here if needed, e.g., icon: category.icon,
+        items: categoryFeatures.map(feature => ({
+          path: feature.path,
+          label: t(feature.titleKey),
+          // Icons for individual menu items can be added here, e.g., icon: feature.icon (smaller version)
+        })),
+      };
+    }).filter(group => group !== null); // Remove null entries for categories with no header items
+  }, [t, i18n.language]); // Recompute when language changes
 
   const handleMenuOpen = (event, groupId) => {
     // 关闭所有其他菜单，只打开当前悬停的菜单
