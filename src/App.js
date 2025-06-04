@@ -24,6 +24,7 @@ import ScrollToTop from './components/ScrollToTop';
 import PdfToWordPage from './pages/pdfToWord/PdfToWordPage';
 import PdfToExcelPage from './pages/pdfToExcel/PdfToExcelPage';
 import PdfToImagePage from './pages/pdfToImage/PdfToImagePage';
+import RotatePage from './pages/rotate/RotatePage';
 import MarkdownPage from './pages/markdown/MarkdownPage';
 import { HelmetProvider } from 'react-helmet-async';
 
@@ -91,6 +92,7 @@ function App() {
                   <Route path="/pdf-to-word" element={<PdfToWordPage />} />
                   <Route path="/pdf-to-excel" element={<PdfToExcelPage />} />
                   <Route path="/pdf-to-image" element={<PdfToImagePage />} />
+                  <Route path="/rotate" element={<RotatePage />} />
                   <Route path="/document-to-markdown" element={<MarkdownPage />} />
                 </Routes>
               </Layout>

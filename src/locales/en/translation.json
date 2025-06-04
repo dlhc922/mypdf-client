@@ -13,7 +13,8 @@
     "pdfToWord": "PDF to Word",
     "pdfToExcel": "PDF to Excel",
     "pdfToImage": "PDF to Image",
-    "pdfToMarkdown": "PDF to Markdown"
+    "rotate": "PDF Rotate",
+    "documentToMarkdown": "PDF to Markdown"
   },
   "meta": {
     "description": "Free online PDF stamp, merge, split, and compress tool without the need for registration.",
@@ -352,6 +353,10 @@
       "documentToMarkdown": {
         "title": "Document to Markdown",
         "description": "Convert PDF, Word and other documents to Markdown format for documentation and blogging"
+      },
+      "rotate": {
+        "title": "PDF Rotate",
+        "description": "Easily rotate PDF pages with options for single or all pages, supporting 90°, 180°, and 270° rotations"
       }
     },
     "quickGuides": {
@@ -1037,6 +1042,52 @@
       "image": "Image",
       "text": "Text",
       "html": "HTML"
+    }
+  },
+  "rotate": {
+    "pageTitle": "Free PDF Rotation Tool - Process Locally Without Upload",
+    "pageDescription": "100% Free online PDF rotation tool. Rotate PDF pages locally in your browser. No upload required, fully private and secure. Supports single or multiple page rotation with various angle options.",
+    "title": "PDF Page Rotation",
+    "selectFile": "Select PDF File",
+    "settings": "Rotation Settings",
+    "rotation": "Rotation Angle",
+    "rotate90": "Rotate 90° Clockwise",
+    "rotate180": "Rotate 180°",
+    "rotate270": "Rotate 90° Counterclockwise",
+    "rotateDirection": "Rotation Direction",
+    "clockwise": "Clockwise",
+    "counterClockwise": "Counterclockwise",
+    "pages": "Page Settings",
+    "selectPages": "Select Pages to Rotate",
+    "quickSelectPlaceholder": "e.g.: 1,3-5,8",
+    "quickSelectHelper": "Hint: Enter page ranges (e.g., 1-5) or individual pages (e.g., 1,3,8) separated by commas",
+    "selectAll": "Select All",
+    "clearAll": "Clear All",
+    "apply": "Apply",
+    "selectedPages": "{{count}} pages selected",
+    "pageRange": "Page Range",
+    "allPages": "All Pages",
+    "evenPages": "Even Pages",
+    "oddPages": "Odd Pages",
+    "customPages": "Custom Pages",
+    "startRotate": "Start Rotation",
+    "rotationInProgress": "Rotation in progress...",
+    "noFileSelected": "Please select a PDF file",
+    "noPageSelected": "Please select at least one page",
+    "rotateSuccess": "PDF rotation successful!",
+    "rotateFailed": "PDF rotation failed",
+    "download": "Save Rotated File",
+    "pagePreview": "Page Preview",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "resetZoom": "Reset Zoom",
+    "closeFile": "Close File",
+    "fileInfo": {
+      "fileName": "File Name",
+      "fileSize": "File Size",
+      "pages": "Pages",
+      "pageUnit": "pages",
+      "modifiedDate": "Modified Date"
     }
   }
 } 

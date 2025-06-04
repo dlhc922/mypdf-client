@@ -326,7 +326,7 @@ function StampTools() {
                 <Stack direction="row" spacing={1} alignItems="center">
                   <Slider
                     value={currentPageSettings?.rotation ?? 0}
-                    onChange={handleRotationChange}
+                    onChange={(event, newValue) => handleStampRotationChange(newValue)}
                     min={0}
                     max={360}
                     valueLabelDisplay="auto"

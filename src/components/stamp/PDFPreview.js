@@ -133,7 +133,7 @@ function PDFPreview() {
 
   // 修改印章渲染函数
   const renderNormalStamp = (pageNumber) => {
-    if (!stampConfig?.imageUrl || !stampConfig.selectedPages.includes(pageNumber)) {
+    if (!stampConfig?.imageUrl || (!stampConfig.selectedPages.includes(pageNumber) && pageNumber !== stampConfig.currentPage)) {
       return null;
     }
 
@@ -195,9 +195,9 @@ function PDFPreview() {
 
     const stampSizeInPixels = stampConfig.size * mmToPixelRatio;
     const rotation = pageSettings.rotation || 0;
+    console.log(`页面 ${pageNumber} 旋转设置:`, pageSettings, '最终角度:', rotation);
 
-    // 对于混合方向模式下的横向页面，需要额外考虑旋转
-    const finalRotation = mixOrientation ? (rotation - 90) : rotation;
+    const finalRotation = rotation;
 
     return (
       <Draggable
@@ -239,34 +239,31 @@ function PDFPreview() {
         }}
         scale={1}
       >
-        <Box
-          sx={{
-            position: "absolute",
-            width: `${stampSizeInPixels}px`,
-            height: `${stampSizeInPixels}px`,
-            transform: `rotate(${finalRotation}deg)`,
-            cursor: isSelected ? "move" : "pointer",
-            border: isSelected ? "2px solid #1976d2" : "none",
-            borderRadius: "50%",
-            "&:hover": {
-              border: "2px solid #1976d2",
-            },
-            transformOrigin: "center center",
-            top: 0,
-            left: 0,
-          }}
-        >
-          <img
-            src={stampConfig.imageUrl}
-            alt={t('stamp.stampPreviewText')}
-            style={{
-              width: "100%",
-              height: "100%",
-              opacity: 0.8,
-              pointerEvents: "none",
+        <div key={finalRotation} style={{ position: 'absolute', top: 0, left: 0 }}>
+          <Box
+            sx={{
+              width: `${stampSizeInPixels}px`,
+              height: `${stampSizeInPixels}px`,
+              transform: `rotate(${finalRotation}deg)`,
+              cursor: isSelected ? "move" : "pointer",
+              border: isSelected ? "2px solid #1976d2" : "none",
+              borderRadius: "50%",
+              "&:hover": { border: "2px solid #1976d2" },
+              transformOrigin: "center center",
             }}
-          />
-        </Box>
+          >
+            <img
+              src={stampConfig.imageUrl}
+              alt={t('stamp.stampPreviewText')}
+              style={{
+                width: "100%",
+                height: "100%",
+                opacity: 0.8,
+                pointerEvents: "none",
+              }}
+            />
+          </Box>
+        </div>
       </Draggable>
     );
   };

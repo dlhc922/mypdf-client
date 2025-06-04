@@ -290,6 +290,8 @@ export const StampProvider = ({ children }) => {
 
       // 处理普通印章（针对选定页面）
 
+      // 缓存旋转后的印章图像，避免重复生成
+      const rotatedImagesCache = {};
 
       for (const pageNum of stampConfig.selectedPages) {
         // 检查页码是否有效
@@ -317,24 +319,39 @@ export const StampProvider = ({ children }) => {
           const stampX = position.x * MM_TO_PT;
           const stampY = height - (position.y * MM_TO_PT + stampSizePt);
 
+          const rotated = !!rotatedPages[pageNum - 1]; // 不同页面的旋转状态
 
-          const rotated = !!rotatedPages[pageNum - 1]; // undefined 也会被转成 false
-          if (rotated) {
-            // 旋转后的坐标
+          // 根据旋转角度决定如何绘制印章
+          if (rotation === 0) {
+            page.drawImage(stampPngImage, {
+              x: stampX,
+              y: stampY,
+              width: stampSizePt,
+              height: stampSizePt,
+              opacity: opacity,
+            });
           } else {
-            // 正常坐标
+            // 如果旋转角度不为 0，则预先生成旋转后的印章图片（保证用 PNG 无损格式，质量最高）
+            if (!rotatedImagesCache[rotation]) {
+              const img = await loadImage(stampConfig.imageUrl);
+              const stampWidthPx = Math.round((stampConfig.size || 40) * MM_TO_INCH * DPI);
+              const resizedCanvas = resizeImage(img, stampWidthPx, stampWidthPx);
+              // rotateAndCropImage 返回旋转后并裁剪中心区域的 PNG DataURL
+              const rotatedDataUrl = rotateAndCropImage(resizedCanvas, rotation, stampWidthPx);
+              const response = await fetch(rotatedDataUrl);
+              const arrayBuffer = await response.arrayBuffer();
+              const rotatedEmbeddedImage = await pdfDoc.embedPng(arrayBuffer);
+              rotatedImagesCache[rotation] = rotatedEmbeddedImage;
+            }
+            page.drawImage(rotatedImagesCache[rotation], {
+              x: stampX,
+              y: stampY,
+              width: stampSizePt,
+              height: stampSizePt,
+              opacity: opacity,
+            });
           }
-
-
-          // 绘制印章
-          page.drawImage(stampPngImage, {
-            x: stampX,
-            y: stampY,
-            width: stampSizePt,
-            height: stampSizePt,
-            opacity: opacity,
-            rotateDegrees: rotation,
-          });
+          
         } catch (pageError) {
           console.error(`处理第${pageNum}页时出错:`, pageError);
           // 继续处理其他页面

@@ -35,11 +35,8 @@ import { useTranslation } from 'react-i18next';
 import FileUploadArea from '../../components/FileUploadArea';
 import axios from 'axios';
 
-// 简单导入 Document 和 Page，worker 已经在 index.js 中配置
-import { Document, Page } from 'react-pdf';
-// 不要重复配置 worker
-// import { pdfjs } from 'react-pdf';
-// pdfjs.GlobalWorkerOptions.workerSrc = '...';
+// 简单导入 Document 和 Page，worker 已经在 index.js 中全局配置
+import { Document, Page, pdfjs } from 'react-pdf';
 
 function PdfToWordPage() {
   const { t } = useTranslation();
@@ -62,6 +59,23 @@ function PdfToWordPage() {
   
   const pdfContainerRef = useRef(null);
   const fileInputRef = useRef(null);
+
+  // 在组件加载时检查并确保worker配置正确
+  useEffect(() => {
+    const currentWorkerSrc = pdfjs.GlobalWorkerOptions.workerSrc;
+    console.log('PdfToWordPage: 当前 PDF.js worker 配置:', {
+      version: pdfjs.version,
+      workerSrc: currentWorkerSrc,
+      isLocal: currentWorkerSrc && currentWorkerSrc.startsWith('/'),
+      isCDN: currentWorkerSrc && currentWorkerSrc.startsWith('http')
+    });
+
+    // 如果worker没有配置，设置默认配置
+    if (!currentWorkerSrc) {
+      console.warn('PdfToWordPage: Worker 未配置，设置默认配置');
+      pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.mjs';
+    }
+  }, []);
 
   // 清理函数
   useEffect(() => {
@@ -104,10 +118,30 @@ function PdfToWordPage() {
     setLoading(false);
   };
 
-  // 处理 PDF 加载失败
+  // 处理 PDF 加载失败 - 改进错误处理并提供worker重配置
   const handleDocumentLoadError = (error) => {
     console.error("PDF 加载失败:", error);
-    setError(t('pdfToWord.errors.loadFailed', 'PDF文件加载失败，请确保文件格式正确'));
+    
+    let errorMessage = t('pdfToWord.errors.loadFailed', 'PDF文件加载失败');
+    
+    // 检查是否是worker相关错误
+    if (error.message && (error.message.includes('worker') || error.message.includes('Worker'))) {
+      console.warn('检测到 worker 相关错误，尝试重新配置 worker');
+      
+      // 尝试切换到CDN worker
+      const cdnWorkerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+      pdfjs.GlobalWorkerOptions.workerSrc = cdnWorkerSrc;
+      
+      console.log('Worker 已切换到 CDN:', cdnWorkerSrc);
+      errorMessage = 'PDF处理组件正在重新配置，请稍后重新尝试上传文件。';
+      
+    } else if (error.message && error.message.includes('Invalid PDF')) {
+      errorMessage = 'PDF文件格式无效或已损坏，请选择其他PDF文件。';
+    } else if (error.message && error.message.includes('network')) {
+      errorMessage = '网络连接问题，请检查网络后重试。';
+    }
+    
+    setError(errorMessage);
     setLoading(false);
   };
 

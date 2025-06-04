@@ -14,6 +14,7 @@ import {
   Transform,
   Analytics,
   CompareArrows,
+  RotateRight,
 } from '@mui/icons-material';
 
 export const featureCategories = [
@@ -57,6 +58,16 @@ export const featureCategories = [
 
 export const features = [
   // PDF编辑类
+  {
+    id: 'rotate',
+    titleKey: 'home.features.rotate.title',
+    descriptionKey: 'home.features.rotate.description',
+    icon: <RotateRight sx={{ fontSize: 40 }} />,
+    path: '/rotate',
+    processingType: 'local',
+    category: 'organize',
+    showInHeader: true,
+  },
   {
     id: 'stamp',
     titleKey: 'home.features.stamp.title',

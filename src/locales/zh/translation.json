@@ -13,6 +13,7 @@
     "pdfToWord": "PDF转Word",
     "pdfToExcel": "PDF转Excel",
     "pdfToImage": "PDF转图片",
+    "rotate": "PDF 旋转",
     "documentToMarkdown": "文档转Markdown转换器"
   },
   "meta": {
@@ -350,6 +351,10 @@
       "documentToMarkdown": {
         "title": "文档转Markdown",
         "description": "将PDF、Word等文档转换为Markdown格式，适用于编写文档和博客"
+      },
+      "rotate": {
+        "title": "PDF 旋转",
+        "description": "轻松旋转 PDF 页面方向，支持单页或全页旋转，提供 90°、180°、270° 旋转选项"
       }
     },
     "quickGuides": {
@@ -408,7 +413,8 @@
     "zoomIn": "放大",
     "zoomOut": "缩小",
     "resetZoom": "重置缩放",
-    "processing": "处理中..."
+    "processing": "处理中...",
+    "pageIndicator": "第 {{current}} 页，共 {{total}} 页"
   },
   "sign": {
     "pageTitle": "免费PDF签名、手写签名、电子签名工具 - 本地处理无需上传 安全私密",
@@ -964,6 +970,52 @@
       "fileLoadError": "无法加载文件",
       "loadError": "无法加载文件",
       "wordFetchError": "无法获取Word文档"
+    }
+  },
+  "rotate": {
+    "pageTitle": "免费PDF旋转工具 - 本地处理无需上传 安全私密",
+    "pageDescription": "100%免费在线PDF旋转工具。在浏览器中本地旋转PDF页面方向，无需上传，完全保护隐私。可选择单页或多页旋转，支持不同角度，简单易用。",
+    "title": "PDF 页面旋转",
+    "selectFile": "选择 PDF 文件",
+    "settings": "旋转设置",
+    "rotation": "旋转角度",
+    "rotate90": "顺时针旋转 90°",
+    "rotate180": "旋转 180°",
+    "rotate270": "逆时针旋转 90°",
+    "rotateDirection": "旋转方向",
+    "clockwise": "顺时针",
+    "counterClockwise": "逆时针",
+    "pages": "页面设置",
+    "selectPages": "选择要旋转的页面",
+    "quickSelectPlaceholder": "例如: 1,3-5,8",
+    "quickSelectHelper": "提示：可以输入页码范围（如1-5）或单页（如1,3,8），用逗号分隔",
+    "selectAll": "全选",
+    "clearAll": "清除",
+    "apply": "应用",
+    "selectedPages": "已选择 {{count}} 页",
+    "pageRange": "页码范围",
+    "allPages": "所有页面",
+    "evenPages": "偶数页",
+    "oddPages": "奇数页",
+    "customPages": "自定义页面",
+    "startRotate": "开始旋转",
+    "rotationInProgress": "旋转处理中...",
+    "noFileSelected": "请选择一个 PDF 文件",
+    "noPageSelected": "请选择至少一个页面",
+    "rotateSuccess": "PDF 旋转成功！",
+    "rotateFailed": "PDF 旋转失败",
+    "download": "保存旋转后的文件",
+    "pagePreview": "页面预览",
+    "zoomIn": "放大",
+    "zoomOut": "缩小",
+    "resetZoom": "重置缩放",
+    "closeFile": "关闭文件",
+    "fileInfo": {
+      "fileName": "文件名",
+      "fileSize": "文件大小",
+      "pages": "页数",
+      "pageUnit": "页",
+      "modifiedDate": "修改时间"
     }
   }
 }

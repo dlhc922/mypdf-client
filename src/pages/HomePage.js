@@ -141,10 +141,13 @@ function HomePage() {
             }
           `}
         </script>
+        
+        {/* 引入最新博客文章脚本 */}
+        <script src="https://www.wsbn.tech/blog/embed/latest-posts.js"></script>
       </Helmet>
       
-      {/* Logo 定位于左上角 */}
-      <Box sx={{ position: 'absolute', top: 16, left: 16 }}>
+      {/* Logo 和导航链接定位于左上角 */}
+      <Box sx={{ position: 'absolute', top: 16, left: 16, display: 'flex', alignItems: 'center', gap: 3 }}>
         <Typography
           variant="h6"
           component={Link}
@@ -156,6 +159,25 @@ function HomePage() {
           }}
         >
           WSBN.tech
+        </Typography>
+        <Typography
+          variant="body1"
+          component="a"
+          href="https://www.wsbn.tech/blog"
+          target="_blank"
+          rel="noopener noreferrer"
+          sx={{ 
+            color: 'text.primary',
+            textDecoration: 'none',
+            fontWeight: 'medium',
+            fontSize: '0.9rem',
+            '&:hover': {
+              color: 'primary.main',
+              textDecoration: 'underline'
+            }
+          }}
+        >
+          Blog
         </Typography>
       </Box>
 
@@ -651,6 +673,11 @@ function HomePage() {
           </Grid>
         </Grid>
       </Paper>
+
+      {/* Latest Blog Posts Section */}
+      <Box sx={{ my: { xs: 4, md: 6 } }}>
+        <div id="wsbn-latest-posts"></div>
+      </Box>
     </Container>
   );
 }
