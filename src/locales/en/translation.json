@@ -357,6 +357,10 @@
       "rotate": {
         "title": "PDF Rotate",
         "description": "Easily rotate PDF pages with options for single or all pages, supporting 90°, 180°, and 270° rotations"
+      },
+      "invoiceRecognition": {
+        "title": "Invoice Recognition",
+        "description": "Recognize key information from invoices, including invoice number, date, and amount"
       }
     },
     "quickGuides": {
@@ -510,6 +514,12 @@
     "downloadSelected": "Save Selected",
     "documentLoaded": "Document loaded, {{pages}} pages in total",
     "success": "Successfully extracted {{count}} images",
+    "description": "Extract all images from PDF files, with batch download support",
+    "pageTitle": "PDF Image Extraction Tool",
+    "pageSubtitle": "Quickly extract all images from PDF documents and save them in their original format. Supports JPG, PNG, and other image formats.",
+    "seoTitle": "PDF Image Extraction Tool - Extract All Images from PDF | Free Online Tool",
+    "seoDescription": "Free online PDF image extraction tool. Quickly extract all images from PDF documents and save them in their original format. Supports JPG, PNG, and other image formats.",
+    "seoKeywords": "PDF image extraction,extract PDF images,PDF extraction tool,PDF image export,PDF image separation,PDF tools,image extraction",
     "errors": {
       "invalidFile": "Please select a valid PDF file",
       "extractFailed": "Failed to extract images",
@@ -909,6 +919,10 @@
         "a1": "Yes, the tool combines all uploaded images into a single PDF file.",
         "q2": "Is there a limit on the number of images?",
         "a2": "There is no strict limit, but a large number of high-resolution images may increase processing time."
+      },
+      "invoiceRecognition": {
+        "title": "Invoice Recognition",
+        "description": "Recognize key information from invoices, including invoice number, date, and amount"
       }
     }
   },
@@ -1088,6 +1102,38 @@
       "pages": "Pages",
       "pageUnit": "pages",
       "modifiedDate": "Modified Date"
+    }
+  },
+  "invoice": {
+    "title": "Invoice Recognition Tool",
+    "description": "Please upload your PDF invoice file, and the system will automatically recognize the information and summarize it into a table. Support batch processing and export to Excel.",
+    "processing": "Processing... {{progress}}%",
+    "start": "Start Recognition",
+    "exportExcel": "Export to Excel",
+    "reset": "Reset",
+    "fileList": "File List",
+    "dragDrop": "Drag and drop PDF files here, or click to select files",
+    "multiUpload": "Support multiple file batch upload",
+    "results": "Recognition Results",
+    "noResults": "No recognition results yet",
+    "itemInfo": "Item Information",
+    "columns": {
+      "sourceFile": "Source File",
+      "invoiceCode": "Invoice Code",
+      "invoiceNumber": "Invoice Number",
+      "invoiceDate": "Invoice Date",
+      "invoiceType": "Invoice Type",
+      "buyerName": "Buyer",
+      "sellerName": "Seller",
+      "taxableAmount": "Taxable Amount",
+      "totalAmount": "Total Amount",
+      "name": "Item Name",
+      "unit": "Unit",
+      "quantity": "Quantity",
+      "unitPrice": "Unit Price",
+      "amount": "Amount",
+      "taxRate": "Tax Rate",
+      "taxAmount": "Tax Amount"
     }
   }
 } 

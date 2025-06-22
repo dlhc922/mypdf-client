@@ -67,39 +67,46 @@ function SignTools() {
     if (file && currentSignIndex !== -1) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        updateSignature(currentSignIndex, { imageUrl: e.target.result });
+        const img = new Image();
+        img.onload = () => {
+          const ratio = img.naturalHeight / img.naturalWidth || 1;
+          updateSignature(currentSignIndex, {
+            imageUrl: e.target.result,
+            aspectRatio: ratio,
+          });
+        };
+        img.src = e.target.result;
       };
       reader.readAsDataURL(file);
     }
   };
 
   const handleSignatureCreate = (imageUrl) => {
-    console.log('Received image URL:', imageUrl);
-
-    if (isCreatingNew) {
-      // 创建新签名配置
-      const newIndex = signConfigs.length;
-      const newConfigs = [
-        ...signConfigs,
-        {
-          id: Date.now(),
-          imageUrl: imageUrl,
-          size: 40,
-          position: { x: 120, y: 190 },
-          rotation: 0,
-          selectedPages: [],
-        },
-      ];
-      console.log('New signature config:', newConfigs[newConfigs.length - 1]);
-      setSignConfigs(newConfigs);
-      setCurrentSignIndex(newIndex);
-      // 同时将当前编辑对象设为签名配置
-      setCurrentEditingElement({ type: 'config', id: newIndex });
-    } else {
-      // 更新现有签名配置
-      updateSignature(currentSignIndex, { imageUrl: imageUrl });
-    }
-    setSignMakerOpen(false);
+    const img = new Image();
+    img.onload = () => {
+      const ratio = img.naturalHeight / img.naturalWidth || 1;
+      if (isCreatingNew) {
+        const newIndex = signConfigs.length;
+        setSignConfigs([
+          ...signConfigs,
+          {
+            id: Date.now(),
+            imageUrl,
+            aspectRatio: ratio,
+            size: 40,
+            position: { x: 120, y: 190 },
+            rotation: 0,
+            selectedPages: [],
+          },
+        ]);
+        setCurrentSignIndex(newIndex);
+        setCurrentEditingElement({ type: 'config', id: newIndex });
+      } else {
+        updateSignature(currentSignIndex, { imageUrl, aspectRatio: ratio });
+      }
+      setSignMakerOpen(false);
+    };
+    img.src = imageUrl;
   };
 
   // 原有的签名列表和配置区域代码保持不变

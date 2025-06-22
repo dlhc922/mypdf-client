@@ -298,7 +298,10 @@ export default function ExtractPage() {
               </Box>
             </Paper>
           </Grid>
-          <DeviceCompatibilityAlert mobileCompatible={true} toolName="PDF提取"></DeviceCompatibilityAlert>
+          <DeviceCompatibilityAlert 
+              mobileCompatible={true} 
+              toolName={t('tools.extract')}
+          />
           {/* 右侧面板 */}
           <Grid item xs={12} md={4}>
             <Paper sx={{ p: 2, height: '100%' }}>

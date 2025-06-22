@@ -227,6 +227,9 @@ export const StampProvider = ({ children }) => {
         const pageCount = pages.length;
         const partWidthPt = stampSizePt / pageCount;
 
+
+        console.log("提交时的stampConfig.straddleY:", stampConfig.straddleY);
+
         // 用户指定的骑缝章Y坐标（毫米）
         const straddleY = stampConfig.straddleY || 148.5;
         console.log(`straddleY: ${straddleY}`);
@@ -274,12 +277,12 @@ export const StampProvider = ({ children }) => {
               // 对于纵向页面
               page.drawImage(croppedImageEmbed, {
                 x: width - partWidthPt,
-                y: straddleY * MM_TO_PT,
+                y: height - (straddleY * MM_TO_PT) - stampSizePt,
                 width: partWidthPt,
                 height: stampSizePt,
                 opacity: opacity
               });
-              console.log(`为纵向第${i + 1}页添加骑缝章: X=${width - partWidthPt}, Y=${straddleY * MM_TO_PT}`);
+              console.log(`为纵向第${i + 1}页添加骑缝章: X=${width - partWidthPt}, Y=${height - (straddleY * MM_TO_PT) - stampSizePt}`);
             }
           } catch (error) {
             console.error(`处理骑缝章第${i + 1}页时出错:`, error);

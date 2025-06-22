@@ -115,7 +115,12 @@ function SignPreview() {
 
     return instances?.map(instance => {
       const baseWidth = convertMmToPx(instance.settings.size);
-      const baseHeight = baseWidth * 0.6;
+      // 动态计算实际的高宽比；若未记录则使用旧版默认 0.6
+      const aspectRatio =
+        (signature.aspectRatio ??
+         instance.settings.aspectRatio ??
+         (instance.settings.baseHeight / instance.settings.baseWidth)) || 1;
+      const baseHeight = baseWidth * aspectRatio;
 
       // 计算旋转后的边界框
       const rotatedBounds = getRotatedBounds(

@@ -97,8 +97,9 @@ export function SignProvider({ children }) {
     const currentSign = signConfigs[index];
     if (!currentSign) return;
     
-    const baseWidth = currentSign.size * (72 / 25.4);
-    const baseHeight = baseWidth * 0.6;
+    const aspectRatio = currentSign.aspectRatio || 1;
+    const baseWidth   = currentSign.size * (72 / 25.4);
+    const baseHeight  = baseWidth * aspectRatio;
     // 计算旋转后的容器尺寸
     const initialBounds = getRotatedBounds(baseWidth, baseHeight, currentSign.rotation || 0);
     
@@ -111,11 +112,11 @@ export function SignProvider({ children }) {
         size: currentSign.size,
         position: { ...currentSign.position },
         rotation: currentSign.rotation || 0,
+        aspectRatio,
         containerWidth: initialBounds.width,
         containerHeight: initialBounds.height,
-        // 记录基础签名尺寸，确保预览和生成时使用相同的参数
-        baseWidth: baseWidth,
-        baseHeight: baseHeight,
+        baseWidth,
+        baseHeight,
       }
     };
 
@@ -182,8 +183,9 @@ export function SignProvider({ children }) {
           const pageHeight = page.getHeight();
 
           // 原始签名尺寸（单位: pt）
-          const baseWidthPt = mmToPt(instance.settings.size);
-          const baseHeightPt = baseWidthPt * 0.6; // 保持签名比例
+          const aspectRatio  = instance.settings.aspectRatio || 1;
+          const baseWidthPt  = mmToPt(instance.settings.size);
+          const baseHeightPt = baseWidthPt * aspectRatio;
 
           // 使用实例中保存的容器尺寸
           const containerWidthPt = instance.settings.containerWidth || baseWidthPt;
@@ -264,8 +266,9 @@ export function SignProvider({ children }) {
         if (instance.id !== instanceId) return instance;
 
         // 计算原始签名尺寸（转换为 pt）
-        const baseWidth = instance.settings.size * (72 / 25.4);
-        const baseHeight = baseWidth * 0.6;
+        const aspectRatio = instance.settings.aspectRatio || 1;
+        const baseWidth   = instance.settings.size * (72 / 25.4);
+        const baseHeight  = baseWidth * aspectRatio;
 
         const oldRotation = instance.settings.rotation;
         // 旧角度下容器边界框

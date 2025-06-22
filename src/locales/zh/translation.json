@@ -355,6 +355,10 @@
       "rotate": {
         "title": "PDF 旋转",
         "description": "轻松旋转 PDF 页面方向，支持单页或全页旋转，提供 90°、180°、270° 旋转选项"
+      },
+      "invoiceRecognition": {
+        "title": "发票识别",
+        "description": "识别发票中的关键信息，包括发票号码、发票日期、发票金额等"
       }
     },
     "quickGuides": {
@@ -1016,6 +1020,38 @@
       "pages": "页数",
       "pageUnit": "页",
       "modifiedDate": "修改时间"
+    }
+  },
+  "invoice": {
+    "title": "发票识别工具",
+    "description": "请上传您的 PDF 发票文件，系统将自动识别信息并汇总到表格中，支持批量处理并可导出为 Excel。",
+    "processing": "处理中... {{progress}}%",
+    "start": "开始识别",
+    "exportExcel": "导出为 Excel",
+    "reset": "清空重置",
+    "fileList": "文件列表",
+    "dragDrop": "拖拽 PDF 文件到此处，或点击选择文件",
+    "multiUpload": "支持多文件批量上传",
+    "results": "识别结果",
+    "noResults": "暂无识别结果",
+    "itemInfo": "商品信息",
+    "columns": {
+      "sourceFile": "来源文件",
+      "invoiceCode": "发票代码",
+      "invoiceNumber": "发票号码",
+      "invoiceDate": "开票日期",
+      "invoiceType": "发票类型",
+      "buyerName": "购买方",
+      "sellerName": "销售方",
+      "taxableAmount": "不含税金额",
+      "totalAmount": "价税合计",
+      "name": "商品名称",
+      "unit": "单位",
+      "quantity": "数量",
+      "unitPrice": "单价",
+      "amount": "金额",
+      "taxRate": "税率",
+      "taxAmount": "税额"
     }
   }
 }

@@ -15,6 +15,7 @@ import {
   Analytics,
   CompareArrows,
   RotateRight,
+  ReceiptLong,
 } from '@mui/icons-material';
 
 export const featureCategories = [
@@ -187,6 +188,16 @@ export const features = [
     descriptionKey: 'home.features.pdfCompare.description',
     icon: <CompareArrows sx={{ fontSize: 40 }} />,
     path: '/pdf-compare',
+    processingType: 'local',
+    category: 'analyze',
+    showInHeader: true,
+  },
+  {
+    id: 'invoiceRecognition',
+    titleKey: 'home.features.invoiceRecognition.title',
+    descriptionKey: 'home.features.invoiceRecognition.description',
+    icon: <ReceiptLong sx={{ fontSize: 40 }} />,
+    path: '/invoice-recognition',
     processingType: 'local',
     category: 'analyze',
     showInHeader: true,

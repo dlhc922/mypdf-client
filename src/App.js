@@ -27,6 +27,7 @@ import PdfToImagePage from './pages/pdfToImage/PdfToImagePage';
 import RotatePage from './pages/rotate/RotatePage';
 import MarkdownPage from './pages/markdown/MarkdownPage';
 import { HelmetProvider } from 'react-helmet-async';
+import InvoiceRecognitionPage from './pages/invoice/InvoiceRecognitionPage';
 
 
 
@@ -94,6 +95,7 @@ function App() {
                   <Route path="/pdf-to-image" element={<PdfToImagePage />} />
                   <Route path="/rotate" element={<RotatePage />} />
                   <Route path="/document-to-markdown" element={<MarkdownPage />} />
+                  <Route path="/invoice-recognition" element={<InvoiceRecognitionPage />} />
                 </Routes>
               </Layout>
             </BrowserRouter>
