@@ -16,6 +16,7 @@ import {
   CompareArrows,
   RotateRight,
   ReceiptLong,
+  EditNote,
 } from '@mui/icons-material';
 
 export const featureCategories = [
@@ -59,6 +60,16 @@ export const featureCategories = [
 
 export const features = [
   // PDF编辑类
+  {
+    id: 'edit-pages',
+    titleKey: 'home.features.editPages.title',
+    descriptionKey: 'home.features.editPages.description',
+    icon: <EditNote sx={{ fontSize: 40 }} />,
+    path: '/edit-pages',
+    processingType: 'local',
+    category: 'edit',
+    showInHeader: true,
+  },
   {
     id: 'rotate',
     titleKey: 'home.features.rotate.title',

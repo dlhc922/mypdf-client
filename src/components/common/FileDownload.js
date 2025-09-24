@@ -38,7 +38,7 @@ function FileDownload({
   // 生成带时间戳的文件名
   const downloadFileName = useMemo(() => {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const baseName = fileName.replace(/\.pdf$/, '');
+    const baseName = fileName ? fileName.replace(/\.pdf$/, '') : 'document';
     return `${baseName}-${timestamp}.pdf`;
   }, [fileName]);
 
@@ -160,6 +160,21 @@ function FileDownload({
             
             <Typography variant="body2" color="text.secondary">
               {t('fileDownload.fileName', { fileName: downloadFileName })}
+            </Typography>
+          </Box>
+        )}
+
+        {!fileUrl && !loading && !error && (
+          <Box sx={{ 
+            py: 3,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 2,
+            textAlign: 'center'
+          }}>
+            <Typography variant="body1" color="text.secondary">
+              {t('fileDownload.noFile')}
             </Typography>
           </Box>
         )}

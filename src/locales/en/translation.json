@@ -163,7 +163,8 @@
     "successMessage": "Processing complete",
     "fileName": "File Name: {{fileName}}",
     "close": "Close",
-    "downloadFile": "Save File"
+    "downloadFile": "Save File",
+    "noFile": "No file available for download"
   },
   "pdfToWord": {
     "pageTitle": "PDF to Word Converter",
@@ -361,6 +362,10 @@
       "invoiceRecognition": {
         "title": "Invoice Recognition",
         "description": "Recognize key information from invoices, including invoice number, date, and amount"
+      },
+      "editPages": {
+        "title": "PDF Page Editor",
+        "description": "Delete, reorder, replace PDF pages with drag & drop"
       }
     },
     "quickGuides": {
@@ -1135,5 +1140,41 @@
       "taxRate": "Tax Rate",
       "taxAmount": "Tax Amount"
     }
+  },
+  "editPages": {
+    "title": "PDF Page Editor",
+    "subtitle": "Delete, reorder, replace PDF pages",
+    "selectFile": "Select PDF File",
+    "noFileSelected": "Please select a PDF file first",
+    "loadingDocument": "Loading document...",
+    "pageCount": "{{count}} pages total",
+    "selectedCount": "{{count}} pages selected",
+    "deleteSelected": "Delete Selected Pages",
+    "selectAll": "Select All",
+    "clearSelection": "Clear Selection",
+    "replacePage": "Replace Page",
+    "replace": "Replace",
+    "replaceWith": "Replace with",
+    "dragToReorder": "Drag to reorder",
+    "dragToMove": "Drag to move page",
+    "confirmDelete": "Confirm Delete",
+    "deleteConfirmMessage": "Are you sure you want to delete {{count}} selected pages? This action cannot be undone.",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "downloadEdited": "Download Edited PDF",
+    "processing": "Processing...",
+    "success": "Operation successful",
+    "error": "Operation failed",
+    "replacePageTitle": "Replace Page {{page}}",
+    "selectReplacement": "Select Replacement File",
+    "supportedFormats": "Supports PDF or image files",
+    "replaceSuccess": "Page replaced successfully",
+    "replacedWithPdf": "Replaced with PDF page",
+    "noEditedFile": "Please edit the PDF first",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "resetZoom": "Reset Zoom",
+    "fitWidth": "Fit Width",
+    "actualSize": "Actual Size"
   }
 } 

@@ -28,7 +28,7 @@ import RotatePage from './pages/rotate/RotatePage';
 import MarkdownPage from './pages/markdown/MarkdownPage';
 import { HelmetProvider } from 'react-helmet-async';
 import InvoiceRecognitionPage from './pages/invoice/InvoiceRecognitionPage';
-
+import EditPagesPage from './pages/edit-pages/EditPagesPage';
 
 
 function App() {
@@ -96,6 +96,7 @@ function App() {
                   <Route path="/rotate" element={<RotatePage />} />
                   <Route path="/document-to-markdown" element={<MarkdownPage />} />
                   <Route path="/invoice-recognition" element={<InvoiceRecognitionPage />} />
+                  <Route path="/edit-pages" element={<EditPagesPage />} />
                 </Routes>
               </Layout>
             </BrowserRouter>

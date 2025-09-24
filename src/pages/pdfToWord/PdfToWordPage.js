@@ -55,8 +55,13 @@ function PdfToWordPage() {
   const [converting, setConverting] = useState(false);
   const [error, setError] = useState(null);
   const [resultUrl, setResultUrl] = useState(null);
-  const [progress, setProgress] = useState(0);
-  
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [conversionStatus, setConversionStatus] = useState('');
+  // 新增状态用于轮询机制
+  const [taskId, setTaskId] = useState(null);
+  const [pollingInterval, setPollingInterval] = useState(null);
+  const [pollingTimeout, setPollingTimeout] = useState(null);
+
   const pdfContainerRef = useRef(null);
   const fileInputRef = useRef(null);
 
@@ -87,8 +92,16 @@ function PdfToWordPage() {
       if (resultUrl) {
         URL.revokeObjectURL(resultUrl);
       }
+      // 清理轮询定时器
+      if (pollingInterval) {
+        clearInterval(pollingInterval);
+      }
+      // 清理超时定时器
+      if (pollingTimeout) {
+        clearTimeout(pollingTimeout);
+      }
     };
-  }, [fileUrl, resultUrl]);
+  }, [fileUrl, resultUrl, pollingInterval, pollingTimeout]);
 
   // 处理文件选择
   const handleFileChange = (selectedFile) => {
@@ -172,6 +185,17 @@ function PdfToWordPage() {
 
   // 重置整个流程
   const handleReset = () => {
+    // 清理轮询定时器
+    if (pollingInterval) {
+      clearInterval(pollingInterval);
+      setPollingInterval(null);
+    }
+    // 清理超时定时器
+    if (pollingTimeout) {
+      clearTimeout(pollingTimeout);
+      setPollingTimeout(null);
+    }
+    
     setActiveStep(0);
     setFile(null);
     if (fileUrl) {
@@ -186,17 +210,136 @@ function PdfToWordPage() {
     setNumPages(null);
     setZoom(1.0);
     setError(null);
-    setProgress(0);
+    setUploadProgress(0);
+    setConversionStatus('');
+    setTaskId(null);
   };
 
-  // 转换PDF到Word - 使用 axios
+  // 取消转换
+  const handleCancelConversion = () => {
+    // 清理轮询定时器
+    if (pollingInterval) {
+      clearInterval(pollingInterval);
+      setPollingInterval(null);
+    }
+    // 清理超时定时器
+    if (pollingTimeout) {
+      clearTimeout(pollingTimeout);
+      setPollingTimeout(null);
+    }
+    
+    setConverting(false);
+    setUploadProgress(0);
+    setConversionStatus('');
+    setTaskId(null);
+    setError(null);
+    
+    console.log('用户取消了转换');
+  };
+
+  // 检查转换状态的函数 - 简化版本
+  const pollStatus = async (fileId) => {
+    const maxAttempts = 60; // 最多等待2分钟
+    let attempts = 0;
+    
+    const poll = async () => {
+      while (attempts < maxAttempts) {
+        attempts++;
+        console.log(`尝试查询状态，第 ${attempts} 次尝试，任务ID: ${fileId}`);
+        
+        try {
+          const response = await axios.get(
+            `${process.env.REACT_APP_API_URL}/api/word/status/${fileId}`,
+            {
+              withCredentials: true,
+              timeout: 10000 // 10秒超时
+            }
+          );
+          
+          console.log('转换状态完整响应:', JSON.stringify(response.data, null, 2));
+          
+          // 根据服务器端建议处理状态
+          switch (response.data.status) {
+            case 'completed':
+              // 转换完成
+              console.log('转换状态为 completed');
+              let finalDownloadUrl = response.data.downloadUrl;
+              if (finalDownloadUrl) {
+                if (finalDownloadUrl.startsWith('/')) {
+                  finalDownloadUrl = `${process.env.REACT_APP_API_URL}${finalDownloadUrl}`;
+                } else if (!finalDownloadUrl.startsWith('http')) {
+                  finalDownloadUrl = `${process.env.REACT_APP_API_URL}/${finalDownloadUrl}`;
+                }
+                setResultUrl(finalDownloadUrl);
+                setConversionStatus('转换完成！');
+                setActiveStep(2);
+                setConverting(false);
+                console.log('转换完成，下载链接:', finalDownloadUrl);
+              } else {
+                console.log('转换完成，但未获取到下载链接');
+                setError('转换完成，但未获取到下载链接');
+                setConverting(false);
+              }
+              return true;
+              
+            case 'failed':
+              // 转换失败
+              console.log('转换状态为 failed');
+              setError(response.data.message || '转换失败');
+              setConverting(false);
+              return true;
+              
+            case 'converting':
+            case 'queued':
+              // 显示不确定进度条 + 状态消息
+              console.log(`转换状态为 ${response.data.status}，等待2秒后继续轮询`);
+              setConversionStatus(response.data.message || '正在转换中...');
+              await new Promise(resolve => setTimeout(resolve, 2000)); // 等待2秒
+              break;
+              
+            default:
+              // 未知状态，继续轮询
+              console.log(`未知状态: ${response.data.status}，等待2秒后继续轮询`);
+              setConversionStatus('正在转换中...');
+              await new Promise(resolve => setTimeout(resolve, 2000)); // 等待2秒
+              break;
+          }
+        } catch (error) {
+          console.error('状态查询出错:', error);
+          if (attempts < maxAttempts) {
+            console.log(`状态查询失败，等待2秒后进行第 ${attempts + 1} 次尝试`);
+            setConversionStatus('网络连接中...');
+            await new Promise(resolve => setTimeout(resolve, 2000)); // 等待2秒
+          } else {
+            console.log('达到最大尝试次数，网络错误');
+            setError('网络错误，请检查连接');
+            setConverting(false);
+            return true;
+          }
+        }
+      }
+      
+      // 达到最大尝试次数
+      console.log('达到最大尝试次数，转换超时');
+      setError('转换超时，请重试');
+      setConverting(false);
+      return true;
+    };
+    
+    // 开始轮询
+    console.log('开始状态轮询，任务ID:', fileId);
+    return await poll();
+  };
+
+  // 转换PDF到Word - 使用轮询机制避免超时
   const convertPdfToWord = async () => {
     if (!file) return;
     
     try {
       setConverting(true);
       setError(null);
-      setProgress(0);
+      setUploadProgress(0);
+      setConversionStatus('准备转换...');
       
       const formData = new FormData();
       formData.append('pdf', file);  // 使用服务器期望的字段名 'pdf'
@@ -215,20 +358,25 @@ function PdfToWordPage() {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
+          timeout: 30000, // 30秒上传超时
           onUploadProgress: (progressEvent) => {
             const percentCompleted = Math.round(
               (progressEvent.loaded * 100) / progressEvent.total
             );
             console.log('上传进度:', percentCompleted + '%');
-            setProgress(percentCompleted);
+            setUploadProgress(percentCompleted);
           }
         }
       );
 
       console.log('服务器响应:', response.data);
 
-      // 检查不同格式的下载链接字段
+      // 检查响应格式，支持两种模式：
+      // 1. 直接返回下载链接（小文件，快速处理）
+      // 2. 返回任务ID（大文件，需要轮询）
+      
       let downloadUrl = null;
+      let receivedTaskId = null;
       
       if (response.data.downloadUrl) {
         downloadUrl = response.data.downloadUrl;
@@ -241,9 +389,18 @@ function PdfToWordPage() {
         downloadUrl = response.data;
       }
       
-      // 确保下载链接是完整的URL
+      // 检查是否有任务ID
+      if (response.data.fileId) {
+        receivedTaskId = response.data.fileId;
+      } else if (response.data.taskId) {
+        receivedTaskId = response.data.taskId;
+      } else if (response.data.id) {
+        receivedTaskId = response.data.id;
+      }
+      
+      // 如果有直接下载链接，立即处理
       if (downloadUrl) {
-        // 如果是相对路径，添加服务器基础URL
+        // 确保下载链接是完整的URL
         if (downloadUrl.startsWith('/')) {
           downloadUrl = `${process.env.REACT_APP_API_URL}${downloadUrl}`;
         } else if (!downloadUrl.startsWith('http')) {
@@ -251,24 +408,53 @@ function PdfToWordPage() {
         }
         
         setResultUrl(downloadUrl);
-        setProgress(100);
+        setUploadProgress(100);
+        setConversionStatus('转换完成！');
         setActiveStep(2);
-        console.log('最终下载链接:', downloadUrl);
-      } else {
-        throw new Error('未获取到下载链接');
+        setConverting(false);
+        console.log('快速转换完成，下载链接:', downloadUrl);
+        return;
       }
+      
+      // 如果有任务ID，开始轮询
+      if (receivedTaskId) {
+        setTaskId(receivedTaskId);
+        console.log('开始轮询任务状态，任务ID:', receivedTaskId);
+        
+        await pollStatus(receivedTaskId);
+        return;
+      }
+      
+      // 如果既没有下载链接也没有任务ID，抛出错误
+      throw new Error('服务器响应格式异常，未获取到下载链接或任务ID');
 
     } catch (err) {
-      console.error("转换失败:", {
+      console.error('转换失败:', {
         message: err.message,
         response: err.response?.data,
         status: err.response?.status
       });
       
       let errorMessage = err.response?.data?.message || err.message || '转换失败';
+      
+      // 特殊处理超时错误
+      if (err.code === 'ECONNABORTED' || err.message.includes('timeout')) {
+        errorMessage = '请求超时，请检查网络连接或稍后重试';
+      }
+      
       setError(errorMessage);
-    } finally {
       setConverting(false);
+      
+      // 清理轮询定时器
+      if (pollingInterval) {
+        clearInterval(pollingInterval);
+        setPollingInterval(null);
+      }
+      // 清理超时定时器
+      if (pollingTimeout) {
+        clearTimeout(pollingTimeout);
+        setPollingTimeout(null);
+      }
     }
   };
 
@@ -664,37 +850,66 @@ function PdfToWordPage() {
       {activeStep !== 2 && (
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
           <Button
-            variant="outlined"
+            variant='outlined'
             onClick={activeStep === 0 ? undefined : handleBack}
             sx={{ visibility: activeStep === 0 ? 'hidden' : 'visible' }}
+            disabled={converting}
           >
             {t('common.back', '返回')}
           </Button>
           
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={activeStep === 0 ? (file ? handleNext : undefined) : convertPdfToWord}
-            disabled={(activeStep === 0 && !file) || converting}
-            endIcon={converting ? undefined : <ArrowForward />}
-          >
-            {converting ? t('pdfToWord.converting', '转换中...') : 
-            activeStep === 0 ? t('pdfToWord.next', '继续') : t('pdfToWord.convert', '立即转换')}
-          </Button>
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            {converting && (
+              <Button
+                variant='outlined'
+                color='error'
+                onClick={handleCancelConversion}
+              >
+                {t('common.cancel', '取消')}
+              </Button>
+            )}
+            
+            {!converting && (
+              <Button
+                variant='contained'
+                color='primary'
+                onClick={activeStep === 0 ? (file ? handleNext : undefined) : convertPdfToWord}
+                disabled={(activeStep === 0 && !file) || converting}
+                endIcon={converting ? undefined : <ArrowForward />}
+              >
+                {converting ? t('pdfToWord.converting', '转换中...') : 
+                activeStep === 0 ? t('pdfToWord.next', '继续') : t('pdfToWord.convert', '立即转换')}
+              </Button>
+            )}
+          </Box>
         </Box>
       )}
 
       {/* 转换进度指示器 */}
       {converting && (
         <Box sx={{ width: '100%', mb: 2 }}>
-          <LinearProgress 
-            variant="determinate" 
-            value={progress} 
-            sx={{ height: 10, borderRadius: 5 }}
-          />
-          <Typography variant="body2" align="center" sx={{ mt: 1 }}>
-            {Math.round(progress)}% {t('pdfToWord.processing', '处理中...')}
-          </Typography>
+          {uploadProgress < 100 ? (
+            <>
+              <LinearProgress 
+                variant='determinate'
+                value={uploadProgress} 
+                sx={{ height: 10, borderRadius: 5, mb: 1 }}
+              />
+              <Typography variant='body2' align='center'>
+                {Math.round(uploadProgress)}% {t('pdfToWord.uploading', '上传中...')}
+              </Typography>
+            </>
+          ) : (
+            <>
+              <LinearProgress 
+                variant='indeterminate'
+                sx={{ height: 10, borderRadius: 5, mb: 1 }}
+              />
+              <Typography variant='body2' align='center'>
+                {conversionStatus || t('pdfToWord.converting', '转换中...')}
+              </Typography>
+            </>
+          )}
         </Box>
       )}
 

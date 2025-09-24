@@ -143,32 +143,25 @@ export function useImageToPdf() {
   }, []);
 
   // 处理拖拽结束事件
-  const handleDragEnd = useCallback((result) => {
-    console.log('Drag end result:', result);
+  const handleImageReorder = useCallback((event) => {
+    const { active, over } = event;
 
-    // 如果没有目标位置，则不执行任何操作
-    if (!result.destination) return;
+    if (over && active.id !== over.id) {
+      setImages((items) => {
+        const oldIndex = items.findIndex((item) => item.id === active.id);
+        const newIndex = items.findIndex((item) => item.id === over.id);
+        
+        if (oldIndex === -1 || newIndex === -1) {
+          return items;
+        }
 
-    // 源位置索引和目标位置索引
-    const sourceIndex = result.source.index;
-    const destinationIndex = result.destination.index;
+        const newItems = Array.from(items);
+        const [movedItem] = newItems.splice(oldIndex, 1);
+        newItems.splice(newIndex, 0, movedItem);
 
-    // 如果源位置和目标位置相同，则不执行任何操作
-    if (sourceIndex === destinationIndex) return;
-
-    console.log(`Reordering image from index ${sourceIndex} to index ${destinationIndex}`);
-
-    // 使用函数式更新，创建一个新的数组，而不是修改现有数组
-    setImages(prevImages => {
-      const newImages = Array.from(prevImages);
-      // 移除拖动的项
-      const [movedItem] = newImages.splice(sourceIndex, 1);
-      // 在新位置插入
-      newImages.splice(destinationIndex, 0, movedItem);
-
-      console.log('Images reordered successfully');
-      return newImages;
+        return newItems;
     });
+    }
   }, []);
 
   // 处理PDF质量变更
@@ -761,9 +754,9 @@ export function useImageToPdf() {
     handleImageUpload,
     handleRemoveImage,
     handleRemoveAllImages,
-    handleDragEnd,
-    handleGeneratePdf,
+    handleImageReorder,
     handlePdfQualityChange,
+    handleGeneratePdf,
     handlePreviewPdf,
     handleClosePreview,
     cleanup

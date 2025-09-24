@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 
 export default function Footer() {
   const { t } = useTranslation();
-  
+
   // 使用一个变量来存储联系我们的文本，这样更容易调试
   const contactText = t('footer.contact', '联系我们');
-  
+
   return (
     <Box
       component="footer"
@@ -36,10 +36,10 @@ export default function Footer() {
           gap: 1
         }}
       >
-        <Stack 
-          direction="row" 
-          spacing={2} 
-          sx={{ 
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{
             fontFamily: 'monospace',
             letterSpacing: '0.5px'
           }}
@@ -50,12 +50,22 @@ export default function Footer() {
           <Typography variant="body2" color="text.secondary">
             <Link href="/faq">{t('faq.pageTitle', '常见问题')}</Link>
           </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <Link
+              href="https://www.wsbn.tech/blog"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              PDF知识分享中心
+            </Link>
+          </Typography>
+
         </Stack>
-        
-        <Typography 
-          variant="body2" 
+
+        <Typography
+          variant="body2"
           color="text.secondary"
-          sx={{ 
+          sx={{
             fontFamily: 'monospace',
             letterSpacing: '0.5px',
             display: 'flex',
@@ -64,8 +74,8 @@ export default function Footer() {
           }}
         >
           {t('footer.poweredBy', '技术支持')}{' '}
-          <Link 
-            href="https://wsbn.tech" 
+          <Link
+            href="https://wsbn.tech"
             target="_blank"
             rel="noopener noreferrer"
             sx={{
@@ -79,11 +89,11 @@ export default function Footer() {
             WSBN.tech
           </Link>
         </Typography>
-        
-        <Stack 
-          direction="row" 
-          spacing={2} 
-          sx={{ 
+
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{
             fontFamily: 'monospace',
             letterSpacing: '0.5px'
           }}
@@ -99,7 +109,7 @@ export default function Footer() {
             <Link href="/disclaimer">{t('footer.disclaimer', '免责声明')}</Link>
           </Typography>
         </Stack>
-        
+
         <Typography variant="body2" color="text.secondary" sx={{ fontFamily: 'monospace', letterSpacing: '0.5px' }}>
           <Link href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
             辽ICP备2025052615号

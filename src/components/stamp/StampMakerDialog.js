@@ -67,12 +67,16 @@ function StampMakerDialog({ open, onClose, onStampMade }) {
       const ctx = canvas.getContext('2d');
 
       if (crop) {
-        // 修正：使用原始图片尺寸计算实际裁剪区域
+        // 使用高分辨率处理
         const scaleX = imageRef.current.naturalWidth / imageRef.current.width;
         const scaleY = imageRef.current.naturalHeight / imageRef.current.height;
 
         canvas.width = crop.width * scaleX;
         canvas.height = crop.height * scaleY;
+
+        // 启用高质量渲染
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
 
         ctx.drawImage(
           imageRef.current,
@@ -88,21 +92,38 @@ function StampMakerDialog({ open, onClose, onStampMade }) {
       } else {
         canvas.width = imageRef.current.naturalWidth;
         canvas.height = imageRef.current.naturalHeight;
+        
+        // 启用高质量渲染
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        
         ctx.drawImage(imageRef.current, 0, 0);
       }
 
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imageData.data;
 
+      // 改进的阈值处理算法
       for (let i = 0; i < data.length; i += 4) {
-        const brightness = (data[i] + data[i + 1] + data[i + 2]) / 3;
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        const alpha = data[i + 3];
+
+        // 使用加权平均计算亮度，更符合人眼感知
+        const brightness = (r * 0.299 + g * 0.587 + b * 0.114);
+        
         if (brightness > threshold) {
-          data[i + 3] = 0;
+          data[i + 3] = 0; // 完全透明
+        } else {
+          // 保持原始颜色，但确保不透明
+          data[i + 3] = 255;
         }
       }
 
       ctx.putImageData(imageData, 0, 0);
-      const processedImageUrl = canvas.toDataURL('image/png');
+      // 使用最高质量PNG格式
+      const processedImageUrl = canvas.toDataURL('image/png', 1.0);
       setPreviewUrl(processedImageUrl);
     } catch (error) {
       console.error('Image processing failed:', error);

@@ -17,7 +17,11 @@ import {
   DialogActions,
   Tooltip,
   Checkbox,
-  CircularProgress
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
 } from '@mui/material';
 import { 
   AddPhotoAlternate,
@@ -430,6 +434,8 @@ function StampTools() {
             >
               {loading ? t('stamp.processing') : t('stamp.addStamp')}
             </Button>
+
+            {/* 删除图像质量设置部分 */}
           </Stack>
         ) : (
           <Typography color="text.secondary">

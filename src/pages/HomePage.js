@@ -1,23 +1,23 @@
 import React, { useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { 
-  Box, 
-  Container, 
-  Grid, 
-  Card, 
-  CardContent, 
-  Typography, 
-  Button, 
+import {
+  Box,
+  Container,
+  Grid,
+  Card,
+  CardContent,
+  Typography,
+  Button,
   Paper,
   Divider,
   useTheme,
   useMediaQuery,
   Chip
 } from '@mui/material';
-import { 
-  Link 
+import {
+  Link
 } from 'react-router-dom';
-import { 
+import {
   ArrowForward,
   Security as SecurityIcon,
   MenuBook as GuideIcon,
@@ -40,19 +40,42 @@ function HomePage() {
 
   // 当语言变化时强制重新渲染组件
   const [forceUpdate, setForceUpdate] = React.useState(0);
-  
+
   // 监听语言变化
   useEffect(() => {
     const handleLanguageChanged = () => {
       setForceUpdate(prev => prev + 1);
     };
-    
+
     i18n.on('languageChanged', handleLanguageChanged);
-    
+
     return () => {
       i18n.off('languageChanged', handleLanguageChanged);
     };
   }, [i18n]);
+
+  // 正确插入 script
+  useEffect(() => {
+    // 动态插入 script
+    if (!document.getElementById('wsbn-latest-posts-script')) {
+      const script = document.createElement('script');
+      script.src = 'https://www.wsbn.tech/blog/embed/latest-posts.js';
+      script.id = 'wsbn-latest-posts-script';
+      script.async = true;
+      script.onload = () => {
+        // 脚本加载完成后，手动触发渲染
+        if (window.WSBNLatestPosts) {
+          window.WSBNLatestPosts.load('wsbn-latest-posts', { limit: 3 });
+        }
+      };
+      document.body.appendChild(script);
+    } else {
+      // 如果脚本已存在，直接触发渲染
+      if (window.WSBNLatestPosts) {
+        window.WSBNLatestPosts.load('wsbn-latest-posts', { limit: 3 });
+      }
+    }
+  }, []);
 
   // Use imported feature categories and features, applying translation
   const featureCategories = useMemo(() => importedFeatureCategories.map(category => ({
@@ -122,7 +145,7 @@ function HomePage() {
         <meta property="og:description" content={t('meta.ogDescription')} />
         <meta property="og:image" content={t('meta.ogImage')} />
         <meta name="keywords" content={t('meta.keywords')} />
-        
+
         {/* 添加结构化数据 */}
         <script type="application/ld+json">
           {`
@@ -141,18 +164,17 @@ function HomePage() {
             }
           `}
         </script>
-        
-        {/* 引入最新博客文章脚本 */}
-        <script src="https://www.wsbn.tech/blog/embed/latest-posts.js"></script>
+
+
       </Helmet>
-      
+
       {/* Logo 和导航链接定位于左上角 */}
       <Box sx={{ position: 'absolute', top: 16, left: 16, display: 'flex', alignItems: 'center', gap: 3 }}>
         <Typography
           variant="h6"
           component={Link}
           to="/"
-          sx={{ 
+          sx={{
             color: 'primary.main',
             textDecoration: 'none',
             fontWeight: 'bold'
@@ -166,7 +188,7 @@ function HomePage() {
           href="https://www.wsbn.tech/blog"
           target="_blank"
           rel="noopener noreferrer"
-          sx={{ 
+          sx={{
             color: 'text.primary',
             textDecoration: 'none',
             fontWeight: 'medium',
@@ -185,15 +207,15 @@ function HomePage() {
       <Box sx={{ position: 'absolute', top: 16, right: 16 }}>
         <LanguageShareControls />
       </Box>
-      
+
       {/* 添加一个顶部空间，确保标题不会与顶部元素重叠 */}
       <Box sx={{ height: { xs: 60, md: 20 } }} />
-      
-      <Typography 
-        variant="h4" 
-        align="center" 
-        component="h1" 
-        sx={{ 
+
+      <Typography
+        variant="h4"
+        align="center"
+        component="h1"
+        sx={{
           color: 'primary.main',
           textDecoration: 'none',
           fontWeight: 'bold',
@@ -204,10 +226,10 @@ function HomePage() {
         {t('home.appTitle')}
       </Typography>
 
-      <Typography 
-        variant="subtitle1" 
-        align="center" 
-        sx={{ 
+      <Typography
+        variant="subtitle1"
+        align="center"
+        sx={{
           mb: { xs: 2, md: 3 },
           color: 'text.secondary',
           display: 'flex',
@@ -216,22 +238,22 @@ function HomePage() {
           px: 2
         }}
       >
-        <Box 
-          component="span" 
-          sx={{ 
+        <Box
+          component="span"
+          sx={{
             py: 0.5,
             fontSize: { xs: '0.875rem', md: '0.95rem' },
             opacity: 0.85,
           }}
         >
-        
+
         </Box>
       </Typography>
 
       {/* 处理方式简要说明 - 与功能卡片样式一致 */}
-      <Box sx={{ 
-        mb: { xs: 3, md: 4 }, 
-        display: 'flex', 
+      <Box sx={{
+        mb: { xs: 3, md: 4 },
+        display: 'flex',
         flexDirection: { xs: 'column', md: 'row' },
         justifyContent: 'center',
         width: '100%',
@@ -239,14 +261,14 @@ function HomePage() {
         mx: 'auto',
         gap: 2
       }}>
-        <Box sx={{ 
+        <Box sx={{
           display: 'flex',
-          alignItems: 'center', 
+          alignItems: 'center',
           justifyContent: 'center',
           gap: 1.5,
           width: '100%',
         }}>
-          <Box sx={{ 
+          <Box sx={{
             display: 'flex',
             alignItems: 'center',
             borderRadius: '12px',
@@ -264,15 +286,15 @@ function HomePage() {
             {t('home.processingInfo.localShort', '文件仅在您的浏览器中处理，确保数据隐私与安全')}
           </Typography>
         </Box>
-        
-        <Box sx={{ 
+
+        <Box sx={{
           display: 'flex',
-          alignItems: 'center', 
+          alignItems: 'center',
           justifyContent: 'center',
           gap: 1.5,
           width: '100%',
         }}>
-          <Box sx={{ 
+          <Box sx={{
             display: 'flex',
             alignItems: 'center',
             borderRadius: '12px',
@@ -296,13 +318,13 @@ function HomePage() {
       {featureCategories.map((category) => (
         <Box key={category.id} sx={{ mb: 6 }}>
           {/* 分类标题和描述 */}
-          <Box sx={{ 
-            display: 'flex', 
-            alignItems: 'center', 
+          <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
             mb: 2,
             px: 2
           }}>
-            <Box sx={{ 
+            <Box sx={{
               color: `${category.color}.main`,
               mr: 1.5,
               display: 'flex',
@@ -311,18 +333,18 @@ function HomePage() {
               {category.icon}
             </Box>
             <Box>
-              <Typography 
-                variant="h5" 
+              <Typography
+                variant="h5"
                 component="h2"
-                sx={{ 
+                sx={{
                   fontWeight: 'bold',
                   fontSize: { xs: '1.25rem', md: '1.5rem' }
                 }}
               >
                 {category.title}
               </Typography>
-              <Typography 
-                variant="body2" 
+              <Typography
+                variant="body2"
                 color="text.secondary"
                 sx={{ mt: 0.5 }}
               >
@@ -336,16 +358,16 @@ function HomePage() {
             {features
               .filter(feature => feature.category === category.id)
               .map((feature) => (
-                <Grid 
-                  item 
+                <Grid
+                  item
                   xs={12}
                   sm={6}
                   md={4}
                   lg={3}
                   key={feature.path}
                 >
-                  <Card 
-                    sx={{ 
+                  <Card
+                    sx={{
                       height: '100%',
                       display: 'flex',
                       flexDirection: 'column',
@@ -368,11 +390,11 @@ function HomePage() {
                         py: 0.25,
                         fontSize: '0.7rem',
                         fontWeight: 'medium',
-                        backgroundColor: feature.processingType === 'local' 
-                          ? 'success.light' 
+                        backgroundColor: feature.processingType === 'local'
+                          ? 'success.light'
                           : 'warning.light',
-                        color: feature.processingType === 'local' 
-                          ? 'success.contrastText' 
+                        color: feature.processingType === 'local'
+                          ? 'success.contrastText'
                           : 'warning.contrastText',
                         display: 'flex',
                         alignItems: 'center',
@@ -380,47 +402,47 @@ function HomePage() {
                         zIndex: 1
                       }}
                     >
-                      <Box 
-                        component="span" 
-                        sx={{ 
-                          width: 8, 
-                          height: 8, 
-                          borderRadius: '50%', 
-                          bgcolor: feature.processingType === 'local' 
-                            ? 'success.main' 
-                            : 'warning.main' 
-                        }} 
+                      <Box
+                        component="span"
+                        sx={{
+                          width: 8,
+                          height: 8,
+                          borderRadius: '50%',
+                          bgcolor: feature.processingType === 'local'
+                            ? 'success.main'
+                            : 'warning.main'
+                        }}
                       />
                       {t(`home.processingType.${feature.processingType}`)}
                     </Box>
 
-                    <CardContent sx={{ 
-                      flexGrow: 1, 
+                    <CardContent sx={{
+                      flexGrow: 1,
                       textAlign: 'center',
                       p: { xs: 2, md: 3 }
                     }}>
-                      <Box sx={{ 
-                        color: `${featureCategories.find(c => c.id === feature.category)?.color}.main`, 
-                        mb: 1 
+                      <Box sx={{
+                        color: `${featureCategories.find(c => c.id === feature.category)?.color}.main`,
+                        mb: 1
                       }}>
                         {feature.icon}
                       </Box>
-                      <Typography 
-                        gutterBottom 
-                        variant="h6" 
+                      <Typography
+                        gutterBottom
+                        variant="h6"
                         component="h2"
-                        sx={{ 
+                        sx={{
                           fontSize: { xs: '1rem', md: '1.25rem' },
                           mb: { xs: 0.5, md: 1 }
                         }}
                       >
                         {feature.title}
                       </Typography>
-                      <Typography 
-                        color="text.secondary" 
-                        paragraph 
+                      <Typography
+                        color="text.secondary"
+                        paragraph
                         variant="body2"
-                        sx={{ 
+                        sx={{
                           mb: 1.5,
                           display: { xs: 'none', sm: 'block' }
                         }}
@@ -449,10 +471,10 @@ function HomePage() {
       <Grid container spacing={3} sx={{ mt: { xs: 3, md: 6 } }}>
         {/* 使用指南部分 */}
         <Grid item xs={12} md={6}>
-          <Paper 
-            elevation={1} 
-            sx={{ 
-              p: { xs: 2, md: 3 }, 
+          <Paper
+            elevation={1}
+            sx={{
+              p: { xs: 2, md: 3 },
               height: '100%',
               borderRadius: 2
             }}
@@ -463,28 +485,28 @@ function HomePage() {
                 {t('home.quickGuides.title')}
               </Typography>
             </Box>
-            
+
             <Divider sx={{ mb: 2 }} />
-            
-            <Box component="ul" sx={{ 
-              listStyle: 'none', 
-              p: 0, 
+
+            <Box component="ul" sx={{
+              listStyle: 'none',
+              p: 0,
               m: 0,
-              '& li': { 
-                mb: 1.5 
+              '& li': {
+                mb: 1.5
               }
             }}>
               {quickGuides.map((guide, index) => (
-                <Box 
-                  component="li" 
+                <Box
+                  component="li"
                   key={`guide-${index}-${forceUpdate}`}
                   sx={{
                     display: 'flex',
                     alignItems: 'center'
                   }}
                 >
-                  <Box sx={{ 
-                    mr: 1.5, 
+                  <Box sx={{
+                    mr: 1.5,
                     color: 'primary.main',
                     display: 'flex',
                     alignItems: 'center',
@@ -492,11 +514,11 @@ function HomePage() {
                   }}>
                     {guide.icon}
                   </Box>
-                  <Typography 
-                    component={Link} 
+                  <Typography
+                    component={Link}
                     to={guide.path}
                     variant="body1"
-                    sx={{ 
+                    sx={{
                       color: 'text.primary',
                       textDecoration: 'none',
                       '&:hover': {
@@ -510,12 +532,12 @@ function HomePage() {
                 </Box>
               ))}
             </Box>
-            
+
             <Box sx={{ mt: 3, textAlign: 'center' }}>
-              <Button 
-                component={Link} 
-                to="/guides" 
-                variant="outlined" 
+              <Button
+                component={Link}
+                to="/guides"
+                variant="outlined"
                 color="primary"
                 endIcon={<ArrowForward />}
                 size={isMobile ? "small" : "medium"}
@@ -525,13 +547,13 @@ function HomePage() {
             </Box>
           </Paper>
         </Grid>
-        
+
         {/* FAQ部分 */}
         <Grid item xs={12} md={6}>
-          <Paper 
-            elevation={1} 
-            sx={{ 
-              p: { xs: 2, md: 3 }, 
+          <Paper
+            elevation={1}
+            sx={{
+              p: { xs: 2, md: 3 },
               height: '100%',
               borderRadius: 2
             }}
@@ -542,38 +564,38 @@ function HomePage() {
                 {t('home.faqSection.title')}
               </Typography>
             </Box>
-            
+
             <Divider sx={{ mb: 2 }} />
-            
-            <Box component="ul" sx={{ 
-              listStyle: 'none', 
-              p: 0, 
+
+            <Box component="ul" sx={{
+              listStyle: 'none',
+              p: 0,
               m: 0,
-              '& li': { 
-                mb: 1.5 
+              '& li': {
+                mb: 1.5
               }
             }}>
               {commonFaqs.map((faq, index) => (
-                <Box 
-                  component="li" 
+                <Box
+                  component="li"
                   key={`faq-${index}-${forceUpdate}`}
                   sx={{
                     display: 'flex',
                     alignItems: 'flex-start'
                   }}
                 >
-                  <Box sx={{ 
-                    mr: 1.5, 
+                  <Box sx={{
+                    mr: 1.5,
                     color: 'primary.main',
                     pt: 0.5
                   }}>
                     <HelpIcon fontSize="small" />
                   </Box>
-                  <Typography 
-                    component={Link} 
+                  <Typography
+                    component={Link}
                     to={faq.path}
                     variant="body1"
-                    sx={{ 
+                    sx={{
                       color: 'text.primary',
                       textDecoration: 'none',
                       '&:hover': {
@@ -587,12 +609,12 @@ function HomePage() {
                 </Box>
               ))}
             </Box>
-            
+
             <Box sx={{ mt: 3, textAlign: 'center' }}>
-              <Button 
-                component={Link} 
-                to="/faq" 
-                variant="outlined" 
+              <Button
+                component={Link}
+                to="/faq"
+                variant="outlined"
                 color="primary"
                 endIcon={<ArrowForward />}
                 size={isMobile ? "small" : "medium"}
@@ -603,23 +625,23 @@ function HomePage() {
           </Paper>
         </Grid>
       </Grid>
-      
+
       {/* Privacy and Security Section */}
-      <Paper 
+      <Paper
         elevation={1}
-        sx={{ 
-          my: { xs: 4, md: 6 }, 
-          p: { xs: 2, md: 4 }, 
-          bgcolor: 'background.paper', 
-          borderRadius: 2 
+        sx={{
+          my: { xs: 4, md: 6 },
+          p: { xs: 2, md: 4 },
+          bgcolor: 'background.paper',
+          borderRadius: 2
         }}
       >
-        <Typography 
-          variant="h5" 
-          component="h2" 
-          gutterBottom 
-          align="center" 
-          sx={{ 
+        <Typography
+          variant="h5"
+          component="h2"
+          gutterBottom
+          align="center"
+          sx={{
             fontWeight: 'bold',
             display: 'flex',
             alignItems: 'center',
@@ -630,16 +652,16 @@ function HomePage() {
           <SecurityIcon sx={{ mr: 1, verticalAlign: 'middle' }} />
           {t('home.privacy.title')}
         </Typography>
-        
-        <Typography 
-          variant="body1" 
-          paragraph 
+
+        <Typography
+          variant="body1"
+          paragraph
           align="center"
           sx={{ mb: { xs: 2, md: 3 } }}
         >
           {t('home.privacy.description')}
         </Typography>
-        
+
         <Grid container spacing={2} sx={{ mt: 1 }}>
           <Grid item xs={12} md={4}>
             <Box sx={{ textAlign: 'center', p: 1 }}>

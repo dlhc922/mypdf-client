@@ -163,7 +163,8 @@
     "successMessage": "处理完成",
     "fileName": "文件名：{{fileName}}",
     "close": "关闭",
-    "downloadFile": "保存文件"
+    "downloadFile": "保存文件",
+    "noFile": "没有可下载的文件"
   },
   "pdfToWord": {
     "pageTitle": "PDF转Word转换器 - 云端处理",
@@ -359,6 +360,10 @@
       "invoiceRecognition": {
         "title": "发票识别",
         "description": "识别发票中的关键信息，包括发票号码、发票日期、发票金额等"
+      },
+      "editPages": {
+        "title": "PDF页面编辑",
+        "description": "删除、重排、替换PDF页面，支持拖拽操作"
       }
     },
     "quickGuides": {
@@ -1053,5 +1058,42 @@
       "taxRate": "税率",
       "taxAmount": "税额"
     }
+  },
+  "editPages": {
+    "title": "PDF页面编辑器",
+    "subtitle": "删除、重排、替换PDF页面",
+    "selectFile": "选择PDF文件",
+    "noFileSelected": "请先选择一个PDF文件",
+    "loadingDocument": "正在加载文档...",
+    "pageCount": "共 {{count}} 页",
+    "selectedCount": "已选择 {{count}} 页",
+    "deleteSelected": "删除选中页面",
+    "selectAll": "全选",
+    "clearSelection": "清除选择",
+    "replacePage": "替换页面",
+    "replace": "替换",
+    "replaceWith": "替换为",
+    "dragToReorder": "拖拽重新排序",
+    "dragToMove": "拖拽移动页面",
+    "confirmDelete": "确认删除",
+    "deleteConfirmMessage": "确定要删除选中的 {{count}} 页吗？此操作不可撤销。",
+    "cancel": "取消",
+    "confirm": "确认",
+    "downloadEdited": "下载编辑后的PDF",
+    "processing": "正在处理...",
+    "success": "操作成功",
+    "error": "操作失败",
+    "replacePageTitle": "替换第 {{page}} 页",
+    "selectReplacement": "选择替换文件",
+    "supportedFormats": "支持PDF或图片文件",
+    "replaceSuccess": "页面替换成功",
+    "replacedWithPdf": "已替换为PDF页面",
+    "noEditedFile": "请先对PDF进行编辑操作",
+    "zoomIn": "放大",
+    "zoomOut": "缩小",
+    "resetZoom": "重置缩放",
+    "fitWidth": "适应宽度",
+    "actualSize": "实际大小"
   }
+ 
 }

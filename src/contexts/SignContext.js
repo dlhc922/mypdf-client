@@ -193,10 +193,15 @@ export function SignProvider({ children }) {
 
           // 创建 canvas 并绘制旋转后的签名
           const canvas = document.createElement('canvas');
-          const scale = 2; // 提高分辨率
+          const scale = 4; // 从2倍提升到4倍分辨率
           canvas.width = containerWidthPt * scale;
           canvas.height = containerHeightPt * scale;
           const ctx = canvas.getContext('2d');
+
+          // 启用高质量渲染
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+
           ctx.scale(scale, scale);
 
           // 加载图片
@@ -209,9 +214,14 @@ export function SignProvider({ children }) {
 
           // 清晰地绘制旋转签名
           ctx.save();
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.clearRect(0, 0, canvas.width / scale, canvas.height / scale);
           ctx.translate(containerWidthPt / 2, containerHeightPt / 2);
           ctx.rotate((instance.settings.rotation * Math.PI) / 180);
+
+          // 使用高质量绘制
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+
           ctx.drawImage(
             img,
             -baseWidthPt / 2,
@@ -221,8 +231,8 @@ export function SignProvider({ children }) {
           );
           ctx.restore();
 
-          // 将 canvas 转换成图片数据，并嵌入 PDF
-          const rotatedImageData = canvas.toDataURL('image/png');
+          // 将 canvas 转换成高质量图片数据
+          const rotatedImageData = canvas.toDataURL('image/png', 1.0);
           const rotatedImage = await pdfDoc.embedPng(rotatedImageData);
 
           // 修正: 确保使用与预览组件相同的参照点

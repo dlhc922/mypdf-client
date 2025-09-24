@@ -8,7 +8,8 @@ export const useStampContext = () => useContext(StampContext);
 
 const MM_TO_PT = 2.83465;
 const MM_TO_INCH = 0.0393701;
-const DPI = 144;
+// 提高DPI值以获得更清晰的印章
+const DPI = 300; // 从144提升到300
 
 // 辅助函数 1：加载图片（返回 HTMLImageElement）
 const loadImage = (src) =>
@@ -23,9 +24,9 @@ const loadImage = (src) =>
 // 辅助函数 2：将图片绘制到 Canvas 中并缩放到指定宽高
 const resizeImage = (img, width, height) => {
   const canvas = document.createElement('canvas');
-  // 增加canvas尺寸以提高精度
-  canvas.width = width * 2;
-  canvas.height = height * 2;
+  // 增加canvas尺寸以提高精度 - 从2倍提升到4倍
+  canvas.width = width * 4;
+  canvas.height = height * 4;
   const ctx = canvas.getContext('2d');
 
   // 启用高质量图像处理
@@ -33,7 +34,7 @@ const resizeImage = (img, width, height) => {
   ctx.imageSmoothingQuality = 'high';
 
   // 使用更高质量的缩放算法
-  ctx.scale(2, 2);
+  ctx.scale(4, 4);
   ctx.drawImage(img, 0, 0, width, height);
 
   // 创建最终canvas
@@ -91,6 +92,37 @@ function cropImage(sourceCanvas, cropLeft, cropTop, cropWidth, cropHeight) {
   ctx.drawImage(sourceCanvas, cropLeft, cropTop, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
   return cropCanvas.toDataURL('image/png');
 }
+
+// 图像预处理函数
+const preprocessImage = async (img) => {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  
+  // 使用原始尺寸
+  canvas.width = img.naturalWidth;
+  canvas.height = img.naturalHeight;
+  
+  // 启用高质量渲染
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  
+  // 绘制图像
+  ctx.drawImage(img, 0, 0);
+  
+  // 应用锐化滤镜（可选）
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const data = imageData.data;
+  
+  // 简单的锐化算法
+  for (let i = 4; i < data.length - 4; i += 4) {
+    data[i] = Math.min(255, Math.max(0, data[i] * 1.1 - data[i - 4] * 0.05));
+    data[i + 1] = Math.min(255, Math.max(0, data[i + 1] * 1.1 - data[i - 3] * 0.05));
+    data[i + 2] = Math.min(255, Math.max(0, data[i + 2] * 1.1 - data[i - 2] * 0.05));
+  }
+  
+  ctx.putImageData(imageData, 0, 0);
+  return canvas;
+};
 
 export const StampProvider = ({ children }) => {
   const {
@@ -172,11 +204,23 @@ export const StampProvider = ({ children }) => {
         try {
           // 如果是字符串URL，先获取图像，再转为PNG数据
           const img = await loadImage(stampConfig.imageUrl);
+          
+          // 创建高分辨率canvas
           const canvas = document.createElement('canvas');
-          canvas.width = img.width;
-          canvas.height = img.height;
+          const scale = 2; // 提高分辨率
+          canvas.width = img.width * scale;
+          canvas.height = img.height * scale;
           const ctx = canvas.getContext('2d');
+          
+          // 启用高质量渲染
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+          
+          // 缩放绘制
+          ctx.scale(scale, scale);
           ctx.drawImage(img, 0, 0);
+          
+          // 使用最高质量PNG格式
           const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1.0));
           const arrayBuffer = await blob.arrayBuffer();
           stampPngImage = await pdfDoc.embedPng(arrayBuffer);
@@ -367,6 +411,10 @@ export const StampProvider = ({ children }) => {
         addDefaultPage: false,
         preservePDFFormXObjects: true,
         updateFieldAppearances: true,
+        // 添加更多高质量选项
+        compress: false, // 不压缩以保持质量
+        preserveGraphicsState: true,
+        preserveEditability: true
       });
 
       // 创建下载链接

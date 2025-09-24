@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useMemo } from 'react';
 import { 
   Container, 
   Grid, 
@@ -41,12 +41,110 @@ import {
   Visibility as VisibilityIcon
 } from '@mui/icons-material';
 import { useTheme } from '@mui/material/styles';
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  useSortable,
+  rectSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { useImageToPdf } from '../../hooks/image-to-pdf/useImageToPdf';
 import DeviceCompatibilityAlert from '../../components/common/DeviceCompatibilityAlert';
 
+// =======================================================================
+//  Sortable Image Item Component
+// =======================================================================
+const SortableImageItem = ({ image, handleRemoveImage, loading, isMobile }) => {
+  const { t } = useTranslation();
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: image.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 1 : 'auto',
+    opacity: isDragging ? 0.7 : 1,
+  };
+
+  return (
+    <Grid item xs={12} sm={6} md={4} lg={3} ref={setNodeRef} style={style} {...attributes}>
+      <Paper 
+        elevation={isDragging ? 6 : 2}
+        sx={{
+          p: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          height: '100%',
+          position: 'relative',
+          overflow: 'hidden',
+          cursor: 'grab',
+          '&:active': { cursor: 'grabbing' },
+          '& .MuiIconButton-root': {
+            transition: 'opacity 0.2s',
+          },
+          '&:hover .MuiIconButton-root': {
+            opacity: 1,
+          },
+        }}
+        {...listeners}
+      >
+        <img
+          src={image.preview}
+          alt={image.name}
+          style={{
+            width: '100%',
+            height: 150,
+            objectFit: 'contain',
+            marginBottom: '8px',
+            borderRadius: '4px',
+          }}
+        />
+        <Tooltip title={image.name}>
+          <Typography noWrap variant="body2" sx={{ width: '100%', textAlign: 'center' }}>
+            {image.name}
+          </Typography>
+        </Tooltip>
+        <Typography variant="caption" color="textSecondary">
+          {`${image.width} x ${image.height}`}
+        </Typography>
+        <IconButton
+          size="small"
+          onClick={() => handleRemoveImage(image.id)}
+          disabled={loading}
+          sx={{
+            position: 'absolute',
+            top: 4,
+            right: 4,
+            bgcolor: 'rgba(255,255,255,0.7)',
+            opacity: { xs: 1, sm: 0 },
+            '&:hover': { bgcolor: 'rgba(255,255,255,0.9)' },
+          }}
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      </Paper>
+    </Grid>
+  );
+};
+
+// =======================================================================
+//  Main Page Component
+// =======================================================================
 export default function ImageToPdfPage() {
   const { t, i18n } = useTranslation();
   const theme = useTheme();
@@ -63,7 +161,7 @@ export default function ImageToPdfPage() {
     handleImageUpload,
     handleRemoveImage,
     handleRemoveAllImages,
-    handleDragEnd,
+    handleImageReorder,
     handleGeneratePdf,
     handlePdfQualityChange,
     pageFormat,
@@ -88,6 +186,16 @@ export default function ImageToPdfPage() {
     handlePreviewPdf,
     handleClosePreview
   } = useImageToPdf();
+  
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  );
+
+  const imageIds = useMemo(() => images.map(img => img.id), [images]);
   
   // 处理文件拖放
   const handleDragOver = useCallback((e) => {
@@ -240,7 +348,21 @@ export default function ImageToPdfPage() {
                   {t('imageToPdf.dragToReorder') || "拖动调整顺序"}
                 </Typography>
                 
-                <DraggableImageList images={images} handleRemoveImage={handleRemoveImage} handleDragEnd={handleDragEnd} loading={loading} isMobile={isMobile} />
+                <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleImageReorder}>
+                  <SortableContext items={imageIds} strategy={rectSortingStrategy}>
+                    <Grid container spacing={2}>
+                      {images.map((image) => (
+                        <SortableImageItem
+                          key={image.id}
+                          image={image}
+                          handleRemoveImage={handleRemoveImage}
+                          loading={loading}
+                          isMobile={isMobile}
+                        />
+                      ))}
+                    </Grid>
+                  </SortableContext>
+                </DndContext>
                 
                 {/* PDF质量选项 */}
                 <Paper 
@@ -595,147 +717,3 @@ export default function ImageToPdfPage() {
     </Container>
   );
 }
-
-// 图片拖拽组件
-const DraggableImageList = ({ images, handleRemoveImage, handleDragEnd, loading, isMobile }) => {
-  const { t } = useTranslation();
-  
-  const onDragEnd = (result) => {
-    // 如果没有目标位置或位置没变，则不执行任何操作
-    if (!result.destination || result.destination.index === result.source.index) {
-      return;
-    }
-    
-    // 调用父组件的处理函数
-    handleDragEnd(result);
-  };
-  
-  return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable 
-        droppableId="image-list" 
-        direction={isMobile ? "vertical" : "horizontal"} 
-        type="IMAGE"
-      >
-        {(provided) => (
-          <Box
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-            sx={{
-              display: 'flex', 
-              flexWrap: 'wrap',
-              gap: 2,
-              p: 2,
-              minHeight: '150px',
-              bgcolor: '#f5f5f5',
-              borderRadius: 1
-            }}
-          >
-            {images.map((image, index) => (
-              <Draggable 
-                key={image.id} 
-                draggableId={image.id} 
-                index={index}
-              >
-                {(provided, snapshot) => (
-                  <Paper
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    elevation={snapshot.isDragging ? 8 : 1}
-                    sx={{
-                      width: isMobile ? '100%' : '150px',
-                      height: '230px',
-                      position: 'relative',
-                      borderRadius: 1,
-                      overflow: 'hidden',
-                      bgcolor: 'background.paper',
-                      cursor: snapshot.isDragging ? 'grabbing' : 'grab',
-                      userSelect: 'none',
-                      transition: 'box-shadow 0.2s ease',
-                      ...provided.draggableProps.style
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bgcolor: 'rgba(0,0,0,0.5)',
-                        color: 'white',
-                        p: 0.5,
-                        display: 'flex',
-                        alignItems: 'center',
-                        zIndex: 2
-                      }}
-                    >
-                      <DragIcon fontSize="small" />
-                      <Typography variant="caption" sx={{ ml: 0.5 }}>
-                        {index + 1}
-                      </Typography>
-                      <Box sx={{ flexGrow: 1 }} />
-                      <IconButton 
-                        size="small" 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          e.preventDefault();
-                          handleRemoveImage(image.id);
-                        }}
-                        sx={{ 
-                          color: 'white', 
-                          p: 0.25
-                        }}
-                        disabled={loading}
-                      >
-                        <CloseIcon fontSize="small" />
-                      </IconButton>
-                    </Box>
-                    
-                    <Box sx={{
-                      width: '100%',
-                      height: '180px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      bgcolor: '#f8f8f8'
-                    }}>
-                      <img 
-                        src={image.preview} 
-                        alt={`Image ${index + 1}`}
-                        style={{ 
-                          maxWidth: '100%',
-                          maxHeight: '180px',
-                          objectFit: 'contain',
-                          pointerEvents: 'none'
-                        }}
-                      />
-                    </Box>
-                    
-                    <Box sx={{
-                      position: 'absolute',
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      bgcolor: 'rgba(0,0,0,0.5)',
-                      color: 'white',
-                      p: 0.5,
-                      fontSize: '10px',
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      textAlign: 'center'
-                    }}>
-                      {image.name}
-                    </Box>
-                  </Paper>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
-          </Box>
-        )}
-      </Droppable>
-    </DragDropContext>
-  );
-}; 
