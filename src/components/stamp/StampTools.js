@@ -27,13 +27,15 @@ import {
   AddPhotoAlternate,
   Delete,
   Rotate90DegreesCcw,
-  Create
+  Create,
+  ArrowForward
 } from '@mui/icons-material';
 import { useStampContext } from '../../contexts/StampContext';
 import PageSelectDialog from './PageSelectDialog';
 import FileDownload from '../common/FileDownload';
 import { useTranslation } from 'react-i18next';
 import StampMakerDialog from './StampMakerDialog';
+import WorkflowIndicator from '../common/WorkflowIndicator';
 
 function StampTools() {
   const { t } = useTranslation();
@@ -50,7 +52,9 @@ function StampTools() {
     handleSubmit,
     loading,
     error,
-    stampedFileUrl
+    stampedFileUrl,
+    handleContinueToSign,
+    hasFile
   } = useStampContext();
 
   // 页面选择对话框
@@ -224,7 +228,7 @@ function StampTools() {
 
       <Box sx={{ flex: 1, overflow: 'auto', minHeight: 0 }}>
         {file ? (
-          <Stack spacing={1.5}>
+          <Stack spacing={1}>
             {/* 印章图片上传 */}
             <Stack spacing={0.5}>
               <Typography variant="subtitle2">
@@ -286,8 +290,20 @@ function StampTools() {
                 size="small"
                 value={stampConfig?.size || 40}
                 onChange={(e) => {
-                  const newSize = Math.max(10, Math.min(100, Number(e.target.value)));
-                  handleStampConfigChange('size', newSize);
+                  const value = e.target.value;
+                  // 允许空值或数字输入，不立即限制
+                  if (value === '' || !isNaN(Number(value))) {
+                    handleStampConfigChange('size', value === '' ? '' : Number(value));
+                  }
+                }}
+                onBlur={(e) => {
+                  // 失去焦点时进行最终验证
+                  const value = Number(e.target.value);
+                  if (isNaN(value) || value < 10) {
+                    handleStampConfigChange('size', 10);
+                  } else if (value > 100) {
+                    handleStampConfigChange('size', 100);
+                  }
                 }}
                 inputProps={{ 
                   min: 10, 
@@ -422,18 +438,28 @@ function StampTools() {
               )}
             </Stack>
 
-            <Divider />
+            <Divider sx={{ my: 1 }} />
 
-            {/* 修改生成按钮 */}
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleGenerateClick}
-              disabled={loading}
-              startIcon={loading ? <CircularProgress size={20} /> : null}
-            >
-              {loading ? t('stamp.processing') : t('stamp.addStamp')}
-            </Button>
+            {/* 操作按钮组 */}
+            <Box>
+              {/* 主要操作按钮 */}
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleGenerateClick}
+                disabled={loading}
+                startIcon={loading ? <CircularProgress size={20} /> : null}
+                fullWidth
+                size="medium"
+                sx={{ 
+                  height: 40,
+                  mb: 2
+                }}
+              >
+                {loading ? t('stamp.processing') : t('stamp.addStamp')}
+              </Button>
+
+            </Box>
 
             {/* 删除图像质量设置部分 */}
           </Stack>
@@ -464,6 +490,10 @@ function StampTools() {
         loadingMessage={t('stamp.loadingMessage')}
         onClose={handleDownloadClose}
         open={downloadOpen}
+        showContinueButton={true}
+        onContinueToSign={handleContinueToSign}
+        continueButtonText={t('stamp.continueToSign', '继续签名 →')}
+        allowCustomFilename={true}
       />
 
       {/* 添加制作印章对话框 */}

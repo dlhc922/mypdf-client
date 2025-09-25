@@ -6,13 +6,14 @@ import StampTools from '../../components/stamp/StampTools';
 import { StampProvider } from '../../contexts/StampContext';
 import { useTranslation } from 'react-i18next';
 import DeviceCompatibilityAlert from '../../components/common/DeviceCompatibilityAlert';
+import WorkflowIndicator from '../../components/common/WorkflowIndicator';
 
 function StampPage() {
   const { t } = useTranslation();
   
   return (
     <StampProvider>
-      <Helmet>
+        <Helmet>
         <title>{t('stamp.pageTitle', '免费PDF盖章工具 - 本地处理无需上传 安全私密')} | {t('appName', 'PDF工具箱')}</title>
         <meta name="description" content={t('stamp.pageDescription', '100%免费在线PDF盖章工具。在浏览器中本地添加自定义印章、公章或水印，无需上传文件，完全保护隐私。可调整大小、位置和透明度，简单易用。')} />
         <meta name="keywords" content="免费PDF盖章,本地处理,无需上传,骑缝章,电子印章,PDF工具,公章,私章,透明印章,批量盖章,在线PDF处理,安全" />
@@ -58,40 +59,66 @@ function StampPage() {
       <Box
         sx={{
           display: 'flex',
+          flexDirection: 'column',
           height: '100vh',
           position: 'relative',
           overflow: 'hidden'
         }}
       >
-        {/* 左侧预览区域 - 独立滚动 */}
+        {/* 顶部工作流条 */}
         <Box
           sx={{
+            height: 48,
+            borderBottom: 1,
+            borderColor: 'divider',
+            bgcolor: 'background.paper',
+            display: 'flex',
+            alignItems: 'center',
+            px: 2,
+            flexShrink: 0
+          }}
+        >
+          <WorkflowIndicator />
+        </Box>
+        
+        {/* 主要内容区域 */}
+        <Box
+          sx={{
+            display: 'flex',
             flex: 1,
-            height: '100vh',
-            position: 'relative',
             overflow: 'hidden'
           }}
         >
-          <PDFPreview />
+          {/* 左侧预览区域 - 独立滚动 */}
+          <Box
+            sx={{
+              flex: 1,
+              height: '100%',
+              position: 'relative',
+              overflow: 'hidden'
+            }}
+          >
+            <PDFPreview />
+          </Box>
+          <DeviceCompatibilityAlert mobileCompatible={false} toolName="PDF盖章"></DeviceCompatibilityAlert>
+          
+          {/* 右侧工具栏 */}
+          <Box
+            sx={{
+              width: 280,
+              height: '100%',
+              borderLeft: 1,
+              borderColor: 'divider',
+              bgcolor: 'background.paper',
+              overflow: 'hidden'
+            }}
+          >
+            <StampTools />
+          </Box>
         </Box>
-        <DeviceCompatibilityAlert mobileCompatible={false} toolName="PDF盖章"></DeviceCompatibilityAlert>
-        
-      {/* 右侧工具栏 */}
-      <Box
-        sx={{
-          width: 280,
-          height: '100vh',
-          borderLeft: 1,
-          borderColor: 'divider',
-          bgcolor: 'background.paper',
-          overflow: 'hidden'
-        }}
-      >
-        <StampTools />
       </Box>
-    </Box>
-  </StampProvider>
-);
+    </StampProvider>
+  );
 }
 
 export default StampPage; 

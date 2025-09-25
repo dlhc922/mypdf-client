@@ -130,16 +130,24 @@ function PageSelectDialog({
           <Paper sx={{ p: 2 }}>
             <Stack spacing={2}>
               <Stack direction="row" spacing={2} alignItems="center">
-                <Tooltip title={t('stamp.selectAll')}>
-                  <IconButton onClick={handleSelectAll} disabled={!documentNumPages}>
-                    <SelectAll />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title={t('stamp.clearAll')}>
-                  <IconButton onClick={handleClearAll} disabled={selectedPages.length === 0}>
-                    <ClearAll />
-                  </IconButton>
-                </Tooltip>
+                <Button
+                  variant="outlined"
+                  startIcon={<SelectAll />}
+                  onClick={handleSelectAll}
+                  disabled={!documentNumPages}
+                  size="small"
+                >
+                  {t('stamp.selectAll')}
+                </Button>
+                <Button
+                  variant="outlined"
+                  startIcon={<ClearAll />}
+                  onClick={handleClearAll}
+                  disabled={selectedPages.length === 0}
+                  size="small"
+                >
+                  {t('stamp.clearAll')}
+                </Button>
                 <Divider orientation="vertical" flexItem />
                 <TextField
                   size="small"

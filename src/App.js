@@ -29,6 +29,7 @@ import MarkdownPage from './pages/markdown/MarkdownPage';
 import { HelmetProvider } from 'react-helmet-async';
 import InvoiceRecognitionPage from './pages/invoice/InvoiceRecognitionPage';
 import EditPagesPage from './pages/edit-pages/EditPagesPage';
+import { PDFWorkflowProvider } from './contexts/PDFWorkflowContext';
 
 
 function App() {
@@ -51,30 +52,31 @@ function App() {
     <HelmetProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: '100vh',
-          }}
-        >
-          {!isOnline && (
-            <div style={{
-              position: 'fixed',
-              top: 0,
-              width: '100%',
-              background: '#ff4444',
-              color: 'white',
-              padding: '10px',
-              textAlign: 'center'
-            }}>
-              您当前处于离线状态，但仍可以使用所有PDF处理功能
-            </div>
-          )}
-          <Box sx={{ flex: 1 }}>
-            <BrowserRouter>
-              <ScrollToTop />
-              <Layout>
+        <PDFWorkflowProvider>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              minHeight: '100vh',
+            }}
+          >
+            {!isOnline && (
+              <div style={{
+                position: 'fixed',
+                top: 0,
+                width: '100%',
+                background: '#ff4444',
+                color: 'white',
+                padding: '10px',
+                textAlign: 'center'
+              }}>
+                您当前处于离线状态，但仍可以使用所有PDF处理功能
+              </div>
+            )}
+            <Box sx={{ flex: 1 }}>
+              <BrowserRouter>
+                <ScrollToTop />
+                <Layout>
                 <Routes>
                   <Route path="/" element={<HomePage />} />
                   <Route path="/merge" element={<MergePage />} />
@@ -98,11 +100,12 @@ function App() {
                   <Route path="/invoice-recognition" element={<InvoiceRecognitionPage />} />
                   <Route path="/edit-pages" element={<EditPagesPage />} />
                 </Routes>
-              </Layout>
-            </BrowserRouter>
+                </Layout>
+              </BrowserRouter>
+            </Box>
+            <Footer />
           </Box>
-          <Footer />
-        </Box>
+        </PDFWorkflowProvider>
       </ThemeProvider>
     </HelmetProvider>
   );

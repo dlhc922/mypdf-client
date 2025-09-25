@@ -16,6 +16,7 @@ import {
   TextField,
   FormControlLabel,
   Checkbox,
+  Divider,
 } from '@mui/material';
 import {
   Add as AddIcon,
@@ -26,11 +27,13 @@ import {
   AspectRatio,
   Pages,
   Save as SaveIcon,
+  ArrowBack,
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useSignContext } from '../../contexts/SignContext';
 import SignMakerDialog from './SignMakerDialog';
 import FileDownload from '../common/FileDownload';
+import WorkflowIndicator from '../common/WorkflowIndicator';
 
 function SignTools() {
   const { t } = useTranslation();
@@ -57,6 +60,8 @@ function SignTools() {
     handleDownloadClose,
     loading,
     error,
+    handleContinueToStamp,
+    hasFile
   } = useSignContext();
 
   const [signMakerOpen, setSignMakerOpen] = useState(false);
@@ -183,13 +188,13 @@ function SignTools() {
           // 新建签名配置时，同时设为编辑配置
           setCurrentEditingElement({ type: 'config', id: currentSignIndex + 1 });
         }}
-        sx={{ mb: 2 }}
+        sx={{ mb: 1 }}
       >
         {t('sign.addNewSignature')}
       </Button>
 
       {/* 原有签名列表部分，不做调整 */}
-      <List dense sx={{ flex: 0.75, overflow: 'auto', mb: 2 }}>
+      <List dense sx={{ flex: 0.75, overflow: 'auto', mb: 1 }}>
         {signConfigs.map((config, index) => {
           return (
             <ListItem
@@ -351,17 +356,24 @@ function SignTools() {
               />
             </Stack>
 
-            {/* 添加签名到PDF按钮 */}
-            <Stack spacing={0.5}>
+            {/* 操作按钮组 */}
+            <Box>
+              {/* 主要操作按钮 */}
               <Button
                 variant="contained"
                 startIcon={<SaveIcon />}
-                size="small"
+                size="medium"
                 onClick={generateSignedPdf}
+                fullWidth
+                sx={{ 
+                  height: 40,
+                  mb: 2
+                }}
               >
                 {t('sign.addSignatureToPdf')}
               </Button>
-            </Stack>
+              
+            </Box>
           </Stack>
         </Box>
       )}
@@ -382,6 +394,10 @@ function SignTools() {
         successMessage={t('sign.pdfSuccessMessage')}
         loadingMessage={t('sign.pdfLoadingMessage')}
         onClose={handleDownloadClose}
+        showContinueButton={true}
+        onContinueToSign={handleContinueToStamp}
+        continueButtonText={t('sign.continueToStamp', '← 继续盖章')}
+        allowCustomFilename={true}
       />
     </Paper>
   );

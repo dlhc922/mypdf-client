@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo } from 'react';
+import React, { useEffect, useCallback, useMemo, useState } from 'react';
 import { 
   Box, 
   Button,
@@ -9,12 +9,14 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  IconButton
+  IconButton,
+  TextField
 } from '@mui/material';
 import {
   Download as DownloadIcon,
   CheckCircle as CheckCircleIcon,
-  Close as CloseIcon
+  Close as CloseIcon,
+  ArrowForward as ArrowForwardIcon
 } from '@mui/icons-material';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -27,9 +29,14 @@ function FileDownload({
   successMessage,
   loadingMessage,
   onClose,
-  open
+  open,
+  onContinueToSign,
+  showContinueButton = false,
+  continueButtonText = '继续签名 →',
+  allowCustomFilename = false
 }) {
   const { t } = useTranslation();
+  const [customFileName, setCustomFileName] = useState('');
 
   // 如果未传入提示信息，则使用翻译来默认赋值
   const finalSuccessMessage = successMessage || t('fileDownload.successMessage');
@@ -37,10 +44,16 @@ function FileDownload({
 
   // 生成带时间戳的文件名
   const downloadFileName = useMemo(() => {
+    if (allowCustomFilename && customFileName.trim()) {
+      // 如果允许自定义文件名且用户输入了文件名
+      const name = customFileName.trim();
+      return name.endsWith('.pdf') ? name : `${name}.pdf`;
+    }
+    
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const baseName = fileName ? fileName.replace(/\.pdf$/, '') : 'document';
     return `${baseName}-${timestamp}.pdf`;
-  }, [fileName]);
+  }, [fileName, allowCustomFilename, customFileName]);
 
   const handleDownload = useCallback(() => {
     if (fileUrl) {
@@ -158,6 +171,18 @@ function FileDownload({
               </Typography>
             </Box>
             
+            {allowCustomFilename && (
+              <TextField
+                label={t('fileDownload.customFileName', '自定义文件名')}
+                value={customFileName}
+                onChange={(e) => setCustomFileName(e.target.value)}
+                placeholder={t('fileDownload.fileNamePlaceholder', '输入文件名（不含扩展名）')}
+                size="small"
+                sx={{ width: '100%', maxWidth: 300 }}
+                helperText={t('fileDownload.fileNameHelper', '将自动添加 .pdf 扩展名')}
+              />
+            )}
+            
             <Typography variant="body2" color="text.secondary">
               {t('fileDownload.fileName', { fileName: downloadFileName })}
             </Typography>
@@ -184,7 +209,9 @@ function FileDownload({
         <DialogActions sx={{ 
           px: 3, 
           py: 2,
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: 1
         }}>
           <Button
             onClick={handleClose}
@@ -192,18 +219,36 @@ function FileDownload({
           >
             {t('fileDownload.close')}
           </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<DownloadIcon />}
-            onClick={handleDownload}
-            sx={{ 
-              minWidth: 140,
-              py: 1
-            }}
-          >
-            {t('fileDownload.downloadFile')}
-          </Button>
+          
+          <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+            {showContinueButton && onContinueToSign && (
+              <Button
+                variant="outlined"
+                color="secondary"
+                startIcon={<ArrowForwardIcon />}
+                onClick={onContinueToSign}
+                sx={{ 
+                  minWidth: 140,
+                  py: 1
+                }}
+              >
+                {continueButtonText}
+              </Button>
+            )}
+            
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<DownloadIcon />}
+              onClick={handleDownload}
+              sx={{ 
+                minWidth: 140,
+                py: 1
+              }}
+            >
+              {t('fileDownload.downloadFile')}
+            </Button>
+          </Box>
         </DialogActions>
       )}
     </Dialog>
@@ -218,7 +263,11 @@ FileDownload.propTypes = {
   successMessage: PropTypes.string,
   loadingMessage: PropTypes.string,
   onClose: PropTypes.func,
-  open: PropTypes.bool.isRequired
+  open: PropTypes.bool.isRequired,
+  onContinueToSign: PropTypes.func,
+  showContinueButton: PropTypes.bool,
+  continueButtonText: PropTypes.string,
+  allowCustomFilename: PropTypes.bool
 };
 
 export default FileDownload; 

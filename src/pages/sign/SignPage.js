@@ -6,12 +6,13 @@ import { SignProvider } from '../../contexts/SignContext';
 import { useTranslation } from 'react-i18next';
 import DeviceCompatibilityAlert from '../../components/common/DeviceCompatibilityAlert';
 import { Helmet } from 'react-helmet-async';
+import WorkflowIndicator from '../../components/common/WorkflowIndicator';
 
 function SignPage() {
   const { t } = useTranslation();
   
   return (
-      <SignProvider>
+    <SignProvider>
         <Helmet>
           <title>{t('sign.pageTitle', '免费PDF签名工具 - 本地处理无需上传 安全私密')} | {t('appName', 'PDF工具箱')}</title>
           <meta name="description" content={t('sign.pageDescription', '100%免费在线PDF签名工具。在浏览器中本地添加手写或打字签名，无需上传文件，完全保护隐私。轻松创建和定位签名，简单易用。')} />
@@ -57,41 +58,67 @@ function SignPage() {
         <Box
           sx={{
             display: 'flex',
+            flexDirection: 'column',
             height: '100vh',
             position: 'relative',
             overflow: 'hidden'
           }}
         >
-          {/* 左侧预览区域 - 独立滚动 */}
+          {/* 顶部工作流条 */}
           <Box
             sx={{
+              height: 48,
+              borderBottom: 1,
+              borderColor: 'divider',
+              bgcolor: 'background.paper',
+              display: 'flex',
+              alignItems: 'center',
+              px: 2,
+              flexShrink: 0
+            }}
+          >
+            <WorkflowIndicator />
+          </Box>
+          
+          {/* 主要内容区域 */}
+          <Box
+            sx={{
+              display: 'flex',
               flex: 1,
-              height: '100vh',
-              position: 'relative',
               overflow: 'hidden'
             }}
           >
-            <SignPreview />
-          </Box>
+            {/* 左侧预览区域 - 独立滚动 */}
+            <Box
+              sx={{
+                flex: 1,
+                height: '100%',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+            >
+              <SignPreview />
+            </Box>
 
-        {/* 右侧工具栏：使用紧凑的垂直排列 */}
-        <DeviceCompatibilityAlert mobileCompatible={false} toolName="PDF签名"></DeviceCompatibilityAlert>
-        <Box
-          sx={{
-            width: 280,
-            height: '100vh',
-            display: 'flex',          // 设为 flex 布局
-            flexDirection: 'column',   // 垂直排列
-            borderLeft: 1,
-            borderColor: 'divider',
-            bgcolor: 'background.paper',
-            overflow: 'hidden',
-            p: 1                     // 根据需要可以适当减少内边距
-          }}
-        >
-          <SignTools />
+            {/* 右侧工具栏：使用紧凑的垂直排列 */}
+            <DeviceCompatibilityAlert mobileCompatible={false} toolName="PDF签名"></DeviceCompatibilityAlert>
+            <Box
+              sx={{
+                width: 280,
+                height: '100%',
+                display: 'flex',          // 设为 flex 布局
+                flexDirection: 'column',   // 垂直排列
+                borderLeft: 1,
+                borderColor: 'divider',
+                bgcolor: 'background.paper',
+                overflow: 'hidden',
+                p: 1                     // 根据需要可以适当减少内边距
+              }}
+            >
+              <SignTools />
+            </Box>
+          </Box>
         </Box>
-      </Box>
     </SignProvider>
   );
 }

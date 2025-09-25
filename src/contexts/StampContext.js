@@ -1,7 +1,9 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { PDFDocument, degrees } from 'pdf-lib';
 // 注意：pdf-lib 里 degrees 用于 PDF 文档绘制时的旋转，如果你需要自定义 Canvas 旋转，则另外计算（本例中不直接使用 degrees）。
 import { useStamp } from '../hooks/stamp/useStamp';
+import { usePDFWorkflow } from './PDFWorkflowContext';
+import { useNavigate } from 'react-router-dom';
 
 const StampContext = createContext();
 export const useStampContext = () => useContext(StampContext);
@@ -127,6 +129,7 @@ const preprocessImage = async (img) => {
 export const StampProvider = ({ children }) => {
   const {
     file,
+    setFile,
     loading,
     error,
     message,
@@ -151,7 +154,41 @@ export const StampProvider = ({ children }) => {
     handleResetZoom,
   } = useStamp();
 
+  // 获取共享工作流上下文
+  const { 
+    currentFile, 
+    addToWorkflow, 
+    setProcessing,
+    hasFile 
+  } = usePDFWorkflow();
+  
+  // 获取导航函数
+  const navigate = useNavigate();
 
+  // 同步共享文件到本地状态
+  useEffect(() => {
+    console.log('=== StampContext 文件同步检查 ===');
+    console.log('currentFile:', currentFile ? {
+      name: currentFile.name,
+      size: currentFile.size,
+      type: currentFile.type
+    } : 'null');
+    console.log('当前 file:', file ? {
+      name: file.name,
+      size: file.size,
+      type: file.type
+    } : 'null');
+    console.log('文件是否不同:', currentFile !== file);
+    
+    if (currentFile && currentFile !== file) {
+      console.log('同步共享文件到盖章功能:', currentFile.name);
+      // 直接设置文件，不通过 handleFileSelect
+      // 因为 handleFileSelect 会触发验证逻辑
+      setFile(currentFile);
+      console.log('文件已设置到盖章功能');
+    }
+    console.log('=== StampContext 文件同步检查完成 ===');
+  }, [currentFile, file]);
 
   const [stampedFileUrl, setStampedFileUrl] = useState(null);
   // 从环境变量读取 API_URL （仅用于调试或后续其他用途）
@@ -421,6 +458,22 @@ export const StampProvider = ({ children }) => {
       const blob = new Blob([outputPdfBytes], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       setStampedFileUrl(url);
+      
+      // 创建新的文件对象并添加到工作流
+      const newFile = new File([outputPdfBytes], 'stamped.pdf', { type: 'application/pdf' });
+      console.log('=== 盖章完成，准备添加到工作流 ===');
+      console.log('新文件信息:', {
+        name: newFile.name,
+        size: newFile.size,
+        type: newFile.type
+      });
+      addToWorkflow('stamp', newFile, {
+        stampConfig: stampConfig,
+        pages: stampConfig.selectedPages,
+        isStraddle: stampConfig.isStraddle
+      });
+      console.log('=== 文件已添加到工作流 ===');
+      
       setMessage({ type: 'success', content: 'PDF 盖章处理完成！' });
     } catch (err) {
       console.error('处理PDF时出错:', err);
@@ -430,6 +483,55 @@ export const StampProvider = ({ children }) => {
     }
   };
 
+
+  // 切换到签名功能
+  const handleContinueToSign = useCallback(() => {
+    console.log('=== 开始切换到签名功能 ===');
+    console.log('stampedFileUrl:', stampedFileUrl);
+    console.log('stampConfig:', stampConfig);
+    
+    if (stampedFileUrl) {
+      console.log('从 URL 获取文件...');
+      // 从 URL 获取文件并添加到工作流
+      fetch(stampedFileUrl)
+        .then(response => {
+          console.log('Fetch 响应:', response);
+          return response.blob();
+        })
+        .then(blob => {
+          console.log('获取到 Blob:', {
+            size: blob.size,
+            type: blob.type
+          });
+          const file = new File([blob], 'stamped.pdf', { type: 'application/pdf' });
+          console.log('创建文件对象:', {
+            name: file.name,
+            size: file.size,
+            type: file.type
+          });
+          
+          console.log('添加到工作流...');
+          addToWorkflow('stamp', file, {
+            stampConfig: stampConfig,
+            pages: stampConfig.selectedPages,
+            isStraddle: stampConfig.isStraddle
+          });
+          
+          console.log('准备导航到签名页面...');
+          // 使用 React Router 导航，保持 Context 状态
+          console.log('使用 React Router 导航，保持 Context 状态');
+          navigate('/sign');
+        })
+        .catch(error => {
+          console.error('获取盖章文件失败:', error);
+          setMessage({ type: 'error', content: '获取盖章文件失败' });
+        });
+    } else {
+      console.log('没有 stampedFileUrl，显示错误消息');
+      setMessage({ type: 'error', content: '请先完成盖章操作' });
+    }
+    console.log('=== 切换到签名功能完成 ===');
+  }, [stampedFileUrl, stampConfig, addToWorkflow, setMessage]);
 
   const handleCleanup = useCallback(() => {
     handleFileSelect({ target: { files: null } });  // 使用 handleFileSelect 清理文件
@@ -491,6 +593,10 @@ export const StampProvider = ({ children }) => {
         pageOrientations,
         setPageOrientations,
         handlePageLoadSuccess,
+        // 新增工作流相关方法
+        handleContinueToSign,
+        hasFile: hasFile(),
+        currentWorkflowFile: currentFile,
       }}
     >
       {children}

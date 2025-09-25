@@ -66,6 +66,10 @@
     "selectPDFFile": "请选择 PDF 文件",
     "selectPNGImage": "请选择 PNG 格式的图片",
     "makeTransparentStamp": "制作透明印章",
+    "continueToSign": "继续签名 →",
+    "saveFile": "保存盖章文件",
+    "completedActions": "完成操作",
+    "continueToSignDialog": "继续签名 →",
     "selectImage": "选择图片",
     "threshold": "透明度阈值",
     "process": "处理图片",
@@ -164,7 +168,10 @@
     "fileName": "文件名：{{fileName}}",
     "close": "关闭",
     "downloadFile": "保存文件",
-    "noFile": "没有可下载的文件"
+    "noFile": "没有可下载的文件",
+    "customFileName": "自定义文件名",
+    "fileNamePlaceholder": "输入文件名（不含扩展名）",
+    "fileNameHelper": "将自动添加 .pdf 扩展名"
   },
   "pdfToWord": {
     "pageTitle": "PDF转Word转换器 - 云端处理",
@@ -466,6 +473,9 @@
     "noSignatureAvailable": "没有可用签名",
     "choosePreview": "请选择签名预览",
     "addSignatureToPdf": "添加签名到PDF",
+    "continueToStamp": "← 继续盖章",
+    "saveFile": "保存签名文件",
+    "completedActions": "完成操作",
     "pdfSuccessMessage": "PDF签名添加成功！ "
   },
   "extract": {
@@ -1062,6 +1072,31 @@
   "editPages": {
     "title": "PDF页面编辑器",
     "subtitle": "删除、重排、替换PDF页面",
+    "pageTitle": "免费PDF页面编辑器 - 删除、重排、替换PDF页面",
+    "pageDescription": "100%免费在线PDF页面编辑工具。删除、重排、替换PDF页面，支持拖拽操作，无需上传文件，完全保护隐私。简单易用的PDF页面管理工具。",
+    "keywords": "PDF页面编辑,PDF编辑器,删除PDF页面,重排PDF页面,替换PDF页面,PDF页面管理,免费PDF工具,在线PDF编辑器,PDF页面排序,PDF页面删除",
+    "ogTitle": "免费PDF页面编辑器 - 删除、重排、替换PDF页面",
+    "ogDescription": "100%免费在线PDF页面编辑工具，支持删除、重排、替换PDF页面，拖拽操作，无需上传，完全保护隐私。",
+    "feature1": "删除不需要的PDF页面",
+    "feature2": "拖拽重排PDF页面顺序",
+    "feature3": "替换指定PDF页面",
+    "feature4": "本地处理，保护隐私安全",
+    "howToUse": "如何使用PDF页面编辑器",
+    "step1": "步骤1：上传PDF文件",
+    "step1Desc": "选择需要编辑的PDF文件，支持拖拽上传或点击选择文件。文件将在浏览器中本地处理，不会上传到服务器。",
+    "step2": "步骤2：编辑页面",
+    "step2Desc": "选择要删除的页面，拖拽重排页面顺序，或替换指定页面。所有操作都支持实时预览。",
+    "step3": "步骤3：下载结果",
+    "step3Desc": "完成编辑后，点击下载按钮获取编辑后的PDF文件。支持自定义文件名。",
+    "features": "主要功能",
+    "featuresDesc": "支持删除页面、重排顺序、替换页面、批量操作等。所有操作都在本地完成，保护您的隐私安全。",
+    "faqTitle": "常见问题",
+    "faq1": "Q: 编辑后的PDF质量会下降吗？",
+    "faq1Ans": "A: 不会。我们的工具保持原始PDF的质量，编辑后的文件质量与原始文件相同。",
+    "faq2": "Q: 支持哪些文件格式？",
+    "faq2Ans": "A: 支持PDF文件，替换页面时也支持图片文件（JPG、PNG等）。",
+    "faq3": "Q: 文件大小有限制吗？",
+    "faq3Ans": "A: 由于在浏览器中处理，建议文件大小不超过100MB，以确保最佳性能。",
     "selectFile": "选择PDF文件",
     "noFileSelected": "请先选择一个PDF文件",
     "loadingDocument": "正在加载文档...",
@@ -1094,6 +1129,14 @@
     "resetZoom": "重置缩放",
     "fitWidth": "适应宽度",
     "actualSize": "实际大小"
+  },
+  "workflow": {
+    "title": "PDF 处理工作流",
+    "clear": "清理工作流",
+    "stamp": "盖章",
+    "sign": "签名",
+    "history": "处理历史",
+    "goToStamp": "去盖章",
+    "goToSign": "去签名"
   }
- 
 }

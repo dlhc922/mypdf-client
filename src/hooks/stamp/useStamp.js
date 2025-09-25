@@ -189,6 +189,7 @@ export const useStamp = () => {
 
   return {
     file,
+    setFile,
     loading,
     error,
     message,

@@ -1,6 +1,8 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { PDFDocument, degrees } from 'pdf-lib';
 import { getRotatedBounds } from '../utils/geometry';
+import { usePDFWorkflow } from './PDFWorkflowContext';
+import { useNavigate } from 'react-router-dom';
 
 export const SignContext = createContext();
 
@@ -23,6 +25,44 @@ export function SignProvider({ children }) {
   const [downloadOpen, setDownloadOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // 获取共享工作流上下文
+  const { 
+    currentFile, 
+    addToWorkflow, 
+    setProcessing,
+    hasFile 
+  } = usePDFWorkflow();
+  
+  // 获取导航函数
+  const navigate = useNavigate();
+
+  // 同步共享文件到本地状态
+  useEffect(() => {
+    console.log('=== SignContext 文件同步检查 ===');
+    console.log('currentFile:', currentFile ? {
+      name: currentFile.name,
+      size: currentFile.size,
+      type: currentFile.type
+    } : 'null');
+    console.log('当前 file:', file ? {
+      name: file.name,
+      size: file.size,
+      type: file.type
+    } : 'null');
+    console.log('文件是否不同:', currentFile !== file);
+    
+    if (currentFile && currentFile !== file) {
+      console.log('同步共享文件到签名功能:', currentFile.name);
+      setFile(currentFile);
+      // 清理之前的签名状态，因为文件已更改
+      setSignatureInstances([]);
+      setCurrentEditingElement(null);
+      setCurrentSignIndex(-1);
+      console.log('文件已设置到签名功能，状态已清理');
+    }
+    console.log('=== SignContext 文件同步检查完成 ===');
+  }, [currentFile, file]);
 
   const handleZoomIn = () => setZoom(prev => Math.min(prev + 0.1, 2));
   const handleZoomOut = () => setZoom(prev => Math.max(prev - 0.1, 0.5));
@@ -258,6 +298,21 @@ export function SignProvider({ children }) {
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const blobUrl = URL.createObjectURL(blob);
       setSignedFileUrl(blobUrl);
+      
+      // 创建新的文件对象并添加到工作流
+      const newFile = new File([pdfBytes], 'signed.pdf', { type: 'application/pdf' });
+      console.log('=== 签名完成，准备添加到工作流 ===');
+      console.log('新文件信息:', {
+        name: newFile.name,
+        size: newFile.size,
+        type: newFile.type
+      });
+      addToWorkflow('sign', newFile, {
+        signConfigs: signConfigs,
+        signatureInstances: signatureInstances
+      });
+      console.log('=== 文件已添加到工作流 ===');
+      
       setDownloadOpen(true);
     } catch (err) {
       console.error("生成签名 PDF 出错:", err);
@@ -308,6 +363,31 @@ export function SignProvider({ children }) {
     );
   };
 
+  // 切换到盖章功能
+  const handleContinueToStamp = useCallback(() => {
+    if (signedFileUrl) {
+      // 从 URL 获取文件并添加到工作流
+      fetch(signedFileUrl)
+        .then(response => response.blob())
+        .then(blob => {
+          const file = new File([blob], 'signed.pdf', { type: 'application/pdf' });
+          addToWorkflow('sign', file, {
+            signConfigs: signConfigs,
+            signatureInstances: signatureInstances
+          });
+          // 导航到盖章页面
+          console.log('使用 React Router 导航到盖章页面');
+          navigate('/stamp');
+        })
+        .catch(error => {
+          console.error('获取签名文件失败:', error);
+          setError('获取签名文件失败');
+        });
+    } else {
+      setError('请先完成签名操作');
+    }
+  }, [signedFileUrl, signConfigs, signatureInstances, addToWorkflow]);
+
   // 关闭下载对话框时，需要清理 Blob URL
   const handleDownloadClose = useCallback(() => {
     setDownloadOpen(false);
@@ -348,6 +428,10 @@ export function SignProvider({ children }) {
     handleDownloadClose,
     loading,
     error,
+    // 新增工作流相关方法
+    handleContinueToStamp,
+    hasFile: hasFile(),
+    currentWorkflowFile: currentFile,
   };
 
   return (
